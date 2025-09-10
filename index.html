@@ -401,6 +401,9 @@
             transition: background-color 0.3s;
             margin-top: 1.5rem;
             text-align: center;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
         
         .whatsapp-button:hover {
@@ -738,7 +741,7 @@
         <div class="sobre-content">
             <h3>Sobre a Carrara Smart Clinic</h3>
             <p>A Carrara Smart Clinic nasceu da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
-            <p>A nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
+            <p>A nossa equipa é formada por professionals especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
             <p>Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
             <a href="#contato" class="btn-primary">Entre em contacto</a>
         </div>
@@ -812,9 +815,9 @@
                     <textarea id="mensagem" placeholder="Digite a sua mensagem aqui..."></textarea>
                 </div>
                 
-                <a href="#" id="whatsappLink" class="whatsapp-button">
+                <button id="whatsappButton" class="whatsapp-button">
                     <i class="fab fa-whatsapp"></i> Entrar em Contacto via WhatsApp
-                </a>
+                </button>
                 
                 <p style="text-align: center; margin-top: 1rem; color: var(--color-taupe);">
                     Clique no botão acima para iniciar uma conversa no WhatsApp
@@ -894,10 +897,15 @@
             return `https://wa.me/${whatsappNumber}?text=${texto}`;
         }
         
+        // Função para abrir o WhatsApp
+        function openWhatsApp() {
+            const link = generateWhatsAppLink();
+            window.open(link, '_blank');
+        }
+        
         // Atualizar links do WhatsApp
         function updateWhatsAppLinks() {
             const link = generateWhatsAppLink();
-            document.getElementById('whatsappLink').href = link;
             document.getElementById('footerWhatsapp').href = link;
         }
         
@@ -906,6 +914,10 @@
             const mobileMenuButton = document.getElementById('mobile-menu');
             const navMenu = document.getElementById('nav-menu');
             const body = document.body;
+            const whatsappButton = document.getElementById('whatsappButton');
+            
+            // Configurar o botão do WhatsApp
+            whatsappButton.addEventListener('click', openWhatsApp);
             
             // Atualizar links inicialmente
             updateWhatsAppLinks();
