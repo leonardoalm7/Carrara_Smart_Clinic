@@ -2,7 +2,7 @@
 <html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Carrara Smart Clinic | Estética Inteligente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -28,9 +28,11 @@
             background-color: var(--color-cream);
             color: var(--color-brown);
             line-height: 1.6;
+            /* Prevenir scroll horizontal no mobile */
+            overflow-x: hidden;
         }
         
-        /* Header e Navegação */
+        /* Header e Navegação - CORREÇÕES PARA iOS AQUI */
         header {
             background-color: rgba(248, 244, 227, 0.9);
             position: fixed;
@@ -41,6 +43,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            /* Correção para iOS - força renderização por hardware */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
         
         .logo {
@@ -111,9 +116,31 @@
             background-color: var(--color-sage-dark);
         }
         
-        /* Hero Section */
+        /* Menu Mobile - CORREÇÕES PARA iOS AQUI */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-brown);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        /* Hero Section - Ajuste de padding para header fixo */
         .hero {
-            padding: 8rem 5% 5rem;
+            padding: 10rem 5% 5rem; /* Aumentado o padding-top para compensar header fixo */
             text-align: center;
             background: linear-gradient(rgba(248, 244, 227, 0.8), rgba(248, 244, 227, 0.9)), url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
             min-height: 100vh;
@@ -460,21 +487,72 @@
             color: var(--color-beige);
         }
         
-        /* Responsividade */
-        @media (max-width: 768px) {
+        /* Responsividade - CORREÇÕES PARA iOS AQUI */
+        @media (max-width: 1024px) {
             header {
-                flex-direction: column;
                 padding: 1rem 5%;
+            }
+            
+            nav ul li {
+                margin-left: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero h2 {
+                font-size: 2.8rem;
             }
             
             nav ul {
                 margin-top: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
             }
             
             nav ul li {
-                margin: 0.5rem;
+                margin: 0 0.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Menu mobile - CORREÇÕES PARA iOS */
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--color-cream);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.4s ease;
+                margin: 0;
+                padding: 2rem;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav ul li {
+                margin: 1.5rem 0;
+            }
+            
+            nav ul li a {
+                font-size: 1.2rem;
+            }
+            
+            .btn-agendar {
+                display: none;
+            }
+            
+            .hero {
+                padding: 8rem 5% 4rem;
             }
             
             .hero h2 {
@@ -493,6 +571,51 @@
                 flex-direction: column;
                 gap: 2rem;
             }
+            
+            /* Prevenir scroll quando menu está aberto */
+            body.no-scroll {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        
+        /* Ajustes específicos para iOS */
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                min-height: -webkit-fill-available;
+            }
+            
+            nav ul {
+                padding-top: constant(safe-area-inset-top);
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: constant(safe-area-inset-bottom);
+                padding-bottom: env(safe-area-inset-bottom);
+                height: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h3 {
+                font-size: 2rem;
+            }
+            
+            .servicos-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -503,8 +626,15 @@
             <i class="fas fa-spa logo-icon"></i>
             <h1>Carrara Smart Clinic</h1>
         </div>
+        
+        <button class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
         <nav>
-            <ul>
+            <ul id="nav-menu">
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#servicos">Serviços</a></li>
                 <li><a href="#sobre">Sobre</a></li>
@@ -603,11 +733,11 @@
     <!-- Sobre -->
     <section class="sobre" id="sobre">
         <div class="sobre-img">
-            <img src="images/Main.jpeg" alt="Espaço interno da Carrara Smart Clinic">
+            <img src="https://placehold.co/600x400/F8F4E3/7E6C5F?text=Carrara+Smart+Clinic" alt="Espaço interno da Carrara Smart Clinic">
         </div>
         <div class="sobre-content">
             <h3>Sobre a Carrara Smart Clinic</h3>
-            <p>A Carrara Smart Clinic nasceu da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros и eficazes.</p>
+            <p>A Carrara Smart Clinic nasceu da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
             <p>A nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
             <p>Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
             <a href="#contato" class="btn-primary">Entre em contacto</a>
@@ -771,14 +901,49 @@
             document.getElementById('footerWhatsapp').href = link;
         }
         
-        // Inicializar
+        // Menu mobile functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu');
+            const navMenu = document.getElementById('nav-menu');
+            const body = document.body;
+            
             // Atualizar links inicialmente
             updateWhatsAppLinks();
             
             // Atualizar quando os campos mudarem
             document.getElementById('servico').addEventListener('change', updateWhatsAppLinks);
             document.getElementById('mensagem').addEventListener('input', updateWhatsAppLinks);
+            
+            // Toggle menu mobile
+            mobileMenuButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                // Prevenir scroll do body quando o menu está aberto
+                if (navMenu.classList.contains('active')) {
+                    body.classList.add('no-scroll');
+                } else {
+                    body.classList.remove('no-scroll');
+                }
+            });
+            
+            // Fechar menu ao clicar em um link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuButton.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                });
+            });
+            
+            // Fechar menu ao redimensionar para desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    mobileMenuButton.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                }
+            });
         });
         
         // Smooth scrolling para links internos
