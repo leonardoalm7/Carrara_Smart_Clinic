@@ -269,41 +269,41 @@
         .menu-toggle {
             display: flex;
         }
-        
+
         nav ul {
             position: fixed;
-            top: 0;
+            top: 0; /* Faz o menu cobrir o header */
             right: -100%;
-            width: 70%;
-            height: 100vh;
+            width: 100vw; /* Cobrir toda a largura */
+            height: 100vh; /* Cobrir toda a altura */
             background-color: var(--color-cream);
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             transition: right 0.4s ease;
             margin: 0;
-            padding: 2rem;
+            padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 998;
+            z-index: 2000; /* Bem acima do header */
             overflow-y: auto;
         }
-        
+
         nav ul.active {
             right: 0;
         }
-        
+
         nav ul li {
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
             width: 100%;
             text-align: center;
         }
-        
+
         nav ul li a {
             font-size: 1.2rem;
             display: block;
             padding: 0.8rem 0;
         }
-        
+
         .dropdown-content {
             position: static;
             display: none;
@@ -313,23 +313,46 @@
             width: 100%;
             text-align: center;
         }
-        
+
         .dropdown.active .dropdown-content {
             display: block;
         }
-        
+
         .dropdown-content a {
             padding: 0.6rem 0;
             font-size: 1rem;
         }
-        
+
         .btn-agendar {
             display: none;
         }
-        
+
+        .hero {
+            padding: 8rem 5% 4rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+        }
+
+        .sobre {
+            flex-direction: column;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
         /* Prevenir scroll quando menu está aberto */
         body.no-scroll {
             overflow: hidden;
+            position: fixed;
+            width: 100vw;
             height: 100vh;
         }
     }
@@ -821,42 +844,41 @@
     .menu-toggle {
         display: flex;
     }
-    
+
     nav ul {
         position: fixed;
-        top: 0;
+        top: 0; /* Faz o menu cobrir o header */
         right: -100%;
-        width: 70%;
-        height: 100vh;
+        width: 100vw; /* Cobrir toda a largura */
+        height: 100vh; /* Cobrir toda a altura */
         background-color: var(--color-cream);
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start; /* Alterado para flex-start */
+        justify-content: flex-start;
         transition: right 0.4s ease;
         margin: 0;
-        padding: 2rem;
+        padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        padding-top: 80px; /* Adicionado espaço no topo */
-        overflow-y: auto; /* Permite scrolling se necessário */
+        z-index: 2000; /* Bem acima do header */
+        overflow-y: auto;
     }
-    
+
     nav ul.active {
         right: 0;
     }
-    
+
     nav ul li {
-        margin: 1.2rem 0; /* Ajustada a margem */
+        margin: 1.2rem 0;
         width: 100%;
         text-align: center;
     }
-    
+
     nav ul li a {
         font-size: 1.2rem;
         display: block;
         padding: 0.8rem 0;
     }
-    
+
     .dropdown-content {
         position: static;
         display: none;
@@ -866,47 +888,47 @@
         width: 100%;
         text-align: center;
     }
-    
+
     .dropdown.active .dropdown-content {
         display: block;
     }
-    
+
     .dropdown-content a {
         padding: 0.6rem 0;
         font-size: 1rem;
     }
-    
+
     .btn-agendar {
         display: none;
     }
-    
+
     .hero {
         padding: 8rem 5% 4rem;
     }
-    
+
     .hero h2 {
         font-size: 2.5rem;
     }
-    
+
     .hero-buttons {
         flex-direction: column;
     }
-    
+
     .sobre {
         flex-direction: column;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     /* Prevenir scroll quando menu está aberto */
     body.no-scroll {
         overflow: hidden;
         position: fixed;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
     }
 }
 
