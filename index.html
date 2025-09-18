@@ -1,11 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Carrara Smart Clinic | Estética Inteligente</title>
+    <title>Carrara Smart Clinic | Estética Inteligente em Lisboa | Depilação a Laser</title>
+    <meta name="description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta. Marque sua avaliação gratuita.">
+    <meta name="keywords" content="estética lisboa, depilação laser, tratamentos faciais, clínica estética lisboa, peeling hollywood, hifu, limpeza de pele hidrafacial, bem-estar, spa">
+    <meta name="author" content="Carrara Smart Clinic">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.carrarasmartclinic.com">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.carrarasmartclinic.com/">
+    <meta property="og:title" content="Carrara Smart Clinic | Estética Inteligente em Lisboa">
+    <meta property="og:description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.">
+    <meta property="og:image" content="https://www.carrarasmartclinic.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.carrarasmartclinic.com/">
+    <meta property="twitter:title" content="Carrara Smart Clinic | Estética Inteligente em Lisboa">
+    <meta property="twitter:description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.">
+    <meta property="twitter:image" content="https://www.carrarasmartclinic.com/images/twitter-image.jpg">
+    
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "Carrara Smart Clinic",
+      "description": "Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.",
+      "url": "https://www.carrarasmartclinic.com",
+      "telephone": "+351-933-892-968",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Sarmento de Beires, 45B",
+        "addressLocality": "Lisboa",
+        "postalCode": "1900-411",
+        "addressCountry": "PT"
+      },
+      "openingHours": "Mo-Sa 09:00-20:00",
+      "priceRange": "€€",
+      "image": "https://www.carrarasmartclinic.com/images/logo.jpg"
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+   
+   <style>
+
+        /* Avaliações */
+    .avaliacoes {
+        padding: 6rem 5%;
+        background-color: var(--color-beige);
+    }
+
+    .avaliacao-swiper {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 0;
+    }
+
+    .avaliacao-card {
+        background: var(--color-cream);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(122, 102, 85, 0.1);
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-brown);
+    }
+
+    .estrelinhas {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: var(--color-sage);
+    }
+
+    /* Setas do carrossel */
+    .swiper-button-next,
+    .swiper-button-prev {
+    color: var(--color-sage-dark);
+    transition: color 0.3s;
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+    color: var(--color-sage);
+    }
+
         /* Paleta Boho - Tons terrosos e verdes */
         :root {
             --color-cream: #F8F4E3;
@@ -68,10 +158,12 @@
         nav ul {
             display: flex;
             list-style: none;
+            position: relative;
         }
         
         nav ul li {
             margin-left: 2rem;
+            position: relative;
         }
         
         nav ul li a {
@@ -99,6 +191,41 @@
         
         nav ul li a:hover::after {
             width: 100%;
+        }
+        
+        /* Dropdown Menu para Serviços */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--color-cream);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1;
+            padding: 1rem 0;
+        }
+        
+        .dropdown-content a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--color-brown);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(138, 155, 104, 0.1);
+            color: var(--color-sage);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
         
         .btn-agendar {
@@ -205,7 +332,7 @@
             color: white;
         }
         
-        /* Serviços */
+        /* Serviços - NOVA VERSÃO COM CATEGORIAS */
         .servicos {
             padding: 6rem 5%;
             background-color: var(--color-white);
@@ -229,44 +356,91 @@
             margin: 0 auto;
         }
         
-        .servicos-grid {
+        .categorias-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
         
-        .servico-card {
-            background-color: var(--color-cream);
+        .categoria-card {
+            position: relative;
+            height: 350px;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(122, 102, 85, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
+        }
+        
+        .categoria-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(122, 102, 85, 0.2);
+        }
+        
+        .categoria-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s, filter 0.5s;
+            filter: brightness(0.7);
+        }
+        
+        .categoria-card:hover .categoria-bg {
+            transform: scale(1.05);
+            filter: brightness(0.9);
+        }
+        
+        .categoria-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
+            color: white;
+            background: linear-gradient(transparent, rgba(74, 63, 53, 0.8));
+            transition: background 0.3s;
         }
         
-        .servico-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(122, 102, 85, 0.1);
+        .categoria-card:hover .categoria-content {
+            background: linear-gradient(transparent, rgba(138, 155, 104, 0.9));
         }
         
-        .servico-icon {
-            font-size: 2.5rem;
-            color: var(--color-sage);
+        .categoria-content h4 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .categoria-content p {
             margin-bottom: 1.5rem;
+            opacity: 0.9;
         }
         
-        .servico-card h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--color-brown);
+        .categoria-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
         }
         
-        .servico-card p {
-            color: var(--color-taupe);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
+        .categoria-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        .categoria-link:hover::after {
+            width: 100%;
         }
         
         /* Sobre */
@@ -357,6 +531,16 @@
             color: var(--color-taupe);
         }
         
+        .info-text a {
+            color: var(--color-taupe);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .info-text a:hover {
+            color: var(--color-sage);
+        }
+        
         .contato-form {
             flex: 1;
             min-width: 300px;
@@ -415,7 +599,7 @@
             font-size: 1.2rem;
         }
         
-        /* Footer */
+        /* Footer - VERSÃO OTIMIZADA */
         footer {
             background-color: var(--color-brown);
             color: var(--color-cream);
@@ -423,15 +607,13 @@
         }
         
         .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
             margin-bottom: 3rem;
         }
         
         .footer-col {
-            flex: 1;
-            min-width: 200px;
             display: flex;
             flex-direction: column;
         }
@@ -440,6 +622,18 @@
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
             color: var(--color-cream);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-sage);
         }
         
         .footer-col ul {
@@ -461,10 +655,21 @@
             color: var(--color-sage);
         }
         
+        .footer-submenu {
+            padding-left: 1rem;
+            border-left: 2px solid rgba(138, 155, 104, 0.3);
+            margin-top: 0.5rem;
+        }
+        
+        .footer-submenu li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: auto;
+            margin-top: 1rem;
         }
         
         .social-links a {
@@ -550,6 +755,18 @@
                 font-size: 1.2rem;
             }
             
+            .dropdown-content {
+                position: static;
+                display: none;
+                box-shadow: none;
+                background-color: transparent;
+                padding-left: 1rem;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            
             .btn-agendar {
                 display: none;
             }
@@ -571,7 +788,7 @@
             }
             
             .footer-content {
-                flex-direction: column;
+                grid-template-columns: 1fr;
                 gap: 2rem;
             }
             
@@ -616,7 +833,7 @@
                 font-size: 2rem;
             }
             
-            .servicos-grid {
+            .categorias-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -639,7 +856,15 @@
         <nav>
             <ul id="nav-menu">
                 <li><a href="#inicio">Início</a></li>
-                <li><a href="#servicos">Serviços</a></li>
+                <li class="dropdown">
+                    <a href="#servicos">Serviços</a>
+                    <div class="dropdown-content">
+                        <a href="tratamentos-faciais.html">Tratamentos Faciais</a>
+                        <a href="tratamentos-corporais.html">Tratamentos Corporais</a>
+                        <a href="bem-estar.html">Bem-estar</a>
+                        <a href="tratamentos-corporais.html">Depilação a Laser</a>
+                    </div>
+                </li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#contato">Contacto</a></li>
             </ul>
@@ -660,97 +885,120 @@
     <!-- Serviços -->
     <section class="servicos" id="servicos">
         <div class="section-title">
-            <h3>Os Nossos Serviços</h3>
+            <h2>Os Nossos Serviços</h2>
             <p>Oferecemos tratamentos estéticos avançados com tecnologia de ponta para resultados reais e satisfatórios.</p>
         </div>
-        <div class="servicos-grid">
-            <div class="servico-card">
-                <i class="fas fa-hands servico-icon"></i>
-                <h4>Drenagem Linfática</h4>
-                <p>Técnica especializada para reduzir inchaço, melhorar a circulação e eliminar toxinas.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-star servico-icon"></i>
-                <h4>Depilação a Laser</h4>
-                <p>Tecnologia avançada para eliminação definitiva dos pelos com conforto e segurança.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-heart servico-icon"></i>
-                <h4>Lipocavitação</h4>
-                <p>Redução de medidas e gordura localizada através de ultrassom não invasivo.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-hand-holding-medical servico-icon"></i>
-                <h4>Drenagem Pós-Cirúrgica</h4>
-                <p>Recuperação otimizada após procedimentos cirúrgicos com técnicas especializadas.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-spa servico-icon"></i>
-                <h4>Massagem Terapêutica</h4>
-                <p>Técnicas de massagem para relaxamento, alívio de tensões e bem-estar integral.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-leaf servico-icon"></i>
-                <h4>Aromaterapia</h4>
-                <p>Terapia com óleos essenciais para equilíbrio físico e emocional.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-bath servico-icon"></i>
-                <h4>Spa Premium</h4>
-                <p>Banho de óleos essenciais e experiência completa de relaxamento e rejuvenescimento.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-eraser servico-icon"></i>
-                <h4>Remoção de Tatuagem</h4>
-                <p>Eliminação de tatuagens com tecnologia laser avançada e mínimo desconforto.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-gem servico-icon"></i>
-                <h4>Peeling de Diamante</h4>
-                <p>Esfoliação de precisão para renovação celular e pele mais lisa e rejuvenescida.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-crown servico-icon"></i>
-                <h4>Peeling Hollywood</h4>
-                <p>Tratamento premium para rejuvenescimento facial com resultados impressionantes.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
-            <div class="servico-card">
-                <i class="fas fa-venus servico-icon"></i>
-                <h4>Clareamento Íntimo</h4>
-                <p>Procedimento seguro para clareamento das áreas íntimas com resultados naturais.</p>
-                <a href="#contato" class="btn-secondary">Saber mais</a>
-            </div>
+        <div class="categorias-grid">
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/22589552/pexels-photo-22589552.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Tratamentos Faciais</h3>
+                    <p>Procedimentos especializados para rejuvenescimento e tratamento da pele facial.</p>
+                    <a href="tratamentos-faciais.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/5042608/pexels-photo-5042608.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Tratamentos Corporais</h3>
+                    <p>Soluções inovadoras para modelagem corporal and tratamentos estéticos corporais.</p>
+                    <a href="tratamentos-corporais.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/6810866/pexels-photo-6810866.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Bem-estar</h3>
+                    <p>Rituais exclusivos para relaxamento, rejuvenescimento e equilíbrio físico e mental.</p>
+                    <a href="bem-estar.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/16032298/pexels-photo-16032298.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Depilação a Laser</h3>
+                    <p>Tecnologia avançada para eliminação definitiva dos pelos com conforto e segurança.</p>
+                    <a href="tratamentos-corporais.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+
         </div>
     </section>
 
     <!-- Sobre -->
     <section class="sobre" id="sobre">
         <div class="sobre-img">
-            <img src="https://placehold.co/600x400/F8F4E3/7E6C5F?text=Carrara+Smart+Clinic" alt="Espaço interno da Carrara Smart Clinic">
+            <img src="images/Clinic2.jpeg?auto=format&fit=crop&w=800&q=80" alt="Espaço interno da Carrara Smart Clinic em Lisboa" loading="lazy">
         </div>
         <div class="sobre-content">
-            <h3>Sobre a Carrara Smart Clinic</h3>
-            <p>A Carrara Smart Clinic nasceu da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
-            <p>A nossa equipa é formada por professionals especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
+            <h2>Sobre a Carrara Smart Clinic</h2>
+            <p>A Carrara Smart Clinic nasce da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
+            <p>Nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
             <p>Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
             <a href="#contato" class="btn-primary">Entre em contacto</a>
         </div>
     </section>
 
+    <!-- Avaliações -->
+<section class="avaliacoes">
+  <div class="section-title">
+    <h3>O que dizem os nossos clientes</h3>
+  </div>
+
+  <div class="swiper avaliacao-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide avaliacao-card">
+        <p>“O espaço é lindo, acolhedor e muito bem cuidado Dá para sentir a atenção aos detalhes em cada canto O atendimento é excelente e a energia do lugar deixa a experiência ainda mais especial Recomendo muito a visita”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Espaço maravilhoso com uma profissional de excelência!”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“A melhor clínica de Lisboa. Fui muito bem atendido. A Camila é uma querida!”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Atendimento maravilhoso e os tratamentos deram muito resultado.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+<!--      <div class="swiper-slide avaliacao-card">
+        <p>“Excelentes profissionais, muito acima da média.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Resultados incríveis já nas primeiras sessões.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“O ambiente é lindo e aconchegante. Uma experiência única.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div> -->
+    </div>
+
+    <!-- Botões de navegação -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</section>
+
+
     <!-- Contato -->
     <section class="contato" id="contato">
         <div class="section-title">
-            <h3>Entre em Contacto</h3>
+            <h2>Entre em Contacto</h2>
             <p>Agende uma avaliação e esclareça todas as suas dúvidas com a nossa equipa especializada.</p>
         </div>
         <div class="contato-container">
@@ -786,7 +1034,7 @@
                         <i class="fab fa-instagram"></i>
                     </div>
                     <div class="info-text">
-                        <p>@carrarasmartclinic</p>
+                        <p><a href="https://www.instagram.com/carrarasmartclinic" target="_blank" rel="noopener">@carrarasmartclinic</a></p>
                     </div>
                 </div>
             </div>
@@ -795,18 +1043,10 @@
                     <label for="servico">Serviço de Interesse</label>
                     <select id="servico">
                         <option value="">Selecione um serviço</option>
-                        <option value="drenagem">Drenagem Linfática</option>
                         <option value="depilacao">Depilação a Laser</option>
-                        <option value="lipocavitacao">Lipocavitação</option>
-                        <option value="drenagem_pos">Drenagem Pós-Cirúrgica</option>
-                        <option value="massagem">Massagem Terapêutica</option>
-                        <option value="aromaterapia">Aromaterapia</option>
-                        <option value="spa">Spa Premium</option>
-                        <option value="tatuagem">Remoção de Tatuagem</option>
-                        <option value="peeling_diamante">Peeling de Diamante</option>
-                        <option value="peeling_hollywood">Peeling Hollywood</option>
-                        <option value="clareamento">Clareamento Íntimo</option>
-                        <option value="outro">Outro serviço</option>
+                        <option value="facial">Tratamentos Faciais</option>
+                        <option value="corporal">Tratamentos Corporais</option>
+                        <option value="bem_estar">Bem-estar</option>
                     </select>
                 </div>
                 
@@ -826,43 +1066,53 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - VERSÃO ATUALIZADA -->
     <footer>
         <div class="footer-content">
             <div class="footer-col">
-                <h4>Carrara Smart Clinic</h4>
+                <h3>Tratamentos Faciais</h3>
+                <ul>
+                    <li><a href="tratamentos-faciais.html">Peeling Hollywood</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele com Hidrafacial</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Glow</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Lips</a></li>
+                    <li><a href="tratamentos-faciais.html">Microagulhamento com PDRN</a></li>
+                    <li><a href="tratamentos-faciais.html">Despigmentação (Remoção de manchas de areas escurecidas)</a></li>
+                    <li><a href="tratamentos-faciais.html">HIFU</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Tratamentos Corporais</h3>
+                <ul>
+                    <li><a href="tratamentos-corporais.html">Depilação a laser</a></li>
+                    <li><a href="tratamentos-corporais.html">Drenagem Linfática</a></li>
+                    <li><a href="tratamentos-corporais.html">Lipocavitação</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento Íntimo</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Relaxante</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Modeladora</a></li>
+                    <li><a href="tratamentos-corporais.html">Cellulaser PRO</a></li>
+                    <li><a href="tratamentos-corporais.html">Criolipólise</a></li>
+                    <li><a href="tratamentos-corporais.html">Remoção de Tatuagem</a></li>
+                    <li><a href="tratamentos-corporais.html">Despigmentação (Remoção de manchas de areas escurecidas)</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Bem-estar</h3>
+                <ul>
+                    <li><a href="bem-estar.html">Ritual Esculpir – Redução de Medidas</a></li>
+                    <li><a href="bem-estar.html">Ritual Serenar – Relaxamento Profundo</a></li>
+                    <li><a href="bem-estar.html">Ritual Aliviar – Alívio de Dores Musculares</a></li>
+                </ul>
+                
+                <h3>Carrara Smart Clinic</h3>
                 <p>Estética inteligente com tecnologia de ponta para resultados reais.</p>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
                     <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
                 </div>
-            </div>
-            <div class="footer-col">
-                <h4>Serviços</h4>
-                <ul>
-                    <li><a href="#servicos">Drenagem Linfática</a></li>
-                    <li><a href="#servicos">Depilação a Laser</a></li>
-                    <li><a href="#servicos">Lipocavitação</a></li>
-                    <li><a href="#servicos">Drenagem Pós-Cirúrgica</a></li>
-                    <li><a href="#servicos">Massagem Terapêutica</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Links Rápidos</h4>
-                <ul>
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#servicos">Serviços</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#contato">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contacto</h4>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> Rua Sarmento de Beires, 45B</li>
-                    <li><i class="fas fa-phone"></i> +351 933 892 968</li>
-                    <li><i class="fab fa-instagram"></i> @carrarasmartclinic</li>
-                </ul>
             </div>
         </div>
         <div class="copyright">
@@ -871,117 +1121,96 @@
     </footer>
 
     <script>
-        // Número de WhatsApp
-        const whatsappNumber = '351933892968';
+        // Menu Mobile
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
         
-        // Função para gerar o link do WhatsApp
-        function generateWhatsAppLink() {
-            const servico = document.getElementById('servico').value;
-            const mensagem = document.getElementById('mensagem').value;
-            
-            // Mensagem padrão
-            let texto = 'Olá! Gostaria de obter mais informações sobre os serviços da Carrara Smart Clinic.';
-            
-            // Adicionar serviço selecionado se houver
-            if (servico) {
-                const servicoText = document.querySelector(`#servico option[value="${servico}"]`).textContent;
-                texto += `%0A%0A📋 Serviço de interesse: ${servicoText}`;
-            }
-            
-            // Adicionar mensagem personalizada se houver
-            if (mensagem) {
-                texto += `%0A%0A💬 Mensagem: ${mensagem}`;
-            }
-            
-            // Criar o link
-            return `https://wa.me/${whatsappNumber}?text=${texto}`;
-        }
+        mobileMenu.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
         
-        // Função para abrir o WhatsApp
-        function openWhatsApp() {
-            const link = generateWhatsAppLink();
-            window.open(link, '_blank');
-        }
-        
-        // Atualizar links do WhatsApp
-        function updateWhatsAppLinks() {
-            const link = generateWhatsAppLink();
-            document.getElementById('footerWhatsapp').href = link;
-        }
-        
-        // Menu mobile functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu');
-            const navMenu = document.getElementById('nav-menu');
-            const body = document.body;
-            const whatsappButton = document.getElementById('whatsappButton');
-            
-            // Configurar o botão do WhatsApp
-            whatsappButton.addEventListener('click', openWhatsApp);
-            
-            // Atualizar links inicialmente
-            updateWhatsAppLinks();
-            
-            // Atualizar quando os campos mudarem
-            document.getElementById('servico').addEventListener('change', updateWhatsAppLinks);
-            document.getElementById('mensagem').addEventListener('input', updateWhatsAppLinks);
-            
-            // Toggle menu mobile
-            mobileMenuButton.addEventListener('click', function() {
-                this.classList.toggle('active');
-                navMenu.classList.toggle('active');
-                
-                // Prevenir scroll do body quando o menu está aberto
-                if (navMenu.classList.contains('active')) {
-                    body.classList.add('no-scroll');
-                } else {
-                    body.classList.remove('no-scroll');
-                }
-            });
-            
-            // Fechar menu ao clicar em um link
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuButton.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    body.classList.remove('no-scroll');
-                });
-            });
-            
-            // Fechar menu ao redimensionar para desktop
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    mobileMenuButton.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    body.classList.remove('no-scroll');
-                }
+        // Fechar menu ao clicar em um link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('no-scroll');
             });
         });
         
-        // Smooth scrolling para links internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+        // WhatsApp Button
+        const whatsappButton = document.getElementById('whatsappButton');
+        const footerWhatsapp = document.getElementById('footerWhatsapp');
+        const phoneNumber = '351933892968';
+        
+        whatsappButton.addEventListener('click', function() {
+            const serviceSelect = document.getElementById('servico');
+            const messageTextarea = document.getElementById('mensagem');
+            
+            let message = 'Olá! Gostaria de agendar uma consulta.';
+            
+            if (serviceSelect.value) {
+                message += ` Serviço de interesse: ${serviceSelect.options[serviceSelect.selectedIndex].text}.`;
+            }
+            
+            if (messageTextarea.value) {
+                message += ` Minha mensagem: ${messageTextarea.value}`;
+            }
+            
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
         });
         
-        // Função para rolar até o contacto
+        footerWhatsapp.addEventListener('click', function() {
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações.')}`;
+            window.open(whatsappURL, '_blank');
+        });
+        
+        // Função para rolar até a seção de contato
         function scrollToContact() {
-            document.querySelector('#contato').scrollIntoView({
-                behavior: 'smooth'
+            document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Dropdown para mobile
+        const dropdown = document.querySelector('.dropdown');
+        if (window.innerWidth <= 768) {
+            dropdown.addEventListener('click', function(e) {
+                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
+                    this.classList.toggle('active');
+                }
             });
         }
     </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+  const swiper = new Swiper('.avaliacao-swiper', {
+    slidesPerView: 2,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1, // mobile
+      },
+      768: {
+        slidesPerView: 2, // tablet/desktop
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
