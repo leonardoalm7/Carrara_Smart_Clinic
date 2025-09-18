@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tratamentos Corporais | Carrara Smart Clinic | Estética em Lisboa</title>
+    <meta name="description" content="Tratamentos corporais de excelência na Carrara Smart Clinic em Lisboa. Depilação a laser, massagens modeladoras e redução de medidas com tecnologia avançada.">
+    <meta name="keywords" content="tratamentos corporais lisboa, massagem modeladora, lipocavitação, drenagem linfática, criolipólise, remoção de tatuagem lisboa">
+    <meta name="author" content="Carrara Smart Clinic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(248, 244, 227, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            box-shadow: 0 2px 10px rgba(122, 102, 85, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage-dark);
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--color-sage);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-brown);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-sage);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .btn-agendar {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-agendar:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        /* Hero Section */
+        .hero-corporal {
+            padding: 12rem 5% 6rem;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://img.freepik.com/fotos-premium/o-procedimento-de-fotoepilacao-no-salao-de-beleza-cosmetologia-de-hardware-fechar-se_213607-1233.jpg?ga=GA1.1.815465315.1758152573&semt=ais_incoming&w=740&q=80?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: var(--color-white);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-corporal h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-corporal h2 span {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+        
+        .hero-corporal p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--color-cream);
+        }
+        
+        /* Tratamentos Section */
+        .tratamentos {
+            padding: 6rem 5%;
+            background-color: var(--color-white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 1rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section-title p {
+            color: var(--color-taupe);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .tratamentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .tratamento-card {
+            background: var(--color-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--color-beige);
+            position: relative;
+        }
+        
+        .tratamento-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .tratamento-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tratamento-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tratamento-card:hover .tratamento-img img {
+            transform: scale(1.05);
+        }
+        
+        .tratamento-content {
+            padding: 2rem;
+        }
+        
+        .tratamento-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-brown);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .tratamento-tagline {
+            color: var(--color-sage);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: block;
+            border-left: 3px solid var(--color-gold);
+            padding-left: 12px;
+        }
+        
+        .tratamento-descricao {
+            color: var(--color-taupe);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .tratamento-preco {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-beige);
+        }
+        
+        .preco-tag {
+            font-size: 1.5rem;
+            color: var(--color-sage-dark);
+            font-weight: 600;
+        }
+        
+        .preco-nota {
+            font-size: 0.85rem;
+            color: var(--color-taupe);
+            font-style: italic;
+        }
+        
+        .btn-saiba-mais {
+            background-color: transparent;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-saiba-mais:hover {
+            background-color: var(--color-sage);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-sage);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--color-beige);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(248, 244, 227, 0.1);
+            border-radius: 50%;
+            color: var(--color-cream);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--color-sage);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+            color: var(--color-beige);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero-corporal h2 {
+                font-size: 2.5rem;
+            }
+            
+            .tratamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-spa logo-icon"></i>
+            <h1>Carrara Smart Clinic</h1>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#servicos">Serviços</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#contato">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="btn-agendar" onclick="location.href='index.html#contato'">Agendar Consulta</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-corporal">
+        <h2>Tratamentos <span>Corporais</span></h2>
+        <p>Descubra a excelência em estética corporal com tecnologia avançada e resultados excepcionais</p>
+    </section>
+
+    <!-- Tratamentos Section -->
+    <section class="tratamentos">
+        <div class="section-title">
+            <h3>Transforme o Seu Corpo</h3>
+            <p>Procedimentos especializados para modelagem, redução de medidas e rejuvenescimento corporal</p>
+        </div>
+        
+        <div class="tratamentos-grid">
+            <!-- Drenagem Linfática -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/drenagem-linfatica.png" alt="Drenagem Linfática">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Drenagem Linfática</h4>
+                    <span class="tratamento-tagline">"Leveza reconquistada, bem-estar renovado"</span>
+                    <p class="tratamento-descricao">Técnica manual especializada que estimula o sistema linfático, facilitando a eliminação de toxinas e reduzindo a retenção de líquidos. Promove sensação imediata de leveza e alívio de inchaços.</p>
+                    <p><strong>Objetivo:</strong> redução de edemas, melhora da circulação e desintoxicação corporal.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lipocavitação -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/lipocavitacao.png" alt="Lipocavitação">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Lipocavitação</h4>
+                    <span class="tratamento-tagline">"Contornos esculpidos sem intervenção cirúrgica"</span>
+                    <p class="tratamento-descricao">Tecnologia avançada de ultrassom focalizado que reduz medidas e modela silhuetas de forma não invasiva. Rompe as células adiposas sem danificar tecidos circundantes.</p>
+                    <p><strong>Objetivo:</strong> redução de gordura localizada, modelagem corporal e definição de contornos.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Depilação a laser -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/depilacao-laser.png" alt="Depilação a laser">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Depilação a laser</h4>
+                    <span class="tratamento-tagline">"Pele suave e livre de pelos com tecnologia avançada"</span>
+                    <p class="tratamento-descricao">Tecnologia de laser de última geração para remoção eficaz e duradoura dos pelos. Tratamento seguro e confortável, adequado para todos os tipos de pele.</p>
+                    <p><strong>Objetivo:</strong> remoção permanente dos pelos, pele suave e redução de irritações.</p>
+                    <div class="tratamento-preco">
+                        <a href="index.html#contato" class="btn-saiba-mais">Clique aqui e saiba mais</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clareamento Íntimo -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/Clareamento.png" alt="Clareamento Íntimo">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Clareamento Íntimo</h4>
+                    <span class="tratamento-tagline">"Harmonia e confiança na sua intimidade"</span>
+                    <p class="tratamento-descricao">Procedimento seguro e especializado para clareamento das áreas íntimas, utilizando tecnologia e produtos específicos que respeitam a sensibilidade da região.</p>
+                    <p><strong>Objetivo:</strong> uniformização da tonalidade íntima, aumento da autoestima e bem-estar.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Massagem Relaxante -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/massagem-relax.png" alt="Massagem Relaxante">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Massagem Relaxante</h4>
+                    <span class="tratamento-tagline">"Alívio profundo que restaura seu equilíbrio"</span>
+                    <p class="tratamento-descricao">Técnicas manuais especializadas para tratamento de dores musculares, tensões e contraturas. Combina diferentes abordagens para devolver a mobilidade e conforto.</p>
+                    <p><strong>Objetivo:</strong> alívio de dores musculares, liberação de tensões e restauração do movimento.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Massagem Modeladora -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/massagem-modeladora.png" alt="Massagem Modeladora">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Massagem Modeladora</h4>
+                    <span class="tratamento-tagline">"Formas esculpidas, confiança renovada"</span>
+                    <p class="tratamento-descricao">Massagem intensiva que trabalha camadas profundas do tecido, quebrando nódulos de gordura e estimulando a redução de medidas. Ideal para remodelar silhuetas.</p>
+                    <p><strong>Objetivo:</strong> redução de medidas, quebra de gordura localizada e modelagem corporal.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cellulaser PRO -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/cellulaserPRO.png" alt="Cellulaser PRO">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Cellulaser PRO</h4>
+                    <span class="tratamento-tagline">"Tecnologia de ponta contra a celulite"</span>
+                    <p class="tratamento-descricao">Protocolo avançado que combina tecnologia e cosméticos para redução de celulite e inflamação corporal.</p>
+                    <p><strong>Objetivo:</strong> redução de celulite, melhora da textura cutânea e estímulo de colágeno.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Criolipólise -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/criolipolise.jpg" alt="Criolipólise">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Criolipólise</h4>
+                    <span class="tratamento-tagline">"Gordura congelada, resultados duradouros"</span>
+                    <p class="tratamento-descricao">Tecnologia que utiliza controle térmico para cristalizar as células adiposas, eliminando-as naturalmente pelo organismo. Resultados progressivos e naturais.</p>
+                    <p><strong>Objetivo:</strong> redução de gordura localizada, tratamento não invasivo e resultados duradouros.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">150,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Remoção de Tatuagem -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/tattoo-remove.jpg" alt="Remoção de Tatuagem">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Remoção de Tatuagem</h4>
+                    <span class="tratamento-tagline">"Pele renovada, novas histórias para contar"</span>
+                    <p class="tratamento-descricao">Remoção especializada de tatuagens através de tecnologia laser que fragmenta a tinta sem danificar a peau. Processo seguro e progressivo.</p>
+                    <p><strong>Objetivo:</strong> remoção de tatuagens, clareamento progressivo e minimização de marcas.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">150,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Despigmentação -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/despigmentacao_pele.jpg" alt="Despigmentação">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Despigmentação</h4>
+                    <span class="tratamento-tagline">"Pele uniforme, autoconfiança radiante"</span>
+                    <p class="tratamento-descricao">Tratamento especializado para clareamento de manchas corporais, utilizando tecnologias específicas conforme o tipo e profundidade da pigmentação.</p>
+                    <p><strong>Objetivo:</strong> clareamento de manchas, uniformização da tonalidade e rejuvenescimento cutâneo.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">80,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Tratamentos Faciais</h4>
+                <ul>
+                    <li><a href="tratamentos-faciais.html">Peeling Hollywood</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele com Hidrafacial</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Glow</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Lips</a></li>
+                    <li><a href="tratamentos-faciais.html">Microagulhamento com PDRN</a></li>
+                    <li><a href="tratamentos-faciais.html">Tratamento para Melasma</a></li>
+                    <li><a href="tratamentos-faciais.html">Clareamento Facial</a></li>
+                    <li><a href="tratamentos-faciais.html">Remoção de Manchas</a></li>
+                    <li><a href="tratamentos-faciais.html">HIFU</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Tratamentos Corporais</h4>
+                <ul>
+                    <li><a href="tratamentos-corporais.html">Drenagem Linfática</a></li>
+                    <li><a href="tratamentos-corporais.html">Lipocavitação</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento Íntimo</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Terapêutica</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Modeladora</a></li>
+                    <li><a href="tratamentos-corporais.html">Cellulaser PRO</a></li>
+                    <li><a href="tratamentos-corporais.html">Criolipólise</a></li>
+                    <li><a href="tratamentos-corporais.html">Remoção de Tatuagem</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento de Manchas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Bem-estar</h4>
+                <ul>
+                    <li><a href="bem-estar.html">Ritual Esculpir – Redução de Medidas</a></li>
+                    <li><a href="bem-estar.html">Ritual Serenar – Relaxamento Profundo</a></li>
+                    <li><a href="bem-estar.html">Ritual Aliviar – Alívio de Dores Musculares</a></li>
+                </ul>
+                                
+                <h4>Carrara Smart Clinic</h4>
+                <p>Estética inteligente com tecnologia de ponta para resultados reais.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Carrara Smart Clinic. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // WhatsApp Button
+        const footerWhatsapp = document.getElementById('footerWhatsapp');
+        const phoneNumber = '351933892968';
+        
+        footerWhatsapp.addEventListener('click', function(e) {
+            e.preventDefault();
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre os tratamentos corporais.')}`;
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>

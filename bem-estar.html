@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-Estar & Spa | Carrara Smart Clinic | Estética em Lisboa</title>
+    <meta name="description" content="Rituais de bem-estar e spa de excelência na Carrara Smart Clinic em Lisboa. Relaxamento profundo, redução de medidas e alívio de dores musculares.">
+    <meta name="keywords" content="spa lisboa, bem-estar, massagem relaxante, redução de medidas, alívio de dores musculares, rituais de spa">
+    <meta name="author" content="Carrara Smart Clinic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(248, 244, 227, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            box-shadow: 0 2px 10px rgba(122, 102, 85, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage-dark);
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--color-sage);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-brown);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-sage);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .btn-agendar {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-agendar:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        /* Hero Section */
+        .hero-bemestar {
+            padding: 12rem 5% 6rem;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url('images/spa.jpeg') no-repeat center center/cover;
+            color: var(--color-white);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-bemestar h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bemestar h2 span {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+        
+        .hero-bemestar p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--color-cream);
+        }
+        
+        /* Introdução Section */
+        .introducao {
+            padding: 6rem 5%;
+            background-color: var(--color-white);
+            text-align: center;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 1rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section-title p {
+            color: var(--color-taupe);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--color-taupe);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .intro-text p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Rituais Section */
+        .rituais {
+            padding: 6rem 5%;
+            background-color: var(--color-beige);
+        }
+        
+        .rituais-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .ritual-card {
+            background: var(--color-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--color-beige);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ritual-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .ritual-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .ritual-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .ritual-card:hover .ritual-img img {
+            transform: scale(1.05);
+        }
+        
+        .ritual-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ritual-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-brown);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .ritual-tagline {
+            color: var(--color-sage);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: block;
+            border-left: 3px solid var(--color-gold);
+            padding-left: 12px;
+        }
+        
+        .ritual-descricao {
+            color: var(--color-taupe);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        .ritual-detalhes {
+            background-color: rgba(138, 155, 104, 0.1);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ritual-detalhes h5 {
+            color: var(--color-sage-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .ritual-detalhes ul {
+            padding-left: 1.2rem;
+            color: var(--color-taupe);
+        }
+        
+        .ritual-detalhes li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .ritual-preco {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-beige);
+        }
+        
+        .preco-tag {
+            font-size: 1.5rem;
+            color: var(--color-sage-dark);
+            font-weight: 600;
+        }
+        
+        .btn-agendar-ritual {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn-agendar-ritual:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        /* Benefícios Section */
+        .beneficios {
+            padding: 6rem 5%;
+            background-color: var(--color-white);
+        }
+        
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .beneficio-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .beneficio-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--color-sage);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .beneficio-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--color-brown);
+        }
+        
+        .beneficio-item p {
+            color: var(--color-taupe);
+            line-height: 1.7;
+        }
+        
+        /* CTA Section */
+        .cta-bemestar {
+            padding: 6rem 5%;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/6810866/pexels-photo-6810866.jpeg?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: var(--color-white);
+        }
+        
+        .cta-bemestar h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .cta-bemestar p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--color-cream);
+        }
+        
+        .btn-cta {
+            background-color: var(--color-gold);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 0 0.5rem;
+        }
+        
+        .btn-cta:hover {
+            background-color: var(--color-sage);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-sage);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--color-beige);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(248, 244, 227, 0.1);
+            border-radius: 50%;
+            color: var(--color-cream);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--color-sage);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+            color: var(--color-beige);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero-bemestar h2 {
+                font-size: 2.5rem;
+            }
+            
+            .rituais-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .btn-cta {
+                display: block;
+                margin: 0.5rem auto;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-spa logo-icon"></i>
+            <h1>Carrara Smart Clinic</h1>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#servicos">Serviços</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#contato">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="btn-agendar" onclick="location.href='index.html#contato'">Agendar Consulta</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bemestar">
+        <h2>Bem-Estar & <span>Spa</span></h2>
+        <p>Descubra rituais exclusivos que unem tradição e inovação para renovar corpo e mente</p>
+    </section>
+
+    <!-- Introdução Section -->
+    <section class="introducao">
+        <div class="section-title">
+            <h3>Rituais de Transformação</h3>
+            <p>Experiências sensoriais cuidadosamente elaboradas para seu bem-estar integral</p>
+        </div>
+        
+        <div class="intro-text">
+            <p>Na Carrara Smart Clinic, acreditamos que o verdadeiro bem-estar nasce da harmonia entre corpo, mente e espírito. Nossos rituais de spa foram meticulosamente desenvolvidos para oferecer uma experiência transformadora que vai além do relaxamento superficial.</p>
+            <p>Cada ritual combina técnicas ancestrais com inovações contemporâneas, utilizando produtos premium e óleos essenciais selecionados para potencializar os benefícios de cada tratamento. Nossa abordagem holística garante que você saia renovado, revigorado e em paz consigo mesmo.</p>
+        </div>
+    </section>
+
+    <!-- Rituais Section -->
+    <section class="rituais">
+        <div class="section-title">
+            <h3>Nossos Rituais Exclusivos</h3>
+            <p>Descubra a experiência perfeita para suas necessidades atuais</p>
+        </div>
+        
+        <div class="rituais-grid">
+            <!-- Ritual Esculpir -->
+            <div class="ritual-card">
+                <div class="ritual-img">
+                    <img src="images/ritual-esculpir.jpg" alt="Ritual Esculpir - Redução de Medidas">
+                </div>
+                <div class="ritual-content">
+                    <h4>Ritual Esculpir – Redução de Medidas</h4>
+                    <span class="ritual-tagline">"✨ Leveza e transformação em cada toque"</span>
+                    <p class="ritual-descricao">Um tratamento completo que combina técnicas avançadas para modelar sua silhueta enquanto proporciona relaxamento profundo.</p>
+                    
+                    <div class="ritual-detalhes">
+                        <h5>Este ritual inclui:</h5>
+                        <ul>
+                            <li>Acolhedor escalda-pés com frutas frescas e bebidas detox</li>
+                            <li>Massagem modeladora e drenagem linfática em sinergia</li>
+                            <li>Banho de imersão com sais e óleos essenciais revitalizantes</li>
+                            <li>Duração aproximada: 120 minutos</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Objetivo:</strong> remodelar, eliminar toxinas e valorizar sua silhueta com prazer e bem-estar.</p>
+                    
+                    <div class="ritual-preco">
+                        <span class="preco-tag">200,00 €</span>
+                        <a href="index.html#contato" class="btn-agendar-ritual">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ritual Serenar -->
+            <div class="ritual-card">
+                <div class="ritual-img">
+                    <img src="images/ritual-serenar.jpg" alt="Ritual Serenar - Relaxamento Profundo">
+                </div>
+                <div class="ritual-content">
+                    <h4>Ritual Serenar – Relaxamento Profundo</h4>
+                    <span class="ritual-tagline">"✨ Um convite ao descanso da mente e do corpo"</span>
+                    <p class="ritual-descricao">Uma jornada sensorial projetada para dissolver tensões e restaurar o equilíbrio interior através de técnicas de relaxamento profundo.</p>
+                    
+                    <div class="ritual-detalhes">
+                        <h5>Este ritual inclui:</h5>
+                        <ul>
+                            <li>Delicado escalda-pés com petiscos leves e bebidas relaxantes</li>
+                            <li>Massagem de relaxamento profundo com óleos aromáticos</li>
+                            <li>Banho de imersão com óleos essenciais calmantes</li>
+                            <li>Duração aproximada: 120 minutos</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Objetivo:</strong> proporcionar descanso total, reduzir o estresse e restaurar a energia vital.</p>
+                    
+                    <div class="ritual-preco">
+                        <span class="preco-tag">200,00 €</span>
+                        <a href="index.html#contato" class="btn-agendar-ritual">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ritual Aliviar -->
+            <div class="ritual-card">
+                <div class="ritual-img">
+                    <img src="images/ritual-aliviar.jpg" alt="Ritual Aliviar - Alívio de Dores Musculares">
+                </div>
+                <div class="ritual-content">
+                    <h4>Ritual Aliviar – Alívio de Dores Musculares</h4>
+                    <span class="ritual-tagline">"✨ Cuidado terapêutico que respeita o seu corpo"</span>
+                    <p class="ritual-descricao">Um protocolo especializado que combina técnicas fisioterapêuticas com elementos de spa para alívio eficaz de tensões e dores musculares.</p>
+                    
+                    <div class="ritual-detalhes">
+                        <h5>Este ritual inclui:</h5>
+                        <ul>
+                            <li>Ritual de escalda-pés com frutas, chás ou sucos nutritivos</li>
+                            <li>Técnicas fisioterapêuticas específicas para alívio de dores</li>
+                            <li>Banho de imersão com sais minerais e óleos essenciais</li>
+                            <li>Duração aproximada: 120 minutos</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Objetivo:</strong> trazer alívio, restaurar movimentos e revitalizar o corpo com atenção e cuidado personalizado.</p>
+                    
+                    <div class="ritual-preco">
+                        <span class="preco-tag">200,00 €</span>
+                        <a href="index.html#contato" class="btn-agendar-ritual">Agendar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section class="beneficios">
+        <div class="section-title">
+            <h3>Benefícios dos Nossos Rituais</h3>
+            <p>Por que escolher nossas experiências de bem-estar</p>
+        </div>
+        
+        <div class="beneficios-grid">
+            <div class="beneficio-item">
+                <div class="beneficio-icon">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <h4>Ambiente Relaxante</h4>
+                <p>Um espaço cuidadosamente projetado para desconectar do stress quotidiano e conectar consigo mesmo.</p>
+            </div>
+            
+            <div class="beneficio-item">
+                <div class="beneficio-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h4>Abordagem Holística</h4>
+                <p>Tratamentos que cuidam do seu corpo, mente e espírito de forma integrada e harmoniosa.</p>
+            </div>
+            
+            <div class="beneficio-item">
+                <div class="beneficio-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h4>Produtos Premium</h4>
+                <p>Utilizamos apenas produtos de alta qualidade, orgânicos e naturais para maximizar seus benefícios.</p>
+            </div>
+            
+            <div class="beneficio-item">
+                <div class="beneficio-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h4>Terapeutas Especializados</h4>
+                <p>Nossa equipa é composta por profissionais experientes e dedicados ao seu bem-estar integral.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-bemestar">
+        <h3>Pronto para uma Experiência Transformadora?</h3>
+        <p>Agende seu ritual de bem-estar e descubra o poder revitalizante dos nossos tratamentos exclusivos</p>
+        <a href="index.html#contato" class="btn-cta">Agendar Agora</a>
+        <a href="https://wa.me/351933892968?text=Olá! Gostaria de mais informações sobre os rituais de bem-estar." class="btn-cta" target="_blank">Falar no WhatsApp</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Tratamentos Faciais</h4>
+                <ul>
+                    <li><a href="tratamentos-faciais.html">Peeling Hollywood</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Glow</a></li>
+                    <li><a href="tratamentos-faciais.html">Microagulhamento</a></li>
+                    <li><a href="tratamentos-faciais.html">HIFU</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Tratamentos Corporais</h4>
+                <ul>
+                    <li><a href="tratamentos-corporais.html">Depilação a Laser</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Modeladora</a></li>
+                    <li><a href="tratamentos-corporais.html">Drenagem Linfática</a></li>
+                    <li><a href="tratamentos-corporais.html">Criolipólise</a></li>
+                    <li><a href="tratamentos-corporais.html">Lipocavitação</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Bem-Estar</h4>
+                <ul>
+                    <li><a href="bem-estar.html">Ritual Esculpir</a></li>
+                    <li><a href="bem-estar.html">Ritual Serenar</a></li>
+                    <li><a href="bem-estar.html">Ritual Aliviar</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Contactos</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Rua Sarmento de Beires, 45B</li>
+                    <li><i class="fas fa-phone"></i> +351 933 892 968</li>
+                    <!-- <li><i class="fas fa-envelope"></i> info@carrarasmartclinic.com</li> -->
+                    <li><i class="fas fa-clock"></i> Seg-Sáb: 9h-20h</li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Carrara Smart Clinic. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // WhatsApp Button
+        const footerWhatsapp = document.getElementById('footerWhatsapp');
+        const phoneNumber = '351933892968';
+        
+        footerWhatsapp.addEventListener('click', function(e) {
+            e.preventDefault();
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre os rituais de bem-estar.')}`;
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>

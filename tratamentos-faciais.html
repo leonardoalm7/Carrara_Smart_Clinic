@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tratamentos Faciais | Carrara Smart Clinic | Estética em Lisboa</title>
+    <meta name="description" content="Tratamentos faciais de excelência na Carrara Smart Clinic em Lisboa. Limpeza de pele, Despigmentação, BB Glow, BB Lips, Microagulhamento com PDRN, HIFU lisboa.">
+    <meta name="keywords" content="tratamentos faciais lisboa, limpeza de pele, despigmentação, BB Glow, BB Lips, microagulhamento com PDRN, HIFU lisboa">
+    <meta name="author" content="Carrara Smart Clinic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(248, 244, 227, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            box-shadow: 0 2px 10px rgba(122, 102, 85, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage-dark);
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--color-sage);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-brown);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-sage);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .btn-agendar {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-agendar:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        /* Hero Section */
+        .hero-corporal {
+            padding: 12rem 5% 6rem;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/6663368/pexels-photo-6663368.jpeg?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: var(--color-white);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-corporal h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-corporal h2 span {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+        
+        .hero-corporal p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--color-cream);
+        }
+        
+        /* Tratamentos Section */
+        .tratamentos {
+            padding: 6rem 5%;
+            background-color: var(--color-white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 1rem;
+            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section-title p {
+            color: var(--color-taupe);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .tratamentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .tratamento-card {
+            background: var(--color-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--color-beige);
+            position: relative;
+        }
+        
+        .tratamento-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .tratamento-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tratamento-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tratamento-card:hover .tratamento-img img {
+            transform: scale(1.05);
+        }
+        
+        .tratamento-content {
+            padding: 2rem;
+        }
+        
+        .tratamento-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-brown);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .tratamento-tagline {
+            color: var(--color-sage);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: block;
+            border-left: 3px solid var(--color-gold);
+            padding-left: 12px;
+        }
+        
+        .tratamento-descricao {
+            color: var(--color-taupe);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .tratamento-preco {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-beige);
+        }
+        
+        .preco-tag {
+            font-size: 1.5rem;
+            color: var(--color-sage-dark);
+            font-weight: 600;
+        }
+        
+        .preco-nota {
+            font-size: 0.85rem;
+            color: var(--color-taupe);
+            font-style: italic;
+        }
+        
+        .btn-saiba-mais {
+            background-color: transparent;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-saiba-mais:hover {
+            background-color: var(--color-sage);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-sage);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--color-beige);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(248, 244, 227, 0.1);
+            border-radius: 50%;
+            color: var(--color-cream);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--color-sage);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+            color: var(--color-beige);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero-corporal h2 {
+                font-size: 2.5rem;
+            }
+            
+            .tratamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-spa logo-icon"></i>
+            <h1>Carrara Smart Clinic</h1>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#servicos">Serviços</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#contato">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="btn-agendar" onclick="location.href='index.html#contato'">Agendar Consulta</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-corporal">
+        <h2>Tratamentos <span>Faciais</span></h2>
+        <p>Descubra a excelência em estética facial com tecnologia avançada e resultados excepcionais</p>
+    </section>
+
+    <!-- Tratamentos Section -->
+    <section class="tratamentos">
+        <div class="section-title">
+            <h3>Revele Sua Melhor Versão</h3>
+            <p>Tratamentos faciais avançados para rejuvenescimento, uniformização e revitalização da pele</p>        </div>
+        
+        <div class="tratamentos-grid">
+            <!-- Peeling Hollywood -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="https://img.freepik.com/fotos-premium/retrato-de-um-jovem-deitado_1048944-24060477.jpg?uid=R215120692&ga=GA1.1.815465315.1758152573&semt=ais_incoming&auto=format&fit=crop&w=800&q=80" alt="Peeling Hollywood">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Peeling Hollywood</h4>
+                    <span class="tratamento-tagline">"O tratamento estrelado que conquistou as celebridades"</span>
+                    <p class="tratamento-descricao">Experiência premium de rejuvenescimento que combina ácidos de alta performance com tecnologia avançada para resultados transformadores. Indicado para peles que necessitam de renovação intensa, tratamento de linhas de expressão e melhora da elasticidade.</p>
+                    <p><strong>Objetivo:</strong> rejuvenescimento profundo, redução de rugas e qualidade premium de pele.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">80,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Limpeza de Pele -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="https://img.freepik.com/fotos-premium/limpeza-de-mao-rosto-de-mulher-com-cotonete_13339-138093.jpg?uid=R215120692&ga=GA1.1.815465315.1758152573&semt=ais_incoming&auto=format&fit=crop&w=800&q=80" alt="Limpeza de Pele">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Limpeza de Pele</h4>
+                    <span class="tratamento-tagline">"Renove sua pele com uma limpeza profunda e eficaz"</span>
+                    <p class="tratamento-descricao">Tratamento essencial para manter a pele saudável, livre de impurezas e radiante. Ideal para todos os tipos de pele, especialmente as oleosas e acneicas, proporcionando uma limpeza profunda dos poros e prevenção de cravos e espinhas.</p>
+                    <p><strong>Objetivo:</strong> remoção de impurezas, controle de oleosidade e prevenção de acne.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">50,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Limpeza de Pele com Hidrafacial -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/hydrafacial.jpg" alt="Limpeza de Pele com Hidrafacial">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Limpeza de Pele com Hydrafacial</h4>
+                    <span class="tratamento-tagline">"Tecnologia avançada para uma pele limpa e revitalizada"</span>
+                    <p class="tratamento-descricao">Combina limpeza profunda, esfoliação, extração e hidratação em um único tratamento. Ideal para todos os tipos de pele, especialmente as sensíveis e acneicas, proporcionando uma pele limpa, hidratada e radiante sem irritação.</p>
+                    <p><strong>Objetivo:</strong> limpeza profunda, hidratação e revitalização da pele.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">50,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BB Glow -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/BB_Glow.png" alt="BB Glow">
+                </div>
+                <div class="tratamento-content">
+                    <h4>BB Glow</h4>
+                    <span class="tratamento-tagline">"Pele perfeita e radiante com efeito de base"</span>
+                    <p class="tratamento-descricao">Tratamento inovador que utiliza microagulhamento para infundir séruns pigmentados na pele, proporcionando um efeito de base natural e duradouro. Ideal para quem deseja uniformizar o tom da pele, reduzir manchas e melhorar a textura sem maquiagem.</p>
+                    <p><strong>Objetivo:</strong> uniformização do tom da pele, redução de manchas e efeito de base natural.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">50,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- BB Lips -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/bb_lips.jpg" alt="BB Lips">
+                </div>
+                <div class="tratamento-content">
+                    <h4>BB Lips</h4>
+                    <span class="tratamento-tagline">"Lábios naturalmente corados e hidratados"</span>
+                    <p class="tratamento-descricao">Tratamento que utiliza microagulhamento para infundir pigmentos naturais nos lábios, proporcionando cor, definição e hidratação. Ideal para quem deseja realçar a beleza dos lábios de forma sutil e duradoura, sem a necessidade de maquiagem diária.</p>
+                    <p><strong>Objetivo:</strong> realce natural dos lábios, core e hidratação.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">40,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microagulhamento com PDRN -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/microagulhamento.jpg" alt="Microagulhamento com PDRN">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Microagulhamento com PDRN</h4>
+                    <span class="tratamento-tagline">"Renovação celular profunda para uma pele rejuvenescida"</span>
+                    <p class="tratamento-descricao">Combina microagulhamento com a aplicação de PDRN (Polidesoxirribonucleotídeos) para estimular a regeneração celular, melhorar a textura da pele e reduzir sinais de envelhecimento. Indicado para peles maduras, com cicatrizes de acne e manchas.</p>
+                    <p><strong>Objetivo:</strong> rejuvenescimento, melhora da textura e redução de cicatrizes.</p>
+                    <div class="tratamento-preco">
+                    </div>
+                    <a href="index.html#contato" class="btn-saiba-mais">Consultar valores e agendamento</a>
+                    </div>
+            </div>
+
+            <!-- Despigmentação -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/despigmentacao_pele.jpg" alt="Despigmentação">
+                </div>
+                <div class="tratamento-content">
+                    <h4>Despigmentação (Remoção de manchas de areas escurecidas)</h4>
+                    <span class="tratamento-tagline">"Tom uniforme, pele impecável"</span>
+                    <p class="tratamento-descricao">Tratamento especializado para a remoção de manchas escuras causadas por exposição solar, envelhecimento ou alterações hormonais. Utiliza técnicas avançadas para clarear a pele, uniformizar o tom e restaurar a luminosidade natural.</p>
+                    <p><strong>Objetivo:</strong> remoção de manchas, uniformização do tom da pele e restauração da luminosidade.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">80,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HIFU -->
+            <div class="tratamento-card">
+                <div class="tratamento-img">
+                    <img src="images/hifu.jpg" alt="HIFU">
+                </div>
+                <div class="tratamento-content">
+                    <h4>HIFU (Ultrassom Microfocado)</h4>
+                    <span class="tratamento-tagline">"Lifting facial sem cirurgia"</span>
+                    <p class="tratamento-descricao">Tecnologia avançada que utiliza ultrassom microfocado para estimular a produção de colágeno, promovendo o lifting e a firmeza da pele sem a necessidade de cirurgia. Ideal para quem busca um rejuvenescimento facial eficaz e natural.</p>
+                    <p><strong>Objetivo:</strong> lifting facial, firmeza da pele e rejuvenescimento.</p>
+                    <div class="tratamento-preco">
+                        <div>
+                            <span class="preco-nota">A partir de</span>
+                            <span class="preco-tag">100,00 €</span>
+                        </div>
+                        <a href="index.html#contato" class="btn-saiba-mais">Agendar</a>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Tratamentos Faciais</h4>
+                <ul>
+                    <li><a href="tratamentos-faciais.html">Peeling Hollywood</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele com Hidrafacial</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Glow</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Lips</a></li>
+                    <li><a href="tratamentos-faciais.html">Microagulhamento com PDRN</a></li>
+                    <li><a href="tratamentos-faciais.html">Tratamento para Melasma</a></li>
+                    <li><a href="tratamentos-faciais.html">Clareamento Facial</a></li>
+                    <li><a href="tratamentos-faciais.html">Remoção de Manchas</a></li>
+                    <li><a href="tratamentos-faciais.html">HIFU</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Tratamentos Corporais</h4>
+                <ul>
+                    <li><a href="tratamentos-corporais.html">Drenagem Linfática</a></li>
+                    <li><a href="tratamentos-corporais.html">Lipocavitação</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento Íntimo</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Terapêutica</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Modeladora</a></li>
+                    <li><a href="tratamentos-corporais.html">Cellulaser PRO</a></li>
+                    <li><a href="tratamentos-corporais.html">Criolipólise</a></li>
+                    <li><a href="tratamentos-corporais.html">Remoção de Tatuagem</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento de Manchas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Bem-estar</h4>
+                <ul>
+                    <li><a href="bem-estar.html">Ritual Esculpir – Redução de Medidas</a></li>
+                    <li><a href="bem-estar.html">Ritual Serenar – Relaxamento Profundo</a></li>
+                    <li><a href="bem-estar.html">Ritual Aliviar – Alívio de Dores Musculares</a></li>
+                </ul>
+                                
+                <h4>Carrara Smart Clinic</h4>
+                <p>Estética inteligente com tecnologia de ponta para resultados reais.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Carrara Smart Clinic. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // WhatsApp Button
+        const footerWhatsapp = document.getElementById('footerWhatsapp');
+        const phoneNumber = '351933892968';
+        
+        footerWhatsapp.addEventListener('click', function(e) {
+            e.preventDefault();
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre os tratamentos corporais.')}`;
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>
