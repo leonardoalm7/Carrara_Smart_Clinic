@@ -243,27 +243,123 @@
             background-color: var(--color-sage-dark);
         }
         
-        /* Menu Mobile - CORREÇÕES PARA iOS AQUI */
+    /* Menu Mobile - CORREÇÕES ESPECÍFICAS PARA iOS */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+    }
+    
+    .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--color-brown);
+        border-radius: 3px;
+        transition: all 0.3s;
+    }
+    
+    @media (max-width: 768px) {
         .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
+            display: flex;
         }
         
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--color-brown);
-            border-radius: 3px;
-            transition: all 0.3s;
+        nav ul {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background-color: var(--color-cream);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.4s ease;
+            margin: 0;
+            padding: 2rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 998;
+            overflow-y: auto;
         }
+        
+        nav ul.active {
+            right: 0;
+        }
+        
+        nav ul li {
+            margin: 1.5rem 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        nav ul li a {
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.8rem 0;
+        }
+        
+        .dropdown-content {
+            position: static;
+            display: none;
+            box-shadow: none;
+            background-color: transparent;
+            padding-left: 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            padding: 0.6rem 0;
+            font-size: 1rem;
+        }
+        
+        .btn-agendar {
+            display: none;
+        }
+        
+        /* Prevenir scroll quando menu está aberto */
+        body.no-scroll {
+            overflow: hidden;
+            height: 100vh;
+        }
+    }
+
+    /* CORREÇÕES ESPECÍFICAS PARA SAFARI iOS */
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+        nav ul {
+            padding-top: 80px; /* Espaço extra para iOS */
+            -webkit-overflow-scrolling: touch; /* Melhora o scrolling no iOS */
+        }
+        
+        /* Garante que o menu ocupe a altura total da tela */
+        nav ul {
+            height: 100%;
+            max-height: 100vh;
+        }
+    }
+
+    /* Ajustes para o toggle do menu (hamburger) */
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
         
         /* Hero Section - Ajuste de padding para header fixo */
         .hero {
@@ -835,7 +931,6 @@
                 width: 100%;
                 height: 100%;
             }
-        }
         
         /* Ajustes específicos para iOS */
         @supports (-webkit-touch-callout: none) {
@@ -1156,26 +1251,74 @@
         </div>
     </footer>
 
-    <script>
-        // Menu Mobile
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-        
-        mobileMenu.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
+ <script>
+    // Menu Mobile - Código melhorado para iOS
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    // Função para abrir/fechar o menu
+    function toggleMenu() {
+        mobileMenu.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.classList.toggle('no-scroll');
+    }
+    
+    // Evento de clique no toggle do menu
+    mobileMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+    
+    // Fechar menu ao clicar em um link
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
         });
+    });
+    
+    // Fechar menu ao clicar fora dele
+    document.addEventListener('click', function(event) {
+        const isClickInsideMenu = navMenu.contains(event.target);
+        const isClickOnToggle = mobileMenu.contains(event.target);
         
-        // Fechar menu ao clicar em um link
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
+        if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+    });
+    
+    // Dropdown para mobile
+    const dropdownMenu = document.querySelector('.dropdown');
+    if (dropdownMenu) {
+        dropdownMenu.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
+                    this.classList.toggle('active');
+                    if (e.target.tagName === 'A') {
+                        e.preventDefault();
+                    }
+                }
+            }
         });
+    }
+    
+    // Prevenir quebra de layout ao redimensionar
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+            
+            // Resetar dropdown se estiver ativo
+            if (dropdown && dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+            }
+        }
+    });
         
         // WhatsApp Button
         const whatsappButton = document.getElementById('whatsappButton');
@@ -1211,9 +1354,9 @@
         }
         
         // Dropdown para mobile
-        const dropdown = document.querySelector('.dropdown');
-        if (window.innerWidth <= 768) {
-            dropdown.addEventListener('click', function(e) {
+        const dropdownMenu2 = document.querySelector('.dropdown');
+        if (window.innerWidth <= 768 && dropdownMenu2) {
+            dropdownMenu2.addEventListener('click', function(e) {
                 if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
                     this.classList.toggle('active');
                 }
