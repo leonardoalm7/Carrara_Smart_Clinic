@@ -720,77 +720,113 @@
             }
         }
         
-        @media (max-width: 768px) {
-            /* Menu mobile - CORREÇÕES PARA iOS */
-            .menu-toggle {
-                display: flex;
-            }
-            
-            nav ul {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background-color: var(--color-cream);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                transition: right 0.4s ease;
-                margin: 0;
-                padding: 2rem;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                z-index: 999;
-            }
-            
-            nav ul.active {
-                right: 0;
-            }
-            
-            nav ul li {
-                margin: 1.5rem 0;
-            }
-            
-            nav ul li a {
-                font-size: 1.2rem;
-            }
-            
-            .dropdown-content {
-                position: static;
-                display: none;
-                box-shadow: none;
-                background-color: transparent;
-                padding-left: 1rem;
-            }
-            
-            .dropdown.active .dropdown-content {
-                display: block;
-            }
-            
-            .btn-agendar {
-                display: none;
-            }
-            
-            .hero {
-                padding: 8rem 5% 4rem;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-            }
-            
-            .sobre {
-                flex-direction: column;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+@media (max-width: 768px) {
+    /* Menu mobile - CORREÇÕES PARA iOS */
+    .menu-toggle {
+        display: flex;
+    }
+    
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: var(--color-cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; /* Alterado para flex-start */
+        transition: right 0.4s ease;
+        margin: 0;
+        padding: 2rem;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        padding-top: 80px; /* Adicionado espaço no topo */
+        overflow-y: auto; /* Permite scrolling se necessário */
+    }
+    
+    nav ul.active {
+        right: 0;
+    }
+    
+    nav ul li {
+        margin: 1.2rem 0; /* Ajustada a margem */
+        width: 100%;
+        text-align: center;
+    }
+    
+    nav ul li a {
+        font-size: 1.2rem;
+        display: block;
+        padding: 0.8rem 0;
+    }
+    
+    .dropdown-content {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background-color: transparent;
+        padding-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+    
+    .dropdown-content a {
+        padding: 0.6rem 0;
+        font-size: 1rem;
+    }
+    
+    .btn-agendar {
+        display: none;
+    }
+    
+    .hero {
+        padding: 8rem 5% 4rem;
+    }
+    
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .sobre {
+        flex-direction: column;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    /* Prevenir scroll quando menu está aberto */
+    body.no-scroll {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* Ajustes específicos para iOS - CORREÇÃO IMPORTANTE */
+@supports (-webkit-touch-callout: none) {
+    nav ul {
+        padding-top: 100px; /* Espaço extra para iOS */
+        height: 100%; /* Altura total */
+        max-height: 100vh; /* Limite de altura */
+        -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+    }
+    
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+}
             
             /* Prevenir scroll quando menu está aberto */
             body.no-scroll {
