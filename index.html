@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+
+<!-- Favicon e ícones para diferentes dispositivos -->
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H37P01B0NL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H37P01B0NL');
+</script>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Carrara Smart Clinic | Estética Inteligente em Lisboa | Depilação a Laser</title>
+    <meta name="description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta. Marque sua avaliação gratuita.">
+    <meta name="keywords" content="estética lisboa, depilação laser, tratamentos faciais, clínica estética lisboa, peeling hollywood, hifu, limpeza de pele hidrafacial, bem-estar, spa">
+    <meta name="author" content="Carrara Smart Clinic">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.carrarasmartclinic.com">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.carrarasmartclinic.com/">
+    <meta property="og:title" content="Carrara Smart Clinic | Estética Inteligente em Lisboa">
+    <meta property="og:description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.">
+    <meta property="og:image" content="https://www.carrarasmartclinic.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.carrarasmartclinic.com/">
+    <meta property="twitter:title" content="Carrara Smart Clinic | Estética Inteligente em Lisboa">
+    <meta property="twitter:description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.">
+    <meta property="twitter:image" content="https://www.carrarasmartclinic.com/images/twitter-image.jpg">
+    
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "Carrara Smart Clinic",
+      "description": "Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.",
+      "url": "https://www.carrarasmartclinic.com",
+      "telephone": "+351-933-892-968",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Sarmento de Beires, 45B",
+        "addressLocality": "Lisboa",
+        "postalCode": "1900-411",
+        "addressCountry": "PT"
+      },
+      "openingHours": "Mo-Sa 09:00-20:00",
+      "priceRange": "€€",
+      "image": "https://www.carrarasmartclinic.com/images/logo.jpg"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+   <style>
+
+        /* Avaliações */
+    .avaliacoes {
+        padding: 6rem 5%;
+        background-color: var(--color-white);
+    }
+
+    .avaliacao-swiper {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 0;
+    }
+
+    .avaliacao-card {
+        background: var(--color-cream);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(122, 102, 85, 0.1);
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-brown);
+    }
+
+    .estrelinhas {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: var(--color-sage);
+    }
+
+    /* Setas do carrossel */
+    .swiper-button-next,
+    .swiper-button-prev {
+    color: var(--color-sage-dark);
+    transition: color 0.3s;
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+    color: var(--color-sage);
+    }
+
+        /* Paleta Boho - Tons terrosos e verdes */
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            /* Prevenir scroll horizontal no mobile */
+            overflow-x: hidden;
+        }
+        
+        /* Header e Navegação - CORREÇÕES PARA iOS AQUI */
+        header {
+            background-color: rgba(248, 244, 227, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            box-shadow: 0 2px 10px rgba(122, 102, 85, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* Correção para iOS - força renderização por hardware */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage-dark);
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--color-sage);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-brown);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-sage);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown Menu para Serviços */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--color-cream);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1;
+            padding: 1rem 0;
+        }
+        
+        .dropdown-content a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--color-brown);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(138, 155, 104, 0.1);
+            color: var(--color-sage);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .btn-agendar {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-agendar:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+    /* Menu Mobile - CORREÇÕES ESPECÍFICAS PARA iOS */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+    }
+    
+    .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--color-brown);
+        border-radius: 3px;
+        transition: all 0.3s;
+    }
+    
+    @media (max-width: 768px) {
+        .menu-toggle {
+            display: flex;
+        }
+
+        nav ul {
+            position: fixed;
+            top: 0; /* Faz o menu cobrir o header */
+            right: -100%;
+            width: 100vw; /* Cobrir toda a largura */
+            height: 100vh; /* Cobrir toda a altura */
+            background-color: var(--color-cream);
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: right 0.4s ease;
+            margin: 0;
+            padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 2000; /* Bem acima do header */
+            overflow-y: auto;
+        }
+
+        nav ul.active {
+            right: 0;
+        }
+
+        nav ul li {
+            margin: 1.2rem 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        nav ul li a {
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.8rem 0;
+        }
+
+        .dropdown-content {
+            position: static;
+            display: none;
+            box-shadow: none;
+            background-color: transparent;
+            padding-left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 0.6rem 0;
+            font-size: 1rem;
+        }
+
+        .btn-agendar {
+            display: none;
+        }
+
+        .hero {
+            padding: 8rem 5% 4rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+        }
+
+        .sobre {
+            flex-direction: column;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        /* Prevenir scroll quando menu está aberto */
+        body.no-scroll {
+            overflow: hidden;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+        }
+    }
+
+    /* CORREÇÕES ESPECÍFICAS PARA SAFARI iOS */
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+        nav ul {
+            padding-top: 80px; /* Espaço extra para iOS */
+            -webkit-overflow-scrolling: touch; /* Melhora o scrolling no iOS */
+        }
+        
+        /* Garante que o menu ocupe a altura total da tela */
+        nav ul {
+            height: 100%;
+            max-height: 100vh;
+        }
+    }
+
+    /* Ajustes para o toggle do menu (hamburger) */
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+        
+        /* Hero Section - Ajuste de padding para header fixo */
+        .hero {
+            padding: 10rem 5% 5rem; /* Aumentado o padding-top para compensar header fixo */
+            text-align: center;
+            background: linear-gradient(rgba(248, 244, 227, 0.8), rgba(248, 244, 227, 0.9)), url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-brown);
+            font-weight: 300;
+        }
+        
+        .hero h2 span {
+            color: var(--color-sage);
+            font-weight: 600;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--color-taupe);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-sage);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--color-sage);
+            color: white;
+        }
+        
+        /* Serviços - NOVA VERSÃO COM CATEGORIAS */
+        .servicos {
+            padding: 6rem 5%;
+            background-color: var(--color-white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .section-title p {
+            color: var(--color-taupe);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .categoria-card {
+            position: relative;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(122, 102, 85, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .categoria-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(122, 102, 85, 0.2);
+        }
+        
+        .categoria-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s, filter 0.5s;
+            filter: brightness(0.7);
+        }
+        
+        .categoria-card:hover .categoria-bg {
+            transform: scale(1.05);
+            filter: brightness(0.9);
+        }
+        
+        .categoria-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            color: white;
+            background: linear-gradient(transparent, rgba(74, 63, 53, 0.8));
+            transition: background 0.3s;
+        }
+        
+        .categoria-card:hover .categoria-content {
+            background: linear-gradient(transparent, rgba(138, 155, 104, 0.9));
+        }
+        
+        .categoria-content h4 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .categoria-content p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .categoria-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .categoria-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        .categoria-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Sobre */
+        .sobre {
+            padding: 6rem 5%;
+            background-color: var(--color-beige);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .sobre-img {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(122, 102, 85, 0.2);
+        }
+        
+        .sobre-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .sobre-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .sobre-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-brown);
+            font-weight: 300;
+        }
+        
+        .sobre-content p {
+            margin-bottom: 1.5rem;
+            color: var(--color-taupe);
+        }
+        
+        /* Contato */
+        .contato {
+            padding: 6rem 5%;
+            background-color: var(--color-beige);
+        }
+        
+        .contato-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+        
+        .contato-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contato-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--color-brown);
+            font-weight: 300;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--color-sage);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .info-text {
+            color: var(--color-taupe);
+        }
+        
+        .info-text a {
+            color: var(--color-taupe);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .info-text a:hover {
+            color: var(--color-sage);
+        }
+        
+        .contato-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-brown);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--color-beige);
+            border-radius: 5px;
+            background-color: var(--color-white);
+            color: var(--color-taupe);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .whatsapp-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #25D366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+        }
+        
+        .whatsapp-button i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer - VERSÃO OTIMIZADA */
+        footer {
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-sage);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--color-beige);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--color-sage);
+        }
+        
+        .footer-submenu {
+            padding-left: 1rem;
+            border-left: 2px solid rgba(138, 155, 104, 0.3);
+            margin-top: 0.5rem;
+        }
+        
+        .footer-submenu li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(248, 244, 227, 0.1);
+            border-radius: 50%;
+            color: var(--color-cream);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--color-sage);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+            color: var(--color-beige);
+        }
+        
+        /* Responsividade - CORREÇÕES PARA iOS AQUI */
+        @media (max-width: 1024px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            nav ul li {
+                margin-left: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin: 0 0.8rem;
+            }
+        }
+        
+@media (max-width: 768px) {
+    /* Menu mobile - CORREÇÕES PARA iOS */
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: fixed;
+        top: 0; /* Faz o menu cobrir o header */
+        right: -100%;
+        width: 100vw; /* Cobrir toda a largura */
+        height: 100vh; /* Cobrir toda a altura */
+        background-color: var(--color-cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        transition: right 0.4s ease;
+        margin: 0;
+        padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        z-index: 2000; /* Bem acima do header */
+        overflow-y: auto;
+    }
+
+    nav ul.active {
+        right: 0;
+    }
+
+    nav ul li {
+        margin: 1.2rem 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        font-size: 1.2rem;
+        display: block;
+        padding: 0.8rem 0;
+    }
+
+    .dropdown-content {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background-color: transparent;
+        padding-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 0.6rem 0;
+        font-size: 1rem;
+    }
+
+    .btn-agendar {
+        display: none;
+    }
+
+    .hero {
+        padding: 8rem 5% 4rem;
+    }
+
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .sobre {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    /* Prevenir scroll quando menu está aberto */
+    body.no-scroll {
+        overflow: hidden;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+/* Ajustes específicos para iOS - CORREÇÃO IMPORTANTE */
+@supports (-webkit-touch-callout: none) {
+    nav ul {
+        padding-top: 100px; /* Espaço extra para iOS */
+        height: 100%;
+        max-height: 100vh;
+        -webkit-overflow-scrolling: touch;
+    }
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+}
+            
+            /* Prevenir scroll quando menu está aberto */
+            body.no-scroll {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        
+        /* Ajustes específicos para iOS */
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                min-height: -webkit-fill-available;
+            }
+            
+            nav ul {
+                padding-top: constant(safe-area-inset-top);
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: constant(safe-area-inset-bottom);
+                padding-bottom: env(safe-area-inset-bottom);
+                height: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h3 {
+                font-size: 2rem;
+            }
+            
+            .categorias-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-spa logo-icon"></i>
+            <h1>Carrara Smart Clinic</h1>
+        </div>
+        
+        <button class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#inicio">Início</a></li>
+                <li class="dropdown">
+                    <a href="#servicos">Serviços</a>
+                    <div class="dropdown-content">
+                        <a href="tratamentos-faciais.html">Tratamentos Faciais</a>
+                        <a href="tratamentos-corporais.html">Tratamentos Corporais</a>
+                        <a href="bem-estar.html">Bem-estar</a>
+                        <a href="depilacao-laser.html">Depilação a Laser</a>
+                    </div>
+                </li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="btn-agendar" onclick="scrollToContact()">Agendar Consulta</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <h2>Estética <span>Inteligente</span> com Tecnologia de Ponta</h2>
+        <p>Descubra tratamentos exclusivos que unem o melhor da tecnologia com cuidado natural para realçar a sua beleza única.</p>
+        <div class="hero-buttons">
+            <a href="#servicos" class="btn-primary">Conhecer Serviços</a>
+            <a href="#contato" class="btn-secondary">Agendar Avaliação</a>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section class="servicos" id="servicos">
+        <div class="section-title">
+            <h2>Os Nossos Serviços</h2>
+            <p>Oferecemos tratamentos estéticos avançados com tecnologia de ponta para resultados reais e satisfatórios.</p>
+        </div>
+        <div class="categorias-grid">
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/22589552/pexels-photo-22589552.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Tratamentos Faciais</h3>
+                    <p>Procedimentos especializados para rejuvenescimento e tratamento da pele facial.</p>
+                    <a href="tratamentos-faciais.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/5042608/pexels-photo-5042608.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Tratamentos Corporais</h3>
+                    <p>Soluções inovadoras para modelagem corporal and tratamentos estéticos corporais.</p>
+                    <a href="tratamentos-corporais.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+            
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/6810866/pexels-photo-6810866.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Bem-estar</h3>
+                    <p>Rituais exclusivos para relaxamento, rejuvenescimento e equilíbrio físico e mental.</p>
+                    <a href="bem-estar.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+
+            <article class="categoria-card">
+                <div class="categoria-bg" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/16032298/pexels-photo-16032298.jpeg?auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="categoria-content">
+                    <h3>Depilação a Laser</h3>
+                    <p>Tecnologia avançada para eliminação definitiva dos pelos com conforto e segurança.</p>
+                    <a href="depilacao-laser.html" class="categoria-link">Explorar Serviços</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section class="sobre" id="sobre">
+        <div class="sobre-img">
+            <img src="images/Clinic2.jpeg?auto=format&fit=crop&w=800&q=80" alt="Espaço interno da Carrara Smart Clinic em Lisboa" loading="lazy">
+        </div>
+        <div class="sobre-content">
+            <h2>Sobre a Carrara Smart Clinic</h2>
+            <p>A Carrara Smart Clinic nasce da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
+            <p>Nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
+            <p>Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
+            <a href="#contato" class="btn-primary">Entre em contacto</a>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+<section class="avaliacoes">
+  <div class="section-title">
+    <h3>O que dizem os nossos clientes</h3>
+  </div>
+
+  <div class="swiper avaliacao-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide avaliacao-card">
+        <p>“O espaço é lindo, acolhedor e muito bem cuidado Dá para sentir a atenção aos detalhes em cada canto O atendimento é excelente e a energia do lugar deixa a experiência ainda mais especial Recomendo muito a visita”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Espaço maravilhoso com uma profissional de excelência!”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“A melhor clínica de Lisboa. Fui muito bem atendido. A Camila é uma querida!”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Atendimento maravilhoso e os tratamentos deram muito resultado.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+<!--      <div class="swiper-slide avaliacao-card">
+        <p>“Excelentes profissionais, muito acima da média.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“Resultados incríveis já nas primeiras sessões.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div>
+      <div class="swiper-slide avaliacao-card">
+        <p>“O ambiente é lindo e aconchegante. Uma experiência única.”</p>
+        <span class="estrelinhas">★★★★★</span>
+        <p style="color: rgb(130, 129, 129);">Google Reviews</p>
+      </div> -->
+    </div>
+
+    <!-- Botões de navegação -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</section>
+
+
+    <!-- Contato -->
+    <section class="contato" id="contato">
+        <div class="section-title">
+            <h2>Entre em Contacto</h2>
+            <p>Agende uma avaliação e esclareça todas as suas dúvidas com a nossa equipa especializada.</p>
+        </div>
+        <div class="contato-container">
+            <div class="contato-info">
+                <h3>Informações de Contacto</h3>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <p>Rua Sarmento de Beires, 45B</p>
+                        <p>Lisboa, 1900-411</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-text">
+                        <p>+351 933 892 968</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-text">
+                        <p>Segunda a Sábado: 9h às 20h</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="info-text">
+                        <p><a href="https://www.instagram.com/carrarasmartclinic" target="_blank" rel="noopener">@carrarasmartclinic</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="contato-form">
+                <div class="form-group">
+                    <label for="servico">Serviço de Interesse</label>
+                    <select id="servico">
+                        <option value="">Selecione um serviço</option>
+                        <option value="depilacao">Depilação a Laser</option>
+                        <option value="facial">Tratamentos Faciais</option>
+                        <option value="corporal">Tratamentos Corporais</option>
+                        <option value="bem_estar">Bem-estar</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensagem">Mensagem (opcional)</label>
+                    <textarea id="mensagem" placeholder="Digite a sua mensagem aqui..."></textarea>
+                </div>
+                
+                <button id="whatsappButton" class="whatsapp-button">
+                    <i class="fab fa-whatsapp"></i> Entrar em Contacto via WhatsApp
+                </button>
+                
+                <p style="text-align: center; margin-top: 1rem; color: var(--color-taupe);">
+                    Clique no botão acima para iniciar uma conversa no WhatsApp
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - VERSÃO ATUALIZADA -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Tratamentos Faciais</h3>
+                <ul>
+                    <li><a href="tratamentos-faciais.html">Peeling Hollywood</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele</a></li>
+                    <li><a href="tratamentos-faciais.html">Limpeza de Pele com Hidrafacial</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Glow</a></li>
+                    <li><a href="tratamentos-faciais.html">BB Lips</a></li>
+                    <li><a href="tratamentos-faciais.html">Microagulhamento com PDRN</a></li>
+                    <li><a href="tratamentos-faciais.html">Despigmentação (Remoção de manchas de areas escurecidas)</a></li>
+                    <li><a href="tratamentos-faciais.html">HIFU</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Tratamentos Corporais</h3>
+                <ul>
+                    <li><a href="depilacao-laser.html">Depilação a laser</a></li>
+                    <li><a href="tratamentos-corporais.html">Drenagem Linfática</a></li>
+                    <li><a href="tratamentos-corporais.html">Lipocavitação</a></li>
+                    <li><a href="tratamentos-corporais.html">Clareamento Íntimo</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Relaxante</a></li>
+                    <li><a href="tratamentos-corporais.html">Massagem Modeladora</a></li>
+                    <li><a href="tratamentos-corporais.html">Cellulaser PRO</a></li>
+                    <li><a href="tratamentos-corporais.html">Criolipólise</a></li>
+                    <li><a href="tratamentos-corporais.html">Remoção de Tatuagem</a></li>
+                    <li><a href="tratamentos-corporais.html">Despigmentação (Remoção de manchas de areas escurecidas)</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Bem-estar</h3>
+                <ul>
+                    <li><a href="bem-estar.html">Ritual Esculpir – Redução de Medidas</a></li>
+                    <li><a href="bem-estar.html">Ritual Serenar – Relaxamento Profundo</a></li>
+                    <li><a href="bem-estar.html">Ritual Aliviar – Alívio de Dores Musculares</a></li>
+                </ul>
+                
+                <h3>Carrara Smart Clinic</h3>
+                <p>Estética inteligente com tecnologia de ponta para resultados reais.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/carrarasmartclinic" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Carrara Smart Clinic. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+ <script>
+    // Menu Mobile - Código melhorado para iOS
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    // Função para abrir/fechar o menu
+    function toggleMenu() {
+        mobileMenu.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.classList.toggle('no-scroll');
+    }
+    
+    // Evento de clique no toggle do menu
+    mobileMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+    
+    // Fechar menu ao clicar em um link
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
+    });
+    
+    // Fechar menu ao clicar fora dele
+    document.addEventListener('click', function(event) {
+        const isClickInsideMenu = navMenu.contains(event.target);
+        const isClickOnToggle = mobileMenu.contains(event.target);
+        
+        if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+    });
+    
+    // Dropdown para mobile
+    const dropdownMenu = document.querySelector('.dropdown');
+    if (dropdownMenu) {
+        dropdownMenu.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
+                    this.classList.toggle('active');
+                    if (e.target.tagName === 'A') {
+                        e.preventDefault();
+                    }
+                }
+            }
+        });
+    }
+    
+    // Prevenir quebra de layout ao redimensionar
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+            
+            // Resetar dropdown se estiver ativo
+            if (dropdown && dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+            }
+        }
+    });
+        
+        // WhatsApp Button
+        const whatsappButton = document.getElementById('whatsappButton');
+        const footerWhatsapp = document.getElementById('footerWhatsapp');
+        const phoneNumber = '351933892968';
+        
+        whatsappButton.addEventListener('click', function() {
+            const serviceSelect = document.getElementById('servico');
+            const messageTextarea = document.getElementById('mensagem');
+            
+            let message = 'Olá! Gostaria de agendar uma consulta.';
+            
+            if (serviceSelect.value) {
+                message += ` Serviço de interesse: ${serviceSelect.options[serviceSelect.selectedIndex].text}.`;
+            }
+            
+            if (messageTextarea.value) {
+                message += ` Minha mensagem: ${messageTextarea.value}`;
+            }
+            
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        });
+        
+        footerWhatsapp.addEventListener('click', function() {
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações.')}`;
+            window.open(whatsappURL, '_blank');
+        });
+        
+        // Função para rolar até a seção de contato
+        function scrollToContact() {
+            document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Dropdown para mobile
+        const dropdownMenu2 = document.querySelector('.dropdown');
+        if (window.innerWidth <= 768 && dropdownMenu2) {
+            dropdownMenu2.addEventListener('click', function(e) {
+                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
+                    this.classList.toggle('active');
+                }
+            });
+        }
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+  const swiper = new Swiper('.avaliacao-swiper', {
+    slidesPerView: 2,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1, // mobile
+      },
+      768: {
+        slidesPerView: 2, // tablet/desktop
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
