@@ -1360,8 +1360,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             document.body.classList.remove('no-scroll');
             
             // Resetar dropdown se estiver ativo
-            if (dropdown && dropdown.classList.contains('active')) {
-                dropdown.classList.remove('active');
+            if (dropdownMenu && dropdownMenu.classList.contains('active')) {
+                dropdownMenu.classList.remove('active');
             }
         }
     });
@@ -1399,15 +1399,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
         }
         
-        // Dropdown para mobile
-        const dropdownMenu2 = document.querySelector('.dropdown');
-        if (window.innerWidth <= 768 && dropdownMenu2) {
-            dropdownMenu2.addEventListener('click', function(e) {
-                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
-                    this.classList.toggle('active');
-                }
-            });
-        }
+
     </script>
 
     <!-- Swiper JS -->
