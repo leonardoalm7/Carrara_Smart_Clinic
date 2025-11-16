@@ -1,0 +1,4 @@
+node_modules/
+*.db
+*.sqbpro
+.DS_Store

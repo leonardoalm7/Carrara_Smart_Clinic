@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda | Carrara Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* * ===================================================
+         * ESTILOS GERAIS E PALETA DE CORES (Extraído do site)
+         * ===================================================
+        */
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+            --color-red: #c0392b;
+            --color-blue: #2980b9;
+            --color-grey: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* * ===================================================
+         * LAYOUT PRINCIPAL (Sidebar + Conteúdo)
+         * ===================================================
+        */
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 100; /* Garante que fique acima */
+        }
+
+        .main-content {
+            margin-left: 260px;
+            flex-grow: 1;
+            padding: 2rem;
+            width: calc(100% - 260px);
+        }
+
+        /* * ===================================================
+         * SIDEBAR (Menu Lateral)
+         * ===================================================
+        */
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(248, 244, 227, 0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sidebar-nav {
+            margin-top: 1rem;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 2rem;
+            color: var(--color-beige);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav li a:hover {
+            background-color: var(--color-sage-dark);
+            color: var(--color-white);
+        }
+
+        /* Classe "active" para marcar a página atual */
+        .sidebar-nav li a.active {
+            background-color: var(--color-sage);
+            color: var(--color-white);
+            border-right: 4px solid var(--color-gold);
+        }
+
+        .sidebar-nav .nav-divider {
+            height: 1px;
+            background-color: rgba(248, 244, 227, 0.1);
+            margin: 1rem 2rem;
+        }
+
+        .sidebar-footer {
+            /* position: absolute; */ /* Removido para evitar sobreposição se o menu for longo */
+            /* bottom: 0; */
+            width: 100%;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+            margin-top: auto; /* Empurra para o final se houver espaço */
+            padding-top: 1rem; /* Adiciona espaço acima */
+        }
+         /* Faz o sidebar usar toda a altura e ter scroll interno */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .sidebar-nav {
+            flex-grow: 1; /* Faz a navegação ocupar o espaço disponível */
+            overflow-y: auto; /* Adiciona scroll se necessário */
+        }
+
+
+        /* * ===================================================
+         * CONTEÚDO PRINCIPAL (Header e Seções)
+         * ===================================================
+        */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            font-weight: 500;
+        }
+
+        .content-section {
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border: 1px solid var(--color-beige);
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-brown);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--color-sage);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Layout em duas colunas para esta página */
+        .agenda-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        /* * ===================================================
+         * FORMULÁRIO (US05)
+         * ===================================================
+        */
+        .form-container h2 {
+            font-size: 1.5rem; /* Menor que o H2 da seção */
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-brown);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group input[type="datetime-local"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--color-beige);
+            border-radius: 5px;
+            background-color: var(--color-white);
+            color: var(--color-taupe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        .btn:disabled { /* Estilo para botão desabilitado */
+             background-color: var(--color-beige);
+             cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-sage);
+            color: white;
+        }
+        .btn-secondary:disabled {
+            background-color: transparent;
+            color: var(--color-beige);
+            border-color: var(--color-beige);
+             cursor: not-allowed;
+        }
+
+
+        /* * ===================================================
+         * TABELA (US06, US07, US08)
+         * ===================================================
+        */
+        .tabela-wrapper {
+            overflow-x: auto;
+        }
+
+        .tabela-agenda {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .tabela-agenda th,
+        .tabela-agenda td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--color-beige);
+            vertical-align: middle;
+        }
+
+        .tabela-agenda th {
+            background-color: var(--color-beige);
+            font-weight: 600;
+            color: var(--color-brown);
+        }
+
+        .tabela-agenda tr:nth-child(even) {
+            background-color: rgba(248, 244, 227, 0.4); /* Cream-light */
+        }
+        
+        .tabela-agenda tr:hover {
+            background-color: rgba(138, 155, 104, 0.1); /* Sage-light */
+        }
+
+        /* Status (US06) */
+        .status-tag {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--color-white);
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .status-agendado    { background-color: var(--color-blue); }
+        .status-realizado   { background-color: var(--color-sage-dark); }
+        .status-cancelado   { background-color: var(--color-red); }
+        .status-nao_compareceu { background-color: var(--color-grey); }
+
+        /* Pagamento (US08) */
+        .pagamento-tag {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 2px solid;
+            text-align: center;
+            text-transform: capitalize;
+        }
+        .pagamento-pago     { color: var(--color-sage-dark); border-color: var(--color-sage-dark); }
+        .pagamento-pendente { color: var(--color-taupe); border-color: var(--color-taupe); }
+
+
+        /* Ações (US07, US08) */
+        .actions-btn {
+            display: flex;
+            gap: 8px;
+            white-space: nowrap; /* Impede que botões quebrem linha */
+        }
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+        .btn-icon-realizar { color: var(--color-sage); }
+        .btn-icon-realizar:hover { background-color: rgba(138, 155, 104, 0.1); }
+        
+        .btn-icon-reagendar { color: var(--color-blue); }
+        .btn-icon-reagendar:hover { background-color: rgba(41, 128, 185, 0.1); }
+
+        .btn-icon-cancelar { color: var(--color-red); }
+        .btn-icon-cancelar:hover { background-color: rgba(192, 57, 43, 0.1); }
+        
+        .btn-icon-no-show { color: var(--color-grey); }
+        .btn-icon-no-show:hover { background-color: rgba(127, 140, 141, 0.1); }
+
+        .btn-icon-pay { color: var(--color-gold); }
+        .btn-icon-pay:hover { background-color: rgba(198, 169, 114, 0.1); }
+
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+             .agenda-layout {
+                grid-template-columns: 1fr; /* Muda para coluna única */
+            }
+            .form-container {
+                order: -1; /* Coloca o formulário acima da tabela */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative; /* Volta ao fluxo normal */
+                z-index: 0;
+            }
+            body {
+                flex-direction: column; /* Empilha sidebar e conteúdo */
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .actions-btn {
+                flex-wrap: wrap; /* Permite que botões quebrem linha em telas pequenas */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        
+        <div class="sidebar-header">
+            <h2><i class="fas fa-spa"></i> Carrara Admin</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="admin_dashboard.html"><i class="fas fa-fw fa-chart-pie"></i> Dashboard</a></li>
+                <li><a href="admin_agenda.html" class="active"><i class="fas fa-fw fa-calendar-alt"></i> Agendamentos</a></li>
+                <li><a href="admin_clientes.html"><i class="fas fa-fw fa-users"></i> Clientes</a></li>
+                <li><a href="admin_anamnese.html"><i class="fas fa-fw fa-file-medical"></i> Anamneses</a></li>
+                <li><a href="admin_evolucao.html"><i class="fas fa-fw fa-chart-line"></i> Evolução Paciente</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="admin_receitas.html"><i class="fas fa-fw fa-euro-sign"></i> Controle de Receitas</a></li>
+                <li><a href="admin_despesas.html"><i class="fas fa-fw fa-receipt"></i> Controle de Despesas</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="admin_acesso.html"><i class="fas fa-fw fa-user-shield"></i> Controle de Acesso</a></li>
+            </ul>
+        </nav>
+
+        <nav class="sidebar-footer">
+            <ul>
+                 <li><a href="#" id="logout-button">
+                    <i class="fas fa-fw fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="header">
+            <h1>Gestão de Agendamentos</h1>
+        </header>
+
+        <div>
+            <aside class="form-container content-section">
+                <h2>Novo Agendamento</h2>
+
+                <form id="form-agendamento">
+                    
+                    <div class="form-group">
+                        <label for="cliente-existente">Cliente</label>
+                        <select id="cliente-existente" name="client_id" required>
+                            <option value="">Carregando clientes...</option>
+                        </select>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px solid var(--color-beige); margin: 1.5rem 0;">
+
+                    <div class="form-group">
+                        <label for="servico">Serviço</label>
+                        <select id="servico" name="service_name" required>
+                            <option value="">Selecione o serviço...</option>
+                            <optgroup label="Tratamentos Faciais">
+                                <option value="Peeling Hollywood" data-category="Tratamentos Faciais">Peeling Hollywood</option>
+                                <option value="Limpeza de Pele" data-category="Tratamentos Faciais">Limpeza de Pele</option>
+                                <option value="Limpeza com Hydrafacial" data-category="Tratamentos Faciais">Limpeza com Hydrafacial</option>
+                                <option value="BB Glow" data-category="Tratamentos Faciais">BB Glow</option>
+                                <option value="BB Lips" data-category="Tratamentos Faciais">BB Lips</option>
+                                <option value="Microagulhamento com PDRN" data-category="Tratamentos Faciais">Microagulhamento com PDRN</option>
+                                <option value="HIFU" data-category="Tratamentos Faciais">HIFU</option>
+                                <option value="Despigmentação" data-category="Tratamentos Faciais">Despigmentação</option>
+                            </optgroup>
+                            <optgroup label="Tratamentos Corporais">
+                                <option value="Drenagem Linfática" data-category="Tratamentos Corporais">Drenagem Linfática</option>
+                                <option value="Massagem Modeladora" data-category="Tratamentos Corporais">Massagem Modeladora</option>
+                                <option value="Massagem Relaxante" data-category="Tratamentos Corporais">Massagem Relaxante</option>
+                                <option value="Cellulaser PRO" data-category="Tratamentos Corporais">Cellulaser PRO</option>
+                                <option value="Criolipólise" data-category="Tratamentos Corporais">Criolipólise</option>
+                                <option value="Lipocavitação" data-category="Tratamentos Corporais">Lipocavitação</option>
+                                <option value="Clareamento Íntimo" data-category="Tratamentos Corporais">Clareamento Íntimo</option>
+                                <option value="Remoção de Tatuagem" data-category="Tratamentos Corporais">Remoção de Tatuagem</option>
+                                <option value="Despigmentação" data-category="Tratamentos Corporais">Despigmentação</option>
+
+                            </optgroup>
+                            <optgroup label="Bem-Estar">
+                                <option value="Ritual Esculpir" data-category="Servicos de Spa">Ritual Esculpir</option>
+                                <option value="Ritual Serenar" data-category="Servicos de Spa">Ritual Serenar</option>
+                                <option value="Ritual Aliviar" data-category="Servicos de Spa">Ritual Aliviar</option>
+                            </optgroup>
+                            <optgroup label="Depilação a Laser">
+                                <option value="Axilas" data-category="Depilação a Laser">Axilas</option>
+                                <option value="Virilha Básica" data-category="Depilação a Laser">Virilha Básica</option>
+                                <option value="Virilha Completa" data-category="Depilação a Laser">Virilha Completa</option>
+                                <option value="Pernas Completa" data-category="Depilação a Laser">Pernas Completa</option>
+                                <option value="Meia Perna" data-category="Depilação a Laser">Meia Perna</option>
+                                <option value="Braços" data-category="Depilação a Laser">Braços</option>
+                                <option value="Buço" data-category="Depilação a Laser">Buço</option>
+                                <option value="Costas Completa" data-category="Depilação a Laser">Costas Completa</option>
+                                <option value="Peito/Abdomen" data-category="Depilação a Laser">Peito/Abdomen</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data-hora">Data e Hora</label>
+                        <input type="datetime-local" id="data-hora" name="date_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valor">Valor do Serviço (€)</label>
+                        <input type="number" id="valor" name="service_value" step="0.01" min="0">
+                    </div>
+
+                    <button type="submit" class="btn" id="agendar-button">Agendar</button>
+
+                </form>
+
+            </aside>
+        </div>
+
+        <div>
+            <section class="content-section">
+                <h2>Gerenciar Agendamentos</h2>
+                
+                <div class="tabela-wrapper">
+                    <table class="tabela-agenda">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Serviço</th>
+                                <th>Data/Hora</th>
+                                <th>Status</th>
+                                <th>Pagamento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agenda-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Define o endereço do nosso backend
+        const API_URL = 'http://localhost:3000';
+
+        // --- REFERÊNCIAS AOS ELEMENTOS DO HTML ---
+        // Garante que a busca por elementos ocorra após o DOM carregar
+        let agendaForm, agendaTableBody, clienteSelect, servicoSelect, agendarButton;
+
+        function initializeElements() {
+             console.log("Inicializando elementos...");
+             agendaForm = document.getElementById('form-agendamento');
+             agendaTableBody = document.getElementById('agenda-table-body');
+             clienteSelect = document.getElementById('cliente-existente');
+             servicoSelect = document.getElementById('servico');
+             agendarButton = document.getElementById('agendar-button');
+
+             if (!agendaForm || !agendaTableBody || !clienteSelect || !servicoSelect || !agendarButton) {
+                 console.error("ERRO FATAL: Um ou mais elementos essenciais da página de agenda não foram encontrados. Verifique os IDs no HTML.");
+                 alert("Erro crítico: Elementos da página não encontrados. Verifique o console (F12).");
+                 return false; // Indica falha na inicialização
+             }
+             console.log("Elementos inicializados com sucesso.");
+             return true; // Indica sucesso
+        }
+        
+        // --- FUNÇÃO 1: Buscar Clientes para o Dropdown (US05) ---
+        async function fetchClientsForDropdown() {
+             console.log("Buscando clientes para dropdown...");
+            if (!clienteSelect) return; // Segurança extra
+            clienteSelect.disabled = true; // Desabilita enquanto carrega
+            clienteSelect.innerHTML = '<option value="">Carregando...</option>'; 
+            try {
+                const response = await fetch(`${API_URL}/api/clients`);
+                if (!response.ok) throw new Error(`Erro HTTP ao buscar clientes: ${response.status}`);
+                const clients = await response.json();
+                
+                clienteSelect.innerHTML = '<option value="">Selecione um cliente...</option>'; 
+                if (clients.length > 0) {
+                    clients.forEach(client => {
+                        const option = document.createElement('option');
+                        option.value = client.id;
+                        option.textContent = `${client.name} (Telefone: ${client.phone || 'N/A'})`;
+                        clienteSelect.appendChild(option);
+                    });
+                     console.log(`${clients.length} clientes carregados no dropdown.`);
+                } else {
+                     console.log("Nenhum cliente encontrado para o dropdown.");
+                }
+                clienteSelect.disabled = false; // Reabilita
+
+            } catch (error) {
+                console.error("Erro em fetchClientsForDropdown:", error);
+                clienteSelect.innerHTML = '<option value="">Erro ao carregar</option>';
+            }
+        }
+
+        // --- FUNÇÃO 2: Buscar Agendamentos e popular a tabela ---
+        async function fetchAndDisplayAppointments() {
+             console.log("Buscando agendamentos...");
+             if (!agendaTableBody) return; // Segurança extra
+             agendaTableBody.innerHTML = '<tr><td colspan="6">Carregando agendamentos...</td></tr>';
+            try {
+                const response = await fetch(`${API_URL}/api/appointments`);
+                if (!response.ok) throw new Error(`Erro HTTP ao buscar agendamentos: ${response.status}`);
+                const appointments = await response.json();
+                 console.log(`Recebidos ${appointments.length} agendamentos.`);
+
+                agendaTableBody.innerHTML = ''; // Limpa
+
+                if (appointments.length === 0) {
+                     agendaTableBody.innerHTML = '<tr><td colspan="6">Nenhum agendamento encontrado.</td></tr>';
+                     return;
+                }
+
+                appointments.forEach(app => {
+                    const row = document.createElement('tr');
+                    let dataFormatada = 'Data inválida';
+                    let horaFormatada = '';
+                    if (app.date_time) {
+                        try {
+                            const dataHora = new Date(app.date_time);
+                            dataFormatada = dataHora.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                            horaFormatada = dataHora.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                        } catch (dateError) {
+                             console.error(`Erro ao formatar data para agendamento ${app.id}: ${app.date_time}`, dateError);
+                        }
+                    } else {
+                         console.warn(`Agendamento ${app.id} sem data/hora.`);
+                    }
+
+                    let pagamentoHtml = `<span class="pagamento-tag pagamento-${app.payment_status || 'pendente'}">${app.payment_status || 'pendente'}</span>`;
+                    if(app.payment_status === 'pago' && app.value_paid != null) { 
+                        pagamentoHtml = `<span class="pagamento-tag pagamento-pago">Pago</span>`;
+                    }
+
+                    // Define quais botões mostrar baseado no status
+                    let actionButtonsHtml = '';
+                    const serviceValue = app.service_value != null ? app.service_value : 0; // Garante que é um número
+                    if (app.status === 'agendado') {
+                        actionButtonsHtml = `
+                            <button class="btn-icon btn-icon-realizar" title="Marcar como Realizado e Pago (US08)" onclick="markAsDone(${app.id}, ${serviceValue})">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                            <button class="btn-icon btn-icon-reagendar" title="Reagendar (US07)" onclick="rescheduleAppointment(${app.id}, '${app.date_time}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon btn-icon-cancelar" title="Cancelar Agendamento" onclick="updateAppointmentStatus(${app.id}, 'cancelado')">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                             <button class="btn-icon btn-icon-no-show" title="Marcar como Não Compareceu" onclick="updateAppointmentStatus(${app.id}, 'nao_compareceu')">
+                                <i class="fas fa-user-clock"></i>
+                            </button>
+                        `;
+                    } else if (app.status === 'realizado' && app.payment_status === 'pendente') {
+                         actionButtonsHtml = `
+                            <button class="btn-icon btn-icon-pay" title="Marcar como Pago (US08)" onclick="markAsPaid(${app.id}, ${serviceValue})">
+                                <i class="fas fa-euro-sign"></i> 
+                            </button>
+                         `;
+                    }
+                    
+                    // Garante que status existe para a classe CSS
+                    const statusClass = app.status ? `status-${app.status}` : 'status-desconhecido';
+
+                    row.innerHTML = `
+                        <td>${app.client_name || 'Cliente Excluído?'}</td>
+                        <td>${app.service_name || '?'}</td>
+                        <td>${dataFormatada} ${horaFormatada}</td>
+                        <td><span class="status-tag ${statusClass}">${app.status || '?'}</span></td>
+                        <td>${pagamentoHtml}</td>
+                        <td class="actions-btn">${actionButtonsHtml}</td>
+                    `;
+                    agendaTableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Erro em fetchAndDisplayAppointments:", error);
+                agendaTableBody.innerHTML = `<tr><td colspan="6" style="color: red;">Erro ao carregar agendamentos: ${error.message}. Verifique o console.</td></tr>`;
+            }
+        }
+
+// --- FUNÇÃO 3: Adicionar um novo agendamento (US05) ---
+        async function handleAddAppointment(event) {
+            console.log("--- handleAddAppointment START ---");
+            event.preventDefault();
+            agendarButton.disabled = true;
+
+            // --- Log Element References ---
+            console.log("Referência ao Select de Cliente:", clienteSelect);
+            console.log("Referência ao Select de Serviço:", servicoSelect);
+
+            // --- Log Detalhado do Client ID ---
+            const selectedClientIndex = clienteSelect.selectedIndex;
+            const selectedClientOption = clienteSelect.options[selectedClientIndex];
+            console.log("Índice do Cliente Selecionado:", selectedClientIndex);
+            console.log("Elemento Option do Cliente Selecionado:", selectedClientOption);
+            console.log("Valor (value) da Option do Cliente:", selectedClientOption ? selectedClientOption.value : 'NÃO ENCONTRADO');
+            console.log("Valor direto do clienteSelect.value:", clienteSelect.value); // Valor que estava dando 's'
+            const client_id = clienteSelect.value; // Continuamos usando este por enquanto
+
+            // --- Log Detalhado do Serviço e Categoria ---
+            const selectedServiceIndex = servicoSelect.selectedIndex;
+            const selectedServiceOption = servicoSelect.options[selectedServiceIndex];
+            console.log("Índice do Serviço Selecionado:", selectedServiceIndex);
+            console.log("Elemento Option do Serviço Selecionado:", selectedServiceOption);
+            console.log("Valor (value) da Option do Serviço (service_name):", selectedServiceOption ? selectedServiceOption.value : 'NÃO ENCONTRADO');
+            console.log("Dataset da Option do Serviço:", selectedServiceOption ? selectedServiceOption.dataset : 'NÃO ENCONTRADO');
+            console.log("Atributo data-category direto:", selectedServiceOption ? selectedServiceOption.getAttribute('data-category') : 'NÃO ENCONTRADO'); // Leitura direta do atributo
+            const service_name = selectedServiceOption ? selectedServiceOption.value : '';
+            // Tenta ler a categoria de duas formas (dataset e atributo direto) para debug
+            const category_from_dataset = selectedServiceOption ? selectedServiceOption.dataset.category : undefined;
+            const category_from_attribute = selectedServiceOption ? selectedServiceOption.getAttribute('data-category') : undefined;
+            console.log("Categoria lida via dataset:", category_from_dataset);
+            console.log("Categoria lida via getAttribute:", category_from_attribute);
+            const category = category_from_dataset || category_from_attribute; // Usa qualquer um que funcionar
+
+            // --- Log dos Outros Campos ---
+            const date_time_element = document.getElementById('data-hora');
+            const service_value_element = document.getElementById('valor');
+            const date_time = date_time_element ? date_time_element.value : '';
+            const service_value = service_value_element ? service_value_element.value : '';
+            console.log("Valor do Input Data/Hora:", date_time);
+            console.log("Valor do Input Valor Serviço:", service_value);
+
+             // Validação básica no frontend (ajustada para verificar valor vazio também)
+             if (!client_id || client_id === "" || !service_name || service_name === "" || !date_time) {
+                  alert("Por favor, preencha Cliente, Serviço e Data/Hora válidos.");
+                  console.error("Validação falhou no frontend:", { client_id, service_name, date_time });
+                  agendarButton.disabled = false; // Reabilita o botão em caso de erro de validação
+                  console.log("--- handleAddAppointment END (Validation Failed) ---");
+                  return;
+             }
+
+            const dataToSend = {
+                client_id,
+                service_name,
+                category, // Usa a categoria que foi lida (dataset ou atributo)
+                date_time,
+                service_value: service_value ? parseFloat(service_value) : null
+            };
+            console.log("Dados FINAIS a serem enviados para o backend:", dataToSend);
+
+            try {
+                const response = await fetch(`${API_URL}/api/appointments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', },
+                    body: JSON.stringify(dataToSend),
+                });
+                console.log("Resposta do POST:", response.status, response.statusText);
+                 if (!response.ok) {
+                    const err = await response.json();
+                    console.error("Erro recebido do backend:", err);
+                    throw new Error(err.error || `Erro ${response.status} ao salvar agendamento.`);
+                 }
+                const result = await response.json();
+                console.log("Resultado do POST:", result);
+                alert('Agendamento salvo com sucesso!');
+                agendaForm.reset();
+                fetchAndDisplayAppointments(); // Atualiza a tabela
+            } catch (error) {
+                console.error("Erro na Lógica de Envio (fetch):", error);
+                alert(`Erro ao salvar agendamento: ${error.message}`);
+            } finally {
+                 agendarButton.disabled = false; // Reabilita botão
+                 console.log("--- handleAddAppointment END ---");
+            }
+        }
+
+        // --- FUNÇÃO 4: Marcar como Realizado e Pago (US08) ---
+        async function markAsDone(appointmentId, defaultValue) {
+             console.log(`Marcando ${appointmentId} como realizado/pago (valor padrão: ${defaultValue})`);
+            const valuePaidStr = prompt(`Agendamento ${appointmentId} realizado! \nQual o valor pago pelo cliente? (Padrão: € ${defaultValue.toFixed(2)})`, defaultValue.toFixed(2));
+            if (valuePaidStr === null) { console.log("Operação cancelada pelo usuário."); return; } 
+            const valuePaid = parseFloat(valuePaidStr);
+            if (isNaN(valuePaid) || valuePaid < 0) { alert("Valor inválido inserido."); return; }
+
+            try {
+                const response = await fetch(`${API_URL}/api/appointments/${appointmentId}/payment`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ payment_status: 'pago', value_paid: valuePaid }),
+                });
+                 console.log(`Resposta do PUT /payment para ${appointmentId}:`, response.status);
+                if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao marcar como pago.'); }
+                alert('Agendamento marcado como realizado e pago!');
+                fetchAndDisplayAppointments(); 
+            } catch (error) {
+                console.error("Erro em markAsDone:", error);
+                alert(`Erro: ${error.message}`);
+            }
+        }
+        
+        // --- FUNÇÃO 4.1: Marcar como Pago (se já estava realizado) ---
+         async function markAsPaid(appointmentId, defaultValue) {
+              console.log(`Marcando ${appointmentId} como PAGO (valor padrão: ${defaultValue})`);
+             const valuePaidStr = prompt(`Marcar agendamento ${appointmentId} como PAGO. \nQual o valor pago? (Padrão: € ${defaultValue.toFixed(2)})`, defaultValue.toFixed(2));
+             if (valuePaidStr === null) { console.log("Operação cancelada."); return; }
+             const valuePaid = parseFloat(valuePaidStr);
+             if (isNaN(valuePaid) || valuePaid < 0) { alert("Valor inválido."); return; }
+
+            try {
+                const response = await fetch(`${API_URL}/api/appointments/${appointmentId}/payment`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ payment_status: 'pago', value_paid: valuePaid }),
+                });
+                 console.log(`Resposta do PUT /payment (já realizado) para ${appointmentId}:`, response.status);
+                if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao marcar como pago.'); }
+                alert('Agendamento marcado como pago!');
+                fetchAndDisplayAppointments();
+            } catch (error) {
+                console.error("Erro em markAsPaid:", error);
+                alert(`Erro: ${error.message}`);
+            }
+        }
+
+        // --- FUNÇÃO 5: Atualizar Status (Cancelado, Não Compareceu) (US06) ---
+        async function updateAppointmentStatus(appointmentId, newStatus) {
+             console.log(`Atualizando status de ${appointmentId} para ${newStatus}`);
+            const statusTextMap = { cancelado: 'cancelado', nao_compareceu: 'não compareceu' };
+            const confirmMsg = `Tem certeza que deseja marcar o agendamento ${appointmentId} como ${statusTextMap[newStatus] || newStatus}?`;
+            if (!confirm(confirmMsg)) { console.log("Operação cancelada."); return; }
+
+             try {
+                const response = await fetch(`${API_URL}/api/appointments/${appointmentId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus }),
+                });
+                 console.log(`Resposta do PUT /status para ${appointmentId}:`, response.status);
+                if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao atualizar status.'); }
+                alert(`Agendamento ${appointmentId} marcado como ${statusTextMap[newStatus] || newStatus}!`);
+                fetchAndDisplayAppointments(); 
+            } catch (error) {
+                console.error("Erro em updateAppointmentStatus:", error);
+                alert(`Erro: ${error.message}`);
+            }
+        }
+        
+        // --- FUNÇÃO 6: Reagendar (US07) ---
+        async function rescheduleAppointment(appointmentId, currentDateTimeISO) {
+             console.log(`Reagendando ${appointmentId} (data atual ISO: ${currentDateTimeISO})`);
+             let defaultValueForInput = '';
+             try {
+                const currentDateTime = new Date(currentDateTimeISO);
+                // Tenta formatar YYYY-MM-DDTHH:mm
+                const year = currentDateTime.getFullYear();
+                const month = (currentDateTime.getMonth() + 1).toString().padStart(2, '0');
+                const day = currentDateTime.getDate().toString().padStart(2, '0');
+                const hours = currentDateTime.getHours().toString().padStart(2, '0');
+                const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
+                defaultValueForInput = `${year}-${month}-${day}T${hours}:${minutes}`;
+                 console.log(`Valor padrão para prompt: ${defaultValueForInput}`);
+             } catch(e) {
+                  console.warn("Não foi possível formatar data atual para valor padrão do prompt.");
+             }
+
+             const newDateTimeStr = prompt(`Reagendar Agendamento ${appointmentId}.\nInsira a NOVA data e hora:`, defaultValueForInput);
+             if (!newDateTimeStr) { console.log("Reagendamento cancelado."); return; }
+
+             // Validação
+             const newDateTime = new Date(newDateTimeStr);
+             if (isNaN(newDateTime.getTime())) { alert("Data/Hora inválida inserida."); return; }
+             
+             // Envia no formato que o input datetime-local gera (YYYY-MM-DDTHH:MM),
+             // o backend com SQLite parece aceitar bem. Se der problema, converter para ISO.
+             // const newDateTimeISO = newDateTime.toISOString(); 
+             const newDateTimeFormatted = newDateTimeStr; 
+             console.log(`Nova data/hora formatada: ${newDateTimeFormatted}`);
+
+             try {
+                const response = await fetch(`${API_URL}/api/appointments/${appointmentId}/reschedule`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ date_time: newDateTimeFormatted }), // Envia formato local
+                });
+                 console.log(`Resposta do PUT /reschedule para ${appointmentId}:`, response.status);
+                if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao reagendar.'); }
+                alert(`Agendamento ${appointmentId} reagendado com sucesso!`);
+                fetchAndDisplayAppointments(); 
+            } catch (error) {
+                console.error("Erro em rescheduleAppointment:", error);
+                alert(`Erro: ${error.message}`);
+            }
+        }
+
+
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', () => {
+             console.log("DOM carregado. Iniciando script da agenda.");
+            if (initializeElements()) { // Só continua se os elementos foram encontrados
+                fetchClientsForDropdown();
+                fetchAndDisplayAppointments();
+                // Adiciona o listener ao formulário aqui, após garantir que ele existe
+                agendaForm.addEventListener('submit', handleAddAppointment);
+            }
+        });
+
+        // --- LÓGICA DE LOGOUT (ADICIONAR EM TODAS AS PÁGINAS COM SIDEBAR) ---
+         const logoutButton = document.getElementById('logout-button');
+         if (logoutButton) {
+             console.log("Botão de logout encontrado. Adicionando listener."); // Log
+             logoutButton.addEventListener('click', (event) => {
+                 event.preventDefault(); // Impede o link de navegar para '#'
+                 console.log("Logout clicado."); // Log
+
+                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
+                 // localStorage.removeItem('authToken'); 
+                 // localStorage.removeItem('userInfo');
+                 console.log("Dados de sessão (simulado) limpos."); // Log
+
+                 // 2. Redirecionar para a página de login
+                 console.log("Redirecionando para login.html..."); // Log
+                 window.location.href = 'login.html'; 
+             });
+         } else {
+              console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso
+         }
+         // --- FIM DA LÓGICA DE LOGOUT ---
+
+    </script>
+
+</body>
+</html>

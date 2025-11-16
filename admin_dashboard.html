@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Carrara Smart Clinic</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display.swap" rel="stylesheet">
+
+    <style>
+        /* * ===================================================
+         * ESTILOS GERAIS E PALETA DE CORES (Extraído do site)
+         * ===================================================
+        */
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+            --color-red: #c0392b; /* Adicionado para despesas */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* * ===================================================
+         * LAYOUT PRINCIPAL (Sidebar + Conteúdo)
+         * ===================================================
+        */
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            flex-grow: 1;
+            padding: 2rem;
+            width: calc(100% - 260px);
+        }
+
+        /* * ===================================================
+         * SIDEBAR (Menu Lateral)
+         * ===================================================
+        */
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(248, 244, 227, 0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sidebar-nav {
+            margin-top: 1rem;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 2rem;
+            color: var(--color-beige);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav li a:hover {
+            background-color: var(--color-sage-dark);
+            color: var(--color-white);
+        }
+
+        /* Classe "active" para marcar a página atual */
+        .sidebar-nav li a.active {
+            background-color: var(--color-sage);
+            color: var(--color-white);
+            border-right: 4px solid var(--color-gold);
+        }
+
+        .sidebar-nav .nav-divider {
+            height: 1px;
+            background-color: rgba(248, 244, 227, 0.1);
+            margin: 1rem 2rem;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+        }
+
+        /* * ===================================================
+         * CONTEÚDO PRINCIPAL (Header e Seções)
+         * ===================================================
+        */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            font-weight: 500;
+        }
+
+        .content-section {
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border: 1px solid var(--color-beige);
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-brown);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--color-sage);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* * ===================================================
+         * ELEMENTOS DO DASHBOARD (US01, US02, US03, US04)
+         * ===================================================
+        */
+
+        /* US01: Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--color-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--color-beige);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card .icon {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+        }
+        
+        /* Cores específicas para cada card */
+        .card.visitors .icon { background-color: rgba(138, 155, 104, 0.1); color: var(--color-sage-dark); } /* Sage */
+        .card.appointments .icon { background-color: rgba(41, 128, 185, 0.1); color: var(--color-blue); } /* Blue */
+        .card.revenue .icon { background-color: rgba(198, 169, 114, 0.1); color: var(--color-gold); } /* Gold */
+        .card.expenses .icon { background-color: rgba(192, 57, 43, 0.1); color: var(--color-red); } /* Red */
+
+
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--color-taupe);
+            margin-bottom: 0.25rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card .value {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        /* Cores específicas para valores */
+        .card.visitors .value { color: var(--color-sage-dark); }
+        .card.appointments .value { color: var(--color-blue); }
+        .card.revenue .value { color: var(--color-sage-dark); } /* Verde para receita */
+        .card.expenses .value { color: var(--color-red); } /* Vermelho para despesa */
+
+
+        /* US02: Tabela */
+        .tabela-wrapper {
+            overflow-x: auto;
+        }
+
+        .tabela-agenda {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .tabela-agenda th,
+        .tabela-agenda td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--color-beige);
+        }
+
+        .tabela-agenda th {
+            background-color: var(--color-beige);
+            font-weight: 600;
+            color: var(--color-brown);
+        }
+
+        .tabela-agenda tr:nth-child(even) {
+            background-color: rgba(248, 244, 227, 0.4); /* Cream-light */
+        }
+        
+        .tabela-agenda tr:hover {
+            background-color: rgba(138, 155, 104, 0.1); /* Sage-light */
+        }
+
+        /* US03 & US04: Gráficos */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-wrapper {
+            background-color: #fafafa;
+            border: 1px dashed var(--color-beige);
+            padding: 1.5rem;
+            border-radius: 10px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chart-wrapper h3 {
+            color: var(--color-taupe);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .placeholder-text {
+            color: var(--color-taupe);
+            font-style: italic;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        
+        <div class="sidebar-header">
+            <h2><i class="fas fa-spa"></i> Carrara Admin</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="admin_dashboard.html" class="active">
+                        <i class="fas fa-fw fa-chart-pie"></i> Dashboard
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="admin_agenda.html">
+                        <i class="fas fa-fw fa-calendar-alt"></i> Agendamentos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admin_clientes.html">
+                        <i class="fas fa-fw fa-users"></i> Clientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admin_anamnese.html">
+                        <i class="fas fa-fw fa-file-medical"></i> Anamneses
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admin_evolucao.html">
+                        <i class="fas fa-fw fa-chart-line"></i> Evolução Paciente
+                    </a>
+                </li>
+
+                <li class="nav-divider"></li>
+
+                <li>
+                    <a href="admin_receitas.html">
+                        <i class="fas fa-fw fa-euro-sign"></i> Controle de Receitas
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="admin_despesas.html">
+                        <i class="fas fa-fw fa-receipt"></i> Controle de Despesas
+                    </a>
+                </li>
+
+                <li class="nav-divider"></li>
+
+                <li>
+                    <a href="admin_acesso.html">
+                        <i class="fas fa-fw fa-user-shield"></i> Controle de Acesso
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="sidebar-footer">
+            <ul>
+                 <li>
+                    <a href="#" id="logout-button">
+                        <i class="fas fa-fw fa-sign-out-alt"></i> Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="header">
+            <h1>Dashboard Gerencial</h1>
+        </header>
+
+        <section class="dashboard-cards">
+            
+            <div class="card visitors">
+                <div class="icon"><i class="fas fa-eye"></i></div>
+                <div class="card-content">
+                    <h3>Visitantes</h3>
+                    <span class="value" id="card-visitors">...</span>
+                </div>
+            </div>
+
+            <div class="card appointments">
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="card-content">
+                    <h3>Agendamentos</h3>
+                    <span class="value" id="card-appointments">...</span>
+                </div>
+            </div>
+
+            <div class="card revenue">
+                <div class="icon"><i class="fas fa-euro-sign"></i></div>
+                <div class="card-content">
+                    <h3>Receita</h3>
+                    <span class="value" id="total-receita-mes">...</span>
+                </div>
+            </div>
+
+            <div class="card expenses">
+                <div class="icon"><i class="fas fa-receipt"></i></div>
+                <div class="card-content">
+                    <h3>Despesa</h3>
+                    <span class="value" id="card-expenses">...</span>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="content-section">
+            <h2>Próximos Agendamentos</h2>
+            <div class="tabela-wrapper">
+                <table class="tabela-agenda">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upcoming-appointments-table-body">
+                        <tr><td colspan="5">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="charts-container">
+            
+            <div class="content-section">
+                <h2>Categorias Populares (Qtde.)</h2>
+                <div class="chart-wrapper">
+                <h3>Gráfico de Categorias (Rosca)</h3>
+                <span class="placeholder-text" id="categories-placeholder">Carregando dados...</span>
+                <div class="chart-container" style="position: relative; height: 100%; width: 100%;">
+                <canvas id="categoryChart" style="display: none;"></canvas> </div>
+            </div>
+        </div>
+
+            <div class="content-section">
+                <h2>Serviços Populares (Qtde.)</h2>
+                <div class="chart-wrapper">
+                    <h3>Gráfico de Serviços (Rosca)</h3>
+                    <span class="placeholder-text" id="services-placeholder">Carregando dados...</span>
+                    <div class="chart-container" style="position: relative; height: 100%; width: 100%;">
+                    <canvas id="serviceChart" style="display: none;"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        </section>
+
+
+    </main>
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+        // Define o endereço do nosso backend
+        const API_URL = 'http://localhost:3000';
+
+        // --- REFERÊNCIAS AOS ELEMENTOS DO HTML ---
+        const cardVisitors = document.getElementById('card-visitors');
+        const cardAppointments = document.getElementById('card-appointments');
+        const totalReceitaMesElement = document.getElementById('total-receita-mes');
+        const cardExpenses = document.getElementById('card-expenses');
+        const upcomingAppointmentsTableBody = document.getElementById('upcoming-appointments-table-body');
+        
+        // Refs para os Gráficos
+        const categoriesPlaceholder = document.getElementById('categories-placeholder');
+        const servicesPlaceholder = document.getElementById('services-placeholder');
+        const categoryChartCanvas = document.getElementById('categoryChart');
+        const serviceChartCanvas = document.getElementById('serviceChart');
+        let categoryChartInstance = null; // Guarda a instância do gráfico
+        let serviceChartInstance = null; // Guarda a instância do gráfico
+
+
+        // --- FUNÇÃO: Buscar dados do Dashboard e atualizar a página ---
+        async function fetchAndDisplayDashboardData() {
+            console.log("Buscando dados do dashboard...");
+             // Mostra placeholders enquanto carrega
+             if(categoriesPlaceholder) categoriesPlaceholder.textContent = 'Carregando dados...';
+             if(servicesPlaceholder) servicesPlaceholder.textContent = 'Carregando dados...';
+             if(categoryChartCanvas) categoryChartCanvas.style.display = 'none';
+             if(serviceChartCanvas) serviceChartCanvas.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/dashboard`);
+                 if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                const data = await response.json();
+                 console.log("Dados do dashboard recebidos:", data);
+
+                // 2. Atualiza os Cards (US01)
+                if(cardVisitors) cardVisitors.textContent = data.visitorsMonth; 
+                if(cardAppointments) cardAppointments.textContent = data.appointmentsMonth;
+                if(totalReceitaMesElement) totalReceitaMesElement.textContent = `€ ${data.revenueMonth.toFixed(2)}`;
+                if(cardExpenses) cardExpenses.textContent = `€ ${data.expenseMonth.toFixed(2)}`;
+
+                // 3. Atualiza a Tabela de Próximos Agendamentos (US02)
+                if (upcomingAppointmentsTableBody) {
+                    upcomingAppointmentsTableBody.innerHTML = ''; // Limpa
+                    if (data.upcomingAppointments && data.upcomingAppointments.length > 0) {
+                        data.upcomingAppointments.forEach(app => {
+                            const row = document.createElement('tr');
+                            let dataFormatada = 'N/A', horaFormatada = '';
+                             try {
+                                const dataHora = new Date(app.date_time);
+                                dataFormatada = dataHora.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                horaFormatada = dataHora.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                             } catch(e) {}
+                            row.innerHTML = `
+                                <td>${app.client_name || '?'}</td>
+                                <td>${app.service_name || '?'}</td>
+                                <td>${dataFormatada}</td>
+                                <td>${horaFormatada}</td>
+                                <td>${app.service_value != null ? `€ ${app.service_value.toFixed(2)}` : 'N/A'}</td>
+                            `;
+                            upcomingAppointmentsTableBody.appendChild(row);
+                        });
+                    } else {
+                         upcomingAppointmentsTableBody.innerHTML = '<tr><td colspan="5">Nenhum agendamento próximo.</td></tr>';
+                    }
+                } else { console.error("Elemento 'upcoming-appointments-table-body' não encontrado."); }
+
+                // 4. Renderiza Gráfico de Categorias (US03)
+                renderCategoryChart(data.popularCategories || []);
+                
+                // 5. Renderiza Gráfico de Serviços (US04)
+                renderServiceChart(data.popularServices || []);
+
+            } catch (error) {
+                console.error("Erro ao buscar/exibir dados do dashboard:", error);
+                alert(`Erro ao carregar dados do dashboard: ${error.message}`);
+                 // Limpa placeholders em caso de erro
+                 if(categoriesPlaceholder) categoriesPlaceholder.textContent = 'Erro ao carregar.';
+                 if(servicesPlaceholder) servicesPlaceholder.textContent = 'Erro ao carregar.';
+            }
+        }
+        
+        // --- FUNÇÃO: Renderizar Gráfico de Categorias (NOVO!) ---
+        function renderCategoryChart(categoriesData) {
+            if (!categoryChartCanvas || !categoriesPlaceholder) { 
+                console.error("Canvas ou Placeholder do gráfico de categorias não encontrado."); 
+                return; 
+            }
+            
+            // Destroi gráfico antigo se existir (para atualizações)
+            if (categoryChartInstance) {
+                categoryChartInstance.destroy();
+            }
+
+            if (!categoriesData || categoriesData.length === 0) {
+                 categoriesPlaceholder.textContent = 'Nenhum dado de categoria encontrado.';
+                 categoriesPlaceholder.style.display = 'block';
+                 categoryChartCanvas.style.display = 'none';
+                 return;
+            }
+
+            // Prepara os dados para o Chart.js
+            const labels = categoriesData.map(cat => cat.category || 'Sem Categoria');
+            const counts = categoriesData.map(cat => cat.count);
+            const total = counts.reduce((sum, count) => sum + count, 0);
+
+            // Esconde placeholder, mostra canvas
+            categoriesPlaceholder.style.display = 'none';
+            categoryChartCanvas.style.display = 'block';
+            
+            const ctx = categoryChartCanvas.getContext('2d');
+            categoryChartInstance = new Chart(ctx, {
+                type: 'doughnut', // Gráfico de Rosca
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ' Agendamentos Realizados',
+                        data: counts,
+                        backgroundColor: [ // Paleta de cores da clínica
+                            'rgba(138, 155, 104, 0.8)', // Sage
+                            'rgba(198, 169, 114, 0.8)', // Gold
+                            'rgba(126, 108, 95, 0.8)', // Taupe
+                            'rgba(216, 207, 198, 0.8)', // Beige
+                            'rgba(107, 124, 84, 0.8)',  // Sage Dark
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 0.7)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Permite controlar altura/largura
+                    plugins: {
+                        legend: {
+                            position: 'bottom', // Legenda embaixo
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                     let label = context.label || '';
+                                     if (label) { label += ': '; }
+                                     const value = context.raw || 0;
+                                     const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                     label += `${value} (${percentage}%)`; // Mostra valor e %
+                                     return label;
+                                }
+                             }
+                        },
+                         // Para interatividade US03 -> US04 (clique)
+                         // onClick: (event, elements) => handleChartClick(event, elements, 'category') 
+                    }
+                }
+            });
+        }
+        
+        // --- FUNÇÃO: Renderizar Gráfico de Serviços (NOVO!) ---
+        function renderServiceChart(servicesData) {
+            if (!serviceChartCanvas || !servicesPlaceholder) { 
+                 console.error("Canvas ou Placeholder do gráfico de serviços não encontrado."); 
+                 return; 
+             }
+            
+             // Destroi gráfico antigo
+             if (serviceChartInstance) {
+                 serviceChartInstance.destroy();
+             }
+
+             if (!servicesData || servicesData.length === 0) {
+                 servicesPlaceholder.textContent = 'Nenhum dado de serviço encontrado.';
+                 servicesPlaceholder.style.display = 'block';
+                 serviceChartCanvas.style.display = 'none';
+                 return;
+             }
+
+             const labels = servicesData.map(srv => srv.service_name || 'Serviço Desconhecido');
+             const counts = servicesData.map(srv => srv.count);
+             const total = counts.reduce((sum, count) => sum + count, 0);
+
+             servicesPlaceholder.style.display = 'none';
+             serviceChartCanvas.style.display = 'block';
+             
+             const ctx = serviceChartCanvas.getContext('2d');
+             serviceChartInstance = new Chart(ctx, {
+                 type: 'doughnut',
+                 data: {
+                     labels: labels,
+                     datasets: [{
+                         label: ' Agendamentos Realizados',
+                         data: counts,
+                          backgroundColor: [ // Outra paleta (pode repetir ou usar mais cores)
+                             'rgba(107, 124, 84, 0.8)',  // Sage Dark
+                             'rgba(216, 207, 198, 0.8)', // Beige
+                             'rgba(198, 169, 114, 0.8)', // Gold
+                             'rgba(138, 155, 104, 0.8)', // Sage
+                             'rgba(126, 108, 95, 0.8)', // Taupe
+                             'rgba(74, 63, 53, 0.8)', // Brown (se precisar de mais)
+                         ],
+                         borderColor: 'rgba(255, 255, 255, 0.7)',
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { 
+                             callbacks: {
+                                label: function(context) {
+                                     let label = context.label || '';
+                                     if (label) { label += ': '; }
+                                     const value = context.raw || 0;
+                                     const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                     label += `${value} (${percentage}%)`; // Mostra valor e %
+                                     return label;
+                                }
+                             }
+                        }
+                    }
+                 }
+             });
+        }
+        
+        // TODO: Implementar handleChartClick para filtro interativo (US03 -> US04)
+
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', () => {
+             console.log("DOM Carregado - Dashboard");
+             // Verifica se os canvas existem antes de buscar dados
+             if (categoryChartCanvas && serviceChartCanvas) {
+                fetchAndDisplayDashboardData();
+             } else {
+                 console.error("Canvas dos gráficos não encontrados. Gráficos não serão renderizados.");
+                 // Tenta carregar o resto mesmo sem gráficos
+                 fetchAndDisplayDashboardData(); 
+             }
+        });
+
+        // --- LÓGICA DE LOGOUT (ADICIONAR EM TODAS AS PÁGINAS COM SIDEBAR) ---
+         const logoutButton = document.getElementById('logout-button');
+         if (logoutButton) {
+             console.log("Botão de logout encontrado. Adicionando listener."); // Log
+             logoutButton.addEventListener('click', (event) => {
+                 event.preventDefault(); // Impede o link de navegar para '#'
+                 console.log("Logout clicado."); // Log
+
+                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
+                 // localStorage.removeItem('authToken'); 
+                 // localStorage.removeItem('userInfo');
+                 console.log("Dados de sessão (simulado) limpos."); // Log
+
+                 // 2. Redirecionar para a página de login
+                 console.log("Redirecionando para login.html..."); // Log
+                 window.location.href = 'login.html'; 
+             });
+         } else {
+              console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso
+         }
+         // --- FIM DA LÓGICA DE LOGOUT ---
+
+    </script>
+    
+    </body>
+</html>

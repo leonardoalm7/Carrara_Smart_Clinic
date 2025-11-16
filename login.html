@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Carrara Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* * ===================================================
+         * ESTILOS GERAIS E PALETA DE CORES (Extraído do site)
+         * ===================================================
+        */
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+            --color-red: #c0392b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Centralizar o conteúdo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* * ===================================================
+         * CAIXA DE LOGIN (US15)
+         * ===================================================
+        */
+        
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem;
+            background-color: var(--color-white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-beige);
+            text-align: center;
+        }
+        
+        .login-header {
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-sage-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-header p {
+            font-size: 1rem;
+            color: var(--color-taupe);
+            margin-top: 0.5rem;
+        }
+        
+        /* Formulário */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-brown);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--color-beige);
+            border-radius: 5px;
+            background-color: var(--color-white);
+            color: var(--color-taupe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        .login-footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .login-footer a {
+            color: var(--color-sage);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mensagem de Erro (Exemplo) */
+        .error-message {
+            background-color: rgba(192, 57, 43, 0.1);
+            color: var(--color-red);
+            border: 1px solid var(--color-red);
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            display: none; /* Ativar com JS se o login falhar */
+        }
+
+    </style>
+</head>
+<body>
+
+    <main class="login-container">
+        
+        <div class="login-header">
+            <h2><i class="fas fa-spa"></i> Carrara Admin</h2>
+            <p>Acesso ao painel de gestão</p>
+        </div>
+
+        <form id="form-login"> <div id="error-msg" class="error-message">
+                </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn">Entrar</button>
+
+        </form>
+        
+        <div class="login-footer">
+            <a href="#">Esqueceu a senha?</a>
+        </div>
+
+    </main>
+    
+    <script>
+        // Define o endereço do nosso backend
+        const API_URL = 'http://localhost:3000';
+
+        // --- REFERÊNCIAS AOS ELEMENTOS DO HTML ---
+        const loginForm = document.getElementById('form-login');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessageDiv = document.getElementById('error-msg');
+
+        // --- FUNÇÃO: Tentar fazer login ---
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Impede o recarregamento da página
+            errorMessageDiv.style.display = 'none'; // Esconde msg de erro antiga
+
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            try {
+                // 1. Envia os dados para a rota POST /api/login
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+
+                // 2. Verifica se o login falhou (status 401 ou outro erro)
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro desconhecido no login.');
+                }
+
+                // 3. Se o login foi bem-sucedido:
+                console.log("Login OK:", data);
+                // TODO: Armazenar token/info do usuário (localStorage/sessionStorage)
+                
+                // Redireciona para o dashboard
+                window.location.href = 'admin_dashboard.html'; 
+
+            } catch (error) {
+                console.error("Erro no login:", error);
+                // Mostra a mensagem de erro na tela
+                errorMessageDiv.textContent = error.message;
+                errorMessageDiv.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Anamnese | Carrara Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* * ===================================================
+         * ESTILOS GERAIS E PALETA DE CORES (Extraído do site)
+         * ===================================================
+        */
+        :root {
+            --color-cream: #F8F4E3;
+            --color-sage: #8A9B68;
+            --color-sage-dark: #6B7C54;
+            --color-taupe: #7E6C5F;
+            --color-brown: #4A3F35;
+            --color-beige: #D8CFC6;
+            --color-white: #FFFFFF;
+            --color-gold: #C6A972;
+            --color-red: #c0392b;
+            --color-blue: #2980b9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-brown);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* * ===================================================
+         * LAYOUT PRINCIPAL (Sidebar + Conteúdo)
+         * ===================================================
+        */
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            flex-grow: 1;
+            padding: 2rem;
+            width: calc(100% - 260px);
+        }
+
+        /* * ===================================================
+         * SIDEBAR (Menu Lateral)
+         * ===================================================
+        */
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(248, 244, 227, 0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-sage);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sidebar-nav {
+            margin-top: 1rem;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 2rem;
+            color: var(--color-beige);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav li a:hover {
+            background-color: var(--color-sage-dark);
+            color: var(--color-white);
+        }
+
+        /* Classe "active" para marcar a página atual */
+        .sidebar-nav li a.active {
+            background-color: var(--color-sage);
+            color: var(--color-white);
+            border-right: 4px solid var(--color-gold);
+        }
+
+        .sidebar-nav .nav-divider {
+            height: 1px;
+            background-color: rgba(248, 244, 227, 0.1);
+            margin: 1rem 2rem;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid rgba(248, 244, 227, 0.1);
+        }
+
+        /* * ===================================================
+         * CONTEÚDO PRINCIPAL (Header e Seções)
+         * ===================================================
+        */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--color-brown);
+            font-weight: 500;
+        }
+
+        .content-section {
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border: 1px solid var(--color-beige);
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: var(--color-brown);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--color-sage);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .content-section h3 {
+            font-size: 1.5rem;
+            color: var(--color-sage-dark);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--color-sage-dark);
+        }
+        
+        .btn:disabled { /* Estilo desabilitado */
+             background-color: var(--color-beige);
+             cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-sage);
+            color: white;
+        }
+        
+        .btn-container {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        /* * ===================================================
+         * FORMULÁRIO DE ANAMNESE (US10)
+         * ===================================================
+        */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .grid-col-span-2 { grid-column: span 2; }
+        .grid-col-span-3 { grid-column: span 3; }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-brown);
+        }
+        
+        .form-group label.radio-label {
+            font-weight: normal;
+            display: inline-block;
+            margin-right: 15px;
+            margin-left: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--color-beige);
+            border-radius: 5px;
+            background-color: var(--color-white);
+            color: var(--color-taupe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+        }
+
+        .anamnese-tabela {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 1rem;
+        }
+        .anamnese-tabela th,
+        .anamnese-tabela td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--color-beige);
+            vertical-align: middle;
+        }
+        .anamnese-tabela th {
+            font-weight: 600;
+            color: var(--color-brown);
+        }
+        
+        .anamnese-tabela td:nth-child(2),
+        .anamnese-tabela td:nth-child(3) {
+            width: 70px;
+            text-align: center;
+        }
+        .anamnese-tabela td:last-child {
+            width: 40%;
+        }
+        
+        /* Ajuste para inputs de radio */
+        .anamnese-tabela input[type="radio"] {
+            transform: scale(1.2);
+        }
+
+        .checkbox-group {
+            padding: 1rem;
+            background: rgba(248, 244, 227, 0.4);
+            border-radius: 8px;
+            border: 1px solid var(--color-beige);
+        }
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Oculta o anexo específico por enquanto */
+        #anexo-especifico {
+            display: none;
+        }
+
+
+        /* Responsividade */
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .grid-col-span-3 { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .grid-col-span-2, .grid-col-span-3 { grid-column: span 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        
+        <div class="sidebar-header">
+            <h2><i class="fas fa-spa"></i> Carrara Admin</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="admin_dashboard.html"><i class="fas fa-fw fa-chart-pie"></i> Dashboard</a></li>
+                <li><a href="admin_agenda.html"><i class="fas fa-fw fa-calendar-alt"></i> Agendamentos</a></li>
+                <li><a href="admin_clientes.html"><i class="fas fa-fw fa-users"></i> Clientes</a></li>
+                <li><a href="admin_anamnese.html" class="active"><i class="fas fa-fw fa-file-medical"></i> Anamneses</a></li>
+                <li><a href="admin_evolucao.html"><i class="fas fa-fw fa-chart-line"></i> Evolução Paciente</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="admin_receitas.html"><i class="fas fa-fw fa-euro-sign"></i> Controle de Receitas</a></li>
+                <li><a href="admin_despesas.html"><i class="fas fa-fw fa-receipt"></i> Controle de Despesas</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="admin_acesso.html"><i class="fas fa-fw fa-user-shield"></i> Controle de Acesso</a></li>
+            </ul>
+        </nav>
+
+        <nav class="sidebar-footer">
+            <ul><li><a href="#" id="logout-button"><i class="fas fa-fw fa-sign-out-alt"></i> Sair</a></li></ul>
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="header">
+            <h1>Registrar Anamnese</h1>
+        </header>
+
+        <form id="form-anamnese-completa">
+            <section class="content-section">
+                <h2>1. Dados da Paciente</h2>
+                <div class="form-grid">
+                    <div class="form-group grid-col-span-2">
+                        <label for="cliente">Associar a Cliente</label>
+                        <select id="cliente" name="client_id" required>
+                            <option value="">Carregando clientes...</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="data-preenchimento">Data Preenchimento</label>
+                        <input type="date" id="data-preenchimento" name="date_created" required>
+                    </div>
+
+                    <div class="form-group grid-col-span-3">
+                        <label for="objetivo">Objetivo Principal / Queixa</label>
+                        <textarea id="objetivo" name="main_objective" rows="3" placeholder="Ex: Redução de medidas no abdômen, tratamento de melasma facial..."></textarea>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2>2. Anamnese Geral (Histórico de Saúde)</h2>
+                
+                <table class="anamnese-tabela">
+                    <thead>
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Sim</th>
+                            <th>Não</th>
+                            <th>Observações (Se "Sim", explique)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Está grávida ou suspeita de gravidez?</td>
+                            <td><input type="radio" name="is_pregnant" value="1"></td>
+                            <td><input type="radio" name="is_pregnant" value="0" checked></td>
+                            <td><input type="text" name="obs_pregnant"></td>
+                        </tr>
+                        <tr>
+                            <td>Está a amamentar?</td>
+                            <td><input type="radio" name="is_lactating" value="1"></td>
+                            <td><input type="radio" name="is_lactating" value="0" checked></td>
+                            <td><input type="text" name="obs_lactating"></td>
+                        </tr>
+                        <tr>
+                            <td>Possui alguma doença autoimune (Lúpus, Psoríase)?</td>
+                            <td><input type="radio" name="has_autoimmune" value="1"></td>
+                            <td><input type="radio" name="has_autoimmune" value="0" checked></td>
+                            <td><input type="text" name="obs_autoimmune" placeholder="Qual?"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem diabetes?</td>
+                            <td><input type="radio" name="has_diabetes" value="1"></td>
+                            <td><input type="radio" name="has_diabetes" value="0" checked></td>
+                            <td><input type="text" name="obs_diabetes" placeholder="Tipo? Está controlada?"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem hipertensão (pressão alta)?</td>
+                            <td><input type="radio" name="has_hypertension" value="1"></td>
+                            <td><input type="radio" name="has_hypertension" value="0" checked></td>
+                            <td><input type="text" name="obs_hypertension" placeholder="Está controlada?"></td>
+                        </tr>
+                         <tr>
+                            <td>Utiliza Pacemaker (Marcapasso)?</td>
+                            <td><input type="radio" name="has_pacemaker" value="1"></td>
+                            <td><input type="radio" name="has_pacemaker" value="0" checked></td>
+                            <td><input type="text" name="obs_pacemaker"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem histórico de Trombose ou Embolia?</td>
+                            <td><input type="radio" name="has_thrombosis" value="1"></td>
+                            <td><input type="radio" name="has_thrombosis" value="0" checked></td>
+                            <td><input type="text" name="obs_thrombosis"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem epilepsia ou histórico de convulsões?</td>
+                            <td><input type="radio" name="has_epilepsy" value="1"></td>
+                            <td><input type="radio" name="has_epilepsy" value="0" checked></td>
+                            <td><input type="text" name="obs_epilepsy"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem histórico de cancro (câncer)?</td>
+                            <td><input type="radio" name="has_cancer_history" value="1"></td>
+                            <td><input type="radio" name="has_cancer_history" value="0" checked></td>
+                            <td><input type="text" name="obs_cancer_history" placeholder="Qual? Fez Quimio/Rádio?"></td>
+                        </tr>
+                        <tr>
+                            <td>Possui implantes metálicos (placas, parafusos)?</td>
+                            <td><input type="radio" name="has_metal_implants" value="1"></td>
+                            <td><input type="radio" name="has_metal_implants" value="0" checked></td>
+                            <td><input type="text" name="obs_metal_implants" placeholder="Onde?"></td>
+                        </tr>
+                        <tr>
+                            <td>Possui DIU?</td>
+                            <td><input type="radio" name="has_iud" value="1"></td>
+                            <td><input type="radio" name="has_iud" value="0" checked></td>
+                            <td><input type="text" name="obs_iud" placeholder="Cobre ou Hormonal?"></td>
+                        </tr>
+                         <tr>
+                            <td>Tem tendência a formar queloides?</td>
+                            <td><input type="radio" name="has_keloid" value="1"></td>
+                            <td><input type="radio" name="has_keloid" value="0" checked></td>
+                            <td><input type="text" name="obs_keloid"></td>
+                        </tr>
+                        <tr>
+                            <td>Tem Herpes (Simples ou Zoster)?</td>
+                            <td><input type="radio" name="has_herpes" value="1"></td>
+                            <td><input type="radio" name="has_herpes" value="0" checked></td>
+                            <td><input type="text" name="obs_herpes" placeholder="Local e frequência das crises..."></td>
+                        </tr>
+                        <tr>
+                            <td>Tem alergia a cosméticos, metais ou produtos?</td>
+                            <td><input type="radio" name="has_allergies" value="1"></td>
+                            <td><input type="radio" name="has_allergies" value="0" checked></td>
+                            <td><input type="text" name="obs_allergies" placeholder="Quais?"></td>
+                        </tr>
+                        <tr>
+                            <td>Fez uso de Isotretinoína (Roacutan) nos últimos 6 meses?</td>
+                            <td><input type="radio" name="used_roacutan_6m" value="1"></td>
+                            <td><input type="radio" name="used_roacutan_6m" value="0" checked></td>
+                            <td><input type="text" name="obs_roacutan"></td>
+                        </tr>
+                         <tr>
+                            <td>Faz uso de Anticoagulantes (AAS, Aspirina, etc.)?</td>
+                            <td><input type="radio" name="uses_anticoagulant" value="1"></td>
+                            <td><input type="radio" name="uses_anticoagulant" value="0" checked></td>
+                            <td><input type="text" name="obs_anticoagulant" placeholder="Qual?"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Medicações em Uso</h3>
+                <div class="form-group grid-col-span-3">
+                    <label for="medicamentos">Liste todos os medicamentos, suplementos ou ácidos de pele em uso:</label>
+                    <textarea id="medicamentos" name="medications_in_use" rows="3"></textarea>
+                </div>
+
+                <h3>Hábitos e Estilo de Vida</h3>
+                 <div class="form-grid">
+                    <div class="form-group">
+                        <label>Exposição solar:</label>
+                        <div> <input type="radio" name="sun_exposure" value="frequente" id="sol_freq"><label class="radio-label" for="sol_freq">Frequente</label>
+                            <input type="radio" name="sun_exposure" value="ocasional" id="sol_ocas"><label class="radio-label" for="sol_ocas">Ocasional</label>
+                            <input type="radio" name="sun_exposure" value="rara" id="sol_rara" checked><label class="radio-label" for="sol_rara">Rara</label>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label>Usa protetor solar?</label>
+                         <div>
+                            <input type="radio" name="uses_sunscreen" value="1" id="prot_sim"><label class="radio-label" for="prot_sim">Sim</label>
+                            <input type="radio" name="uses_sunscreen" value="0" id="prot_nao" checked><label class="radio-label" for="prot_nao">Não</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>É fumadora (tabagista)?</label>
+                         <div>
+                            <input type="radio" name="is_smoker" value="1" id="fuma_sim"><label class="radio-label" for="fuma_sim">Sim</label>
+                            <input type="radio" name="is_smoker" value="0" id="fuma_nao" checked><label class="radio-label" for="fuma_nao">Não</label>
+                        </div>
+                    </div>
+                 </div>
+
+            </section>
+            
+            <section class="content-section" id="anexo-especifico">
+                <h2>3. Anexo Específico (Procedimento de Hoje)</h2>
+                
+                <div class="form-group">
+                    <label for="procedimento-hoje">Procedimento a Realizar Hoje</label>
+                    <select id="procedimento-hoje" name="procedimento-hoje">
+                        <option value="">Nenhum (Apenas Anamnese Geral)</option>
+                        <option value="hifu">HIFU (Ultrassom Microfocado)</option>
+                        </select>
+                </div>
+                
+                <div id="anexo-hifu" class="checkbox-group">
+                    <h3>Checklist para HIFU</h3>
+                    <label><input type="checkbox" name="check_hifu_1"> ... </label>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2>4. Termo de Responsabilidade</h2>
+                <div class="checkbox-group">
+                     <label>
+                        <input type="checkbox" name="consent_data_truthful" value="1" required> Declaro que todas as informações fornecidas nesta ficha são verdadeiras e completas.
+                    </label>
+                     <label>
+                        <input type="checkbox" name="consent_terms_accepted" value="1" required> Entendo que a omissão de informações pode acarretar riscos e afetar os resultados.
+                    </label>
+                     <label>
+                        <input type="checkbox" name="consent_procedures" value="1">
+                        Autorizo a Carrara Smart Clinic a realizar os procedimentos acordados.
+                    </label>
+                    <label>
+                        <input type="checkbox" name="consent_photos" value="1">
+                        Autorizo a captura de fotografias para documentação e acompanhamento (uso interno e confidencial).
+                    </label>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn" id="save-anamnese-button"> <i class="fas fa-save"></i> Salvar Anamnese
+                    </button>
+                </div>
+            </section>
+
+        </form>
+
+    </main>
+
+    <script>
+        // Define o endereço do nosso backend
+        const API_URL = 'http://localhost:3000';
+
+        // --- REFERÊNCIAS AOS ELEMENTOS DO HTML ---
+        // Estas variáveis serão definidas dentro do DOMContentLoaded
+        let anamneseForm, clienteSelect, formTitle, saveButton;
+
+        // Pega o ID da URL, se existir (ex: ?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const anamneseId = urlParams.get('id');
+        const isEditing = !!anamneseId; // Define se está em modo de edição
+
+
+        // --- FUNÇÃO 1: Buscar Clientes para o Dropdown ---
+        async function fetchClientsForDropdown() {
+             if (!clienteSelect) return;
+            try {
+                const response = await fetch(`${API_URL}/api/clients`);
+                 if (!response.ok) throw new Error(`Erro HTTP ao buscar clientes: ${response.status}`);
+                const clients = await response.json();
+                
+                clienteSelect.innerHTML = '<option value="">Selecione um cliente...</option>'; 
+                clients.forEach(client => {
+                    const option = document.createElement('option');
+                    option.value = client.id;
+                    option.textContent = `${client.name} (ID: ${client.id})`;
+                    clienteSelect.appendChild(option);
+                });
+            } catch (error) { 
+                 console.error("Erro em fetchClientsForDropdown:", error);
+                 clienteSelect.innerHTML = '<option value="">Erro ao carregar</option>';
+            }
+        }
+        
+        // --- FUNÇÃO 2: Carregar dados da Anamnese para Edição ---
+        async function loadAnamneseForEditing(id) {
+            console.log(`Carregando anamnese ID ${id} para edição...`);
+             if (!anamneseForm) return; // Segurança
+            try {
+                const response = await fetch(`${API_URL}/api/anamneses/general/${id}`);
+                if (!response.ok) throw new Error('Anamnese não encontrada.');
+                const data = await response.json();
+                
+                console.log("Dados recebidos para edição:", data);
+
+                // Preenche o formulário
+                for (const key in data) {
+                    const element = anamneseForm.elements[key];
+                    if (element) {
+                        // Tratamento para Radio Buttons
+                        if (element.length > 0 && element[0].type === 'radio') { 
+                            const valueToSelect = data[key] ? '1' : '0';
+                            const radioToSelect = anamneseForm.querySelector(`input[name="${key}"][value="${valueToSelect}"]`);
+                            if(radioToSelect) radioToSelect.checked = true;
+                        } 
+                        // Tratamento para Checkboxes
+                        else if (element.type === 'checkbox') {
+                            element.checked = data[key]; 
+                        } 
+                        // Tratamento para Datas
+                        else if (element.type === 'date' && data[key]) {
+                             try {
+                                element.value = new Date(data[key] + 'T00:00:00').toISOString().split('T')[0];
+                             } catch(e) { console.warn(`Erro ao formatar data ${key}: ${data[key]}`); }
+                        }
+                        // Outros campos (text, textarea, select)
+                         else {
+                            element.value = data[key] === null || data[key] === undefined ? '' : data[key]; 
+                        }
+                    }
+                }
+                
+                // Ajusta título e botão
+                if (formTitle) formTitle.textContent = "Editar Anamnese";
+                if (saveButton) saveButton.innerHTML = '<i class="fas fa-save"></i> Atualizar Anamnese';
+                if (clienteSelect) clienteSelect.disabled = true; // Desabilita cliente na edição
+
+            } catch (error) {
+                console.error("Erro ao carregar anamnese para edição:", error);
+                alert("Erro ao carregar dados da anamnese. Verifique o console.");
+            }
+        }
+
+        // --- FUNÇÃO 3: Coletar e Salvar o Formulário (Adicionar ou Atualizar) ---
+        // ***** DEFINIÇÃO DA FUNÇÃO MOVIDA PARA FORA DO DOMCONTENTLOADED *****
+        async function handleFormSubmit(event) {
+             event.preventDefault(); 
+             if (saveButton) saveButton.disabled = true; 
+ 
+             const formData = new FormData(anamneseForm);
+             const data = {};
+ 
+             formData.forEach((value, key) => {
+                  const element = anamneseForm.elements[key];
+                   // Tratamento Radio Buttons (pega '1' ou '0')
+                  if (element && element.length > 0 && element[0].type === 'radio') {
+                     const checkedRadio = anamneseForm.querySelector(`input[name="${key}"]:checked`);
+                     data[key] = checkedRadio ? checkedRadio.value == '1' : null; // Envia true/false ou null
+                  }
+                  // Tratamento Checkboxes (só entram se marcados, valor '1')
+                  else if (element && element.type === 'checkbox') {
+                     // Incluído diretamente no tratamento de checkboxes não marcados
+                  }
+                  // Outros campos
+                  else {
+                     data[key] = value;
+                  }
+             });
+ 
+              // Trata checkboxes não marcados (garante que são enviados como 'false')
+              const checkboxes = anamneseForm.querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(cb => {
+                  // O FormData só inclui checkboxes marcados. Se não estiver no objeto 'data',
+                  // significa que não estava marcado, então definimos como false.
+                  if (!data.hasOwnProperty(cb.name)) { 
+                      data[cb.name] = false; 
+                  } else {
+                      // Se estava marcado, o FormData colocou 'on' ou o 'value' (que era '1'). 
+                      // Convertemos para true para consistência.
+                      data[cb.name] = true; 
+                  }
+              });
+              
+              // Adiciona client_id manualmente se estiver editando
+              if(isEditing && clienteSelect) {
+                  data['client_id'] = clienteSelect.value;
+              }
+ 
+             // Remove campos que não queremos salvar
+             delete data['procedimento-hoje'];
+             // Remove campos de observação se o radio correspondente for 'não' (opcional, mas limpa os dados)
+             const radioInputs = anamneseForm.querySelectorAll('.anamnese-tabela input[type="radio"][value="0"]:checked');
+             radioInputs.forEach(radio => {
+                  const obsFieldName = `obs_${radio.name.replace('has_','').replace('is_','')}`; // Tenta encontrar o campo obs_ correspondente
+                  if(data.hasOwnProperty(obsFieldName)) {
+                       data[obsFieldName] = null; // Limpa a observação se a resposta foi "não"
+                  }
+                  // Tratamento especial para Roacutan e Anticoagulante
+                   if (radio.name === 'used_roacutan_6m' && data.hasOwnProperty('obs_roacutan')) data['obs_roacutan'] = null;
+                   if (radio.name === 'uses_anticoagulant' && data.hasOwnProperty('obs_anticoagulant')) data['obs_anticoagulant'] = null;
+                   if (radio.name === 'is_pregnant' && data.hasOwnProperty('obs_pregnant')) data['obs_pregnant'] = null;
+                   if (radio.name === 'is_lactating' && data.hasOwnProperty('obs_lactating')) data['obs_lactating'] = null;
+
+             });
+             
+             console.log(`Enviando para o backend (Modo: ${isEditing ? 'Edição' : 'Criação'}):`, data);
+  
+             const url = isEditing ? `${API_URL}/api/anamneses/general/${anamneseId}` : `${API_URL}/api/anamneses/general`;
+             const method = isEditing ? 'PUT' : 'POST';
+  
+             try {
+                 const response = await fetch(url, {
+                     method: method,
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify(data),
+                 });
+  
+                 if (!response.ok) {
+                     const err = await response.json();
+                     throw new Error(err.error || `Erro ao ${isEditing ? 'atualizar' : 'salvar'} anamnese.`);
+                 }
+  
+                 alert(`Anamnese ${isEditing ? 'atualizada' : 'salva'} com sucesso!`);
+                 window.location.href = 'admin_anamnese.html'; 
+  
+             } catch (error) {
+                 console.error(`Erro ao ${isEditing ? 'atualizar' : 'salvar'} anamnese:`, error);
+                 alert(`Erro: ${error.message}`);
+             } finally {
+                  if (saveButton) saveButton.disabled = false; // Reabilita botão
+             }
+          } // Fim da função handleFormSubmit
+
+
+        // --- INICIALIZAÇÃO ---
+        document.addEventListener('DOMContentLoaded', async () => {
+             console.log("DOM Carregado - Anamnese Form");
+             // Define as variáveis globais aqui, após o DOM carregar
+             anamneseForm = document.getElementById('form-anamnese-completa');
+             clienteSelect = document.getElementById('cliente'); 
+             formTitle = document.querySelector('.header h1'); 
+             saveButton = document.getElementById('save-anamnese-button'); // Usa o ID específico do botão
+
+             // Garante que os elementos existem
+             if (!anamneseForm || !clienteSelect || !formTitle || !saveButton) {
+                 console.error("Elementos essenciais do formulário de anamnese não encontrados!");
+                 alert("Erro crítico: Elementos da página não encontrados.");
+                 return;
+             }
+             
+             console.log("Elementos encontrados. Buscando clientes...");
+            await fetchClientsForDropdown(); // Espera os clientes carregarem
+
+             console.log("Clientes carregados. Verificando modo edição...");
+            if (isEditing) {
+                 console.log("Modo Edição detectado.");
+                loadAnamneseForEditing(anamneseId); // Carrega dados se estiver editando
+            } else {
+                 console.log("Modo Criação.");
+                 // Define a data de hoje no campo de data para NOVAS anamneses
+                 const dateInput = document.getElementById('data-preenchimento');
+                 if(dateInput) dateInput.valueAsDate = new Date();
+            }
+
+            // ***** ADICIONA O LISTENER AO FORMULÁRIO AQUI *****
+            console.log("Adicionando listener de submit ao formulário.");
+            anamneseForm.addEventListener('submit', handleFormSubmit); 
+            console.log("Listener adicionado.");
+
+        }); // Fim do DOMContentLoaded
+
+        // --- LÓGICA DE LOGOUT (ADICIONAR EM TODAS AS PÁGINAS COM SIDEBAR) ---
+         const logoutButton = document.getElementById('logout-button');
+         if (logoutButton) {
+             console.log("Botão de logout encontrado. Adicionando listener."); // Log
+             logoutButton.addEventListener('click', (event) => {
+                 event.preventDefault(); // Impede o link de navegar para '#'
+                 console.log("Logout clicado."); // Log
+
+                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
+                 // localStorage.removeItem('authToken'); 
+                 // localStorage.removeItem('userInfo');
+                 console.log("Dados de sessão (simulado) limpos."); // Log
+
+                 // 2. Redirecionar para a página de login
+                 console.log("Redirecionando para login.html..."); // Log
+                 window.location.href = 'login.html'; 
+             });
+         } else {
+              console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso
+         }
+         // --- FIM DA LÓGICA DE LOGOUT ---
+
+    </script>
+
+</body>
+</html>
