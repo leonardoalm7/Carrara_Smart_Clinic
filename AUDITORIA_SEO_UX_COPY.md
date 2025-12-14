@@ -139,7 +139,7 @@
     
     <div class="hero-buttons">
         <a href="#contato" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
-            📞 Agendar Agora - WhatsApp
+            Agendar Agora
         </a>
         <a href="#servicos" class="btn-secondary">Conhecer Serviços</a>
     </div>
