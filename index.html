@@ -360,32 +360,44 @@
             pointer-events: auto; /* Permite interação quando visível */
         }
         
-        /* Botão de fechar o menu */
+        /* Botão de fechar o menu - APENAS NO MOBILE */
         .menu-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: none;
-            font-size: 2rem;
-            color: var(--color-brown);
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1002;
-            padding: 0;
-            transition: transform 0.3s;
+            display: none; /* Sempre oculto no desktop */
         }
         
-        .menu-close:hover {
-            transform: rotate(90deg);
-        }
-        
-        .menu-close:active {
-            transform: scale(0.9);
+        @media (max-width: 768px) {
+            /* Botão de fechar o menu - visível apenas no mobile quando menu está ativo */
+            .menu-close {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: transparent;
+                border: none;
+                font-size: 2rem;
+                color: var(--color-brown);
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                display: none; /* Oculto por padrão */
+                align-items: center;
+                justify-content: center;
+                z-index: 1002;
+                padding: 0;
+                transition: transform 0.3s;
+            }
+            
+            /* Mostrar botão apenas quando menu estiver ativo no mobile */
+            nav ul.active .menu-close {
+                display: flex;
+            }
+            
+            .menu-close:hover {
+                transform: rotate(90deg);
+            }
+            
+            .menu-close:active {
+                transform: scale(0.9);
+            }
         }
 
         nav ul li {
@@ -1006,8 +1018,8 @@
         
         <nav>
             <ul id="nav-menu">
-                <li style="position: relative; width: 100%; padding: 0; margin: 0; list-style: none;">
-                    <button class="menu-close" id="menu-close" aria-label="Fechar menu" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 2rem; color: var(--color-brown); cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 1002; padding: 0;">
+                <li style="position: relative; width: 100%; padding: 0; margin: 0; list-style: none; height: 0;">
+                    <button class="menu-close" id="menu-close" aria-label="Fechar menu">
                         <i class="fas fa-times"></i>
                     </button>
                 </li>
