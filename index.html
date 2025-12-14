@@ -471,10 +471,8 @@
                 height: -webkit-fill-available;
             }
             
-            header {
-                position: -webkit-sticky;
-                position: sticky;
-            }
+            /* Header mantém position: fixed (definido na linha 174) */
+            /* Não sobrescrever para sticky, pois quebra o posicionamento fixo */
             
             /* Garante que o body não tenha scroll quando menu aberto */
             body.no-scroll {
@@ -1375,10 +1373,36 @@
         }
         
         // Evento: Fechar menu ao clicar em qualquer link de navegação
+        // IMPORTANTE: Para links de âncora, prevenir navegação imediata para restaurar scroll primeiro
         const navLinks = document.querySelectorAll('nav ul li a');
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMenu();
+            link.addEventListener('click', function(e) {
+                const href = link.getAttribute('href');
+                
+                // Se for link de âncora (#), prevenir navegação imediata
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    // Fechar menu (isso restaura o scroll no iOS)
+                    closeMenu();
+                    
+                    // Aguardar um frame para garantir que o scroll foi restaurado antes de navegar
+                    requestAnimationFrame(() => {
+                        // Navegar para o destino após restaurar scroll
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            // Atualizar o hash na URL para manter histórico e permitir bookmark/compartilhamento
+                            window.history.pushState(null, '', href);
+                            
+                            // Scroll suave até o elemento
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                } else {
+                    // Para links externos, apenas fechar o menu normalmente
+                    closeMenu();
+                }
             });
         });
         
