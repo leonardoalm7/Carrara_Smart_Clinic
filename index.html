@@ -360,17 +360,45 @@
             pointer-events: auto; /* Permite interação quando visível */
         }
         
-        /* Botão de fechar o menu - APENAS NO MOBILE */
+        /* Botão de fechar o menu - SEMPRE OCULTO NO DESKTOP */
+        .menu-close-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+        
         .menu-close {
-            display: none; /* Sempre oculto no desktop */
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
         }
         
         @media (max-width: 768px) {
+            /* Container do botão visível no mobile */
+            .menu-close-container {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                height: auto !important;
+                width: 100% !important;
+                overflow: visible !important;
+                position: relative !important;
+                left: auto !important;
+            }
+            
             /* Botão de fechar o menu - visível apenas no mobile quando menu está ativo */
             .menu-close {
-                position: absolute;
-                top: 20px;
-                right: 20px;
+                position: absolute !important;
+                top: 20px !important;
+                right: 20px !important;
+                left: auto !important;
                 background: transparent;
                 border: none;
                 font-size: 2rem;
@@ -379,16 +407,20 @@
                 width: 40px;
                 height: 40px;
                 display: none; /* Oculto por padrão */
+                visibility: hidden;
+                opacity: 0;
                 align-items: center;
                 justify-content: center;
                 z-index: 1002;
                 padding: 0;
-                transition: transform 0.3s;
+                transition: transform 0.3s, opacity 0.3s, visibility 0.3s;
             }
             
             /* Mostrar botão apenas quando menu estiver ativo no mobile */
             nav ul.active .menu-close {
-                display: flex;
+                display: flex !important; /* Força exibição quando menu está ativo */
+                visibility: visible !important;
+                opacity: 1 !important;
             }
             
             .menu-close:hover {
@@ -1018,7 +1050,7 @@
         
         <nav>
             <ul id="nav-menu">
-                <li style="position: relative; width: 100%; padding: 0; margin: 0; list-style: none; height: 0;">
+                <li class="menu-close-container" style="position: relative; width: 100%; padding: 0; margin: 0; list-style: none;">
                     <button class="menu-close" id="menu-close" aria-label="Fechar menu">
                         <i class="fas fa-times"></i>
                     </button>
@@ -1044,7 +1076,7 @@
     <section class="hero" id="inicio">
         <h1>Clínica de Estética em Lisboa | Carrara Smart Clinic</h1>
         <h2>Estética <span>Inteligente</span> com Tecnologia de Ponta</h2>
-        <p><strong>Sinta-se confiante e radiante todos os dias.</strong> Na Carrara Smart Clinic, transformamos sua autoestima com tratamentos de última geração. Mais de 200 clientes satisfeitas em Lisboa. <strong>Agende hoje e descubra sua melhor versão!</strong></p>
+        <p><strong>Sinta-se confiante e radiante todos os dias.</strong> Na Carrara Smart Clinic, transformamos sua autoestima com tratamentos de última geração. <strong>Agende hoje e descubra sua melhor versão!</strong></p>
         
         <div class="hero-buttons">
             <a href="#contato" class="btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">Agendar Agora</a>
