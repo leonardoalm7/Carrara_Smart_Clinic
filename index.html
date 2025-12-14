@@ -38,7 +38,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Carrara Smart Clinic | Estética Inteligente em Lisboa | Depilação a Laser</title>
-    <meta name="description" content="Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta. Marque sua avaliação gratuita.">
+    <meta name="description" content="Clínica de estética em Lisboa - Depilação a Laser, HIFU, Peeling Hollywood. Mais de 200 clientes satisfeitas. Agende hoje via WhatsApp!">
     <meta name="keywords" content="estética lisboa, depilação laser, tratamentos faciais, clínica estética lisboa, peeling hollywood, hifu, limpeza de pele hidrafacial, bem-estar, spa">
     <meta name="author" content="Carrara Smart Clinic">
     <meta name="robots" content="index, follow">
@@ -64,7 +64,7 @@
       "@context": "https://schema.org",
       "@type": "BeautySalon",
       "name": "Carrara Smart Clinic",
-      "description": "Clínica de estética em Lisboa especializada em spa e bem estar, tratamentos faciais e corporais com tecnologia de ponta.",
+      "description": "Clínica de estética em Lisboa especializada em depilação a laser, tratamentos faciais e corporais com tecnologia de ponta.",
       "url": "https://www.carrarasmartclinic.com",
       "telephone": "+351-933-892-968",
       "address": {
@@ -74,9 +74,26 @@
         "postalCode": "1900-411",
         "addressCountry": "PT"
       },
-      "openingHours": "Mo-Sa 09:00-20:00",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "38.742946",
+        "longitude": "-9.1295"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        }
+      ],
       "priceRange": "€€",
-      "image": "https://www.carrarasmartclinic.com/images/logo.jpg"
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "4"
+      },
+      "image": "https://www.carrarasmartclinic.com/images/Logo.jpeg"
     }
     </script>
     
@@ -153,11 +170,12 @@
         
         /* Header e Navegação - CORREÇÕES PARA iOS AQUI */
         header {
-            background-color: rgba(248, 244, 227, 0.9);
+            background-color: rgba(248, 244, 227, 0.95);
             position: fixed;
             width: 100%;
             z-index: 1000;
             padding: 1.2rem 5%;
+            padding-top: calc(1.2rem + env(safe-area-inset-top)); /* Safe area para notch */
             box-shadow: 0 2px 10px rgba(122, 102, 85, 0.1);
             display: flex;
             justify-content: space-between;
@@ -165,6 +183,9 @@
             /* Correção para iOS - força renderização por hardware */
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
+            /* Previne problemas de renderização no Safari */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         
         .logo {
@@ -284,6 +305,7 @@
         cursor: pointer;
         padding: 0;
         z-index: 1001;
+        position: relative;
     }
     
     .menu-toggle span {
@@ -292,6 +314,7 @@
         background-color: var(--color-brown);
         border-radius: 3px;
         transition: all 0.3s;
+        display: block;
     }
     
     @media (max-width: 768px) {
@@ -301,20 +324,29 @@
 
         nav ul {
             position: fixed;
-            top: 0; /* Faz o menu cobrir o header */
+            top: 0;
+            left: 0;
             right: -100%;
-            width: 100vw; /* Cobrir toda a largura */
-            height: 100vh; /* Cobrir toda a altura */
+            width: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available; /* Safari iOS */
             background-color: var(--color-cream);
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            transition: right 0.4s ease;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             margin: 0;
-            padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
+            padding: 90px 2rem 2rem 2rem;
+            padding-top: calc(90px + env(safe-area-inset-top)); /* Safe area para notch */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 2000; /* Bem acima do header */
+            z-index: 1001; /* Acima do header (1000) para não ser cortado */
             overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Scrolling suave no iOS */
+            /* Força renderização por hardware no Safari */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: right;
         }
 
         nav ul.active {
@@ -360,6 +392,10 @@
             padding: 8rem 5% 4rem;
         }
 
+        .hero h1 {
+            font-size: 1.8rem;
+        }
+        
         .hero h2 {
             font-size: 2.5rem;
         }
@@ -381,22 +417,41 @@
         body.no-scroll {
             overflow: hidden;
             position: fixed;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+            /* Previne bounce scroll no iOS */
+            overscroll-behavior: none;
+            touch-action: none;
         }
     }
 
     /* CORREÇÕES ESPECÍFICAS PARA SAFARI iOS */
-    @media screen and (max-width: 768px) and (orientation: portrait) {
-        nav ul {
-            padding-top: 80px; /* Espaço extra para iOS */
-            -webkit-overflow-scrolling: touch; /* Melhora o scrolling no iOS */
-        }
-        
-        /* Garante que o menu ocupe a altura total da tela */
-        nav ul {
-            height: 100%;
-            max-height: 100vh;
+    @supports (-webkit-touch-callout: none) {
+        /* Detecta Safari iOS */
+        @media (max-width: 768px) {
+            nav ul {
+                padding-top: calc(90px + env(safe-area-inset-top));
+                min-height: -webkit-fill-available;
+                height: 100vh;
+                height: -webkit-fill-available;
+            }
+            
+            header {
+                position: -webkit-sticky;
+                position: sticky;
+            }
+            
+            /* Garante que o body não tenha scroll quando menu aberto */
+            body.no-scroll {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                height: -webkit-fill-available;
+                overflow: hidden;
+                /* Previne bounce scroll no iOS */
+                overscroll-behavior: none;
+                -webkit-overflow-scrolling: auto;
+            }
         }
     }
 
@@ -423,6 +478,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--color-brown);
+            font-weight: 600;
         }
         
         .hero h2 {
@@ -868,137 +930,12 @@
             }
         }
         
-@media (max-width: 768px) {
-    /* Menu mobile - CORREÇÕES PARA iOS */
-    .menu-toggle {
-        display: flex;
-    }
-
-    nav ul {
-        position: fixed;
-        top: 0; /* Faz o menu cobrir o header */
-        right: -100%;
-        width: 100vw; /* Cobrir toda a largura */
-        height: 100vh; /* Cobrir toda a altura */
-        background-color: var(--color-cream);
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        transition: right 0.4s ease;
-        margin: 0;
-        padding: 100px 2rem 2rem 2rem; /* Espaço para header fixo */
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        z-index: 2000; /* Bem acima do header */
-        overflow-y: auto;
-    }
-
-    nav ul.active {
-        right: 0;
-    }
-
-    nav ul li {
-        margin: 1.2rem 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    nav ul li a {
-        font-size: 1.2rem;
-        display: block;
-        padding: 0.8rem 0;
-    }
-
-    .dropdown-content {
-        position: static;
-        display: none;
-        box-shadow: none;
-        background-color: transparent;
-        padding-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    .dropdown.active .dropdown-content {
-        display: block;
-    }
-
-    .dropdown-content a {
-        padding: 0.6rem 0;
-        font-size: 1rem;
-    }
-
-    .btn-agendar {
-        display: none;
-    }
-
-    .hero {
-        padding: 8rem 5% 4rem;
-    }
-
-    .hero h2 {
-        font-size: 2.5rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .sobre {
-        flex-direction: column;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    /* Prevenir scroll quando menu está aberto */
-    body.no-scroll {
-        overflow: hidden;
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-    }
-}
-
-/* Ajustes específicos para iOS - CORREÇÃO IMPORTANTE */
-@supports (-webkit-touch-callout: none) {
-    nav ul {
-        padding-top: 100px; /* Espaço extra para iOS */
-        height: 100%;
-        max-height: 100vh;
-        -webkit-overflow-scrolling: touch;
-    }
-    .hero {
-        min-height: -webkit-fill-available;
-    }
-}
-            
-            /* Prevenir scroll quando menu está aberto */
-            body.no-scroll {
-                overflow: hidden;
-                position: fixed;
-                width: 100%;
-                height: 100%;
-            }
-        
-        /* Ajustes específicos para iOS */
-        @supports (-webkit-touch-callout: none) {
-            .hero {
-                min-height: -webkit-fill-available;
-            }
-            
-            nav ul {
-                padding-top: constant(safe-area-inset-top);
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: constant(safe-area-inset-bottom);
-                padding-bottom: env(safe-area-inset-bottom);
-                height: 100%;
-            }
-        }
-        
         @media (max-width: 480px) {
             .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 {
                 font-size: 1.5rem;
             }
             
@@ -1055,11 +992,13 @@
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
+        <h1>Clínica de Estética em Lisboa | Carrara Smart Clinic</h1>
         <h2>Estética <span>Inteligente</span> com Tecnologia de Ponta</h2>
-        <p>Descubra tratamentos exclusivos que unem o melhor da tecnologia com cuidado natural para realçar a sua beleza única.</p>
+        <p><strong>Sinta-se confiante e radiante todos os dias.</strong> Na Carrara Smart Clinic, transformamos sua autoestima com tratamentos de última geração. Mais de 200 clientes satisfeitas em Lisboa. <strong>Agende hoje e descubra sua melhor versão!</strong></p>
+        
         <div class="hero-buttons">
-            <a href="#servicos" class="btn-primary">Conhecer Serviços</a>
-            <a href="#contato" class="btn-secondary">Agendar Avaliação</a>
+            <a href="#contato" class="btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">Agendar Agora</a>
+            <a href="#servicos" class="btn-secondary">Conhecer Serviços</a>
         </div>
     </section>
 
@@ -1113,13 +1052,13 @@
     <!-- Sobre -->
     <section class="sobre" id="sobre">
         <div class="sobre-img">
-            <img src="images/Clinic2.jpeg?auto=format&fit=crop&w=800&q=80" alt="Espaço interno da Carrara Smart Clinic em Lisboa" loading="lazy">
+            <img src="images/Clinic2.jpeg?auto=format&fit=crop&w=800&q=80" alt="Interior moderno da Carrara Smart Clinic em Lisboa - Sala de tratamentos estéticos com equipamentos de última geração" loading="lazy">
         </div>
         <div class="sobre-content">
             <h2>Sobre a Carrara Smart Clinic</h2>
-            <p>A Carrara Smart Clinic nasce da união entre estética e tecnologia, oferecendo tratamentos inteligentes com resultados reais. A nossa missão é proporcionar autoestima e bem-estar através de procedimentos seguros e eficazes.</p>
-            <p>Nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes.</p>
-            <p>Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
+            <p><strong>Imagine acordar todos os dias se sentindo radiante e confiante.</strong> Nossos tratamentos não são apenas procedimentos - são transformações que duram.</p>
+            <p>Com nossos protocolos personalizados, você verá resultados reais já nas primeiras sessões.</p>
+            <p>Nossa equipa é formada por profissionais especializados e comprometidos com a excelência no atendimento e satisfação das nossas clientes. Valorizamos a naturalidade, a beleza única de cada pessoa e o cuidado individualizado, garantindo experiências transformadoras num ambiente acolhedor e premium.</p>
             <a href="#contato" class="btn-primary">Entre em contacto</a>
         </div>
     </section>
@@ -1193,6 +1132,20 @@
                         <p>Rua Sarmento de Beires, 45B</p>
                         <p>Lisboa, 1900-411</p>
                     </div>
+                </div>
+                
+                <!-- Google Maps Embed -->
+                <div class="map-container" style="margin-top: 2rem; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); height: 300px;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6223.809667583818!2d-9.1295!3d38.742946!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1933c518046947%3A0xcde42ce333ab1c69!2sCarrara%20Smart%20Clinic!5e0!3m2!1spt-BR!2sus!4v1765728496617!5m2!1spt-BR!2sus"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Localização da Carrara Smart Clinic em Lisboa - Rua Sarmento de Beires, 45B">
+                    </iframe>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
@@ -1301,116 +1254,187 @@
         </div>
     </footer>
 
- <script>
-    // Menu Mobile - Código melhorado para iOS
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navMenu = document.getElementById('nav-menu');
-    
-    // Função para abrir/fechar o menu
-    function toggleMenu() {
-        mobileMenu.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
-    }
-    
-    // Evento de clique no toggle do menu
-    mobileMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMenu();
-    });
-    
-    // Fechar menu ao clicar em um link
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-        });
-    });
-    
-    // Fechar menu ao clicar fora dele
-    document.addEventListener('click', function(event) {
-        const isClickInsideMenu = navMenu.contains(event.target);
-        const isClickOnToggle = mobileMenu.contains(event.target);
+    <script>
+        /**
+         * ============================================
+         * MENU MOBILE - GESTÃO DE NAVEGAÇÃO
+         * ============================================
+         * Gerencia a abertura/fechamento do menu mobile
+         * com suporte especial para Safari iOS
+         */
         
-        if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-        }
-    });
-    
-    // Dropdown para mobile
-    const dropdownMenu = document.querySelector('.dropdown');
-    if (dropdownMenu) {
-        dropdownMenu.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
-                    this.classList.toggle('active');
-                    if (e.target.tagName === 'A') {
-                        e.preventDefault();
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        
+        // Detecção de dispositivo iOS para aplicar correções específicas
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        /**
+         * Alterna o estado do menu mobile (abrir/fechar)
+         * No iOS, preserva a posição de scroll para evitar "pulo" ao fechar
+         */
+        function toggleMenu() {
+            const isActive = navMenu.classList.contains('active');
+            
+            mobileMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            if (!isActive) {
+                // Abrir menu: bloqueia scroll do body
+                document.body.classList.add('no-scroll');
+                if (isIOS) {
+                    // Preserva posição de scroll no iOS
+                    document.body.style.position = 'fixed';
+                    document.body.style.width = '100%';
+                    document.body.style.top = `-${window.scrollY}px`;
+                }
+            } else {
+                // Fechar menu: restaura scroll
+                document.body.classList.remove('no-scroll');
+                if (isIOS) {
+                    // Restaura posição de scroll no iOS
+                    const scrollY = document.body.style.top;
+                    document.body.style.position = '';
+                    document.body.style.width = '';
+                    document.body.style.top = '';
+                    if (scrollY) {
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
                     }
                 }
             }
-        });
-    }
-    
-    // Prevenir quebra de layout ao redimensionar
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            mobileMenu.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-            
-            // Resetar dropdown se estiver ativo
-            if (dropdown && dropdown.classList.contains('active')) {
-                dropdown.classList.remove('active');
-            }
         }
-    });
         
-        // WhatsApp Button
+        // Evento: Clique no botão hamburger
+        if (mobileMenu) {
+            mobileMenu.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+        }
+        
+        // Evento: Fechar menu ao clicar em qualquer link de navegação
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                if (isIOS) {
+                    document.body.style.position = '';
+                    document.body.style.width = '';
+                    document.body.style.top = '';
+                }
+            });
+        });
+        
+        // Evento: Fechar menu ao clicar fora dele
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navMenu && navMenu.contains(event.target);
+            const isClickOnToggle = mobileMenu && mobileMenu.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navMenu && navMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                if (isIOS) {
+                    document.body.style.position = '';
+                    document.body.style.width = '';
+                    document.body.style.top = '';
+                }
+            }
+        });
+        
+        // Evento: Fechar menu automaticamente ao redimensionar para desktop
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 768) {
+                    mobileMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                    if (isIOS) {
+                        document.body.style.position = '';
+                        document.body.style.width = '';
+                        document.body.style.top = '';
+                    }
+                }
+            }, 250);
+        });
+        
+        /**
+         * ============================================
+         * DROPDOWN MENU - SERVIÇOS
+         * ============================================
+         * Gerencia o dropdown de serviços no mobile
+         */
+        const dropdownMenu = document.querySelector('.dropdown');
+        if (dropdownMenu) {
+            dropdownMenu.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    const dropdownLink = this.querySelector('a');
+                    if (e.target === dropdownLink || dropdownLink.contains(e.target)) {
+                        e.preventDefault();
+                        this.classList.toggle('active');
+                    }
+                }
+            });
+        }
+        
+        /**
+         * ============================================
+         * WHATSAPP - INTEGRAÇÃO DE CONTATO
+         * ============================================
+         * Gera links do WhatsApp com mensagem pré-formatada
+         * incluindo serviço selecionado e mensagem do usuário
+         */
         const whatsappButton = document.getElementById('whatsappButton');
         const footerWhatsapp = document.getElementById('footerWhatsapp');
         const phoneNumber = '351933892968';
         
-        whatsappButton.addEventListener('click', function() {
-            const serviceSelect = document.getElementById('servico');
-            const messageTextarea = document.getElementById('mensagem');
-            
-            let message = 'Olá! Gostaria de agendar uma consulta.';
-            
-            if (serviceSelect.value) {
-                message += ` Serviço de interesse: ${serviceSelect.options[serviceSelect.selectedIndex].text}.`;
-            }
-            
-            if (messageTextarea.value) {
-                message += ` Minha mensagem: ${messageTextarea.value}`;
-            }
-            
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
-        });
-        
-        footerWhatsapp.addEventListener('click', function() {
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações.')}`;
-            window.open(whatsappURL, '_blank');
-        });
-        
-        // Função para rolar até a seção de contato
-        function scrollToContact() {
-            document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+        // Botão principal de WhatsApp no formulário de contato
+        if (whatsappButton) {
+            whatsappButton.addEventListener('click', function() {
+                const serviceSelect = document.getElementById('servico');
+                const messageTextarea = document.getElementById('mensagem');
+                
+                let message = 'Olá! Gostaria de agendar uma consulta.';
+                
+                if (serviceSelect && serviceSelect.value) {
+                    message += ` Serviço de interesse: ${serviceSelect.options[serviceSelect.selectedIndex].text}.`;
+                }
+                
+                if (messageTextarea && messageTextarea.value) {
+                    message += ` Minha mensagem: ${messageTextarea.value}`;
+                }
+                
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappURL, '_blank');
+            });
         }
         
-        // Dropdown para mobile
-        const dropdownMenu2 = document.querySelector('.dropdown');
-        if (window.innerWidth <= 768 && dropdownMenu2) {
-            dropdownMenu2.addEventListener('click', function(e) {
-                if (e.target.classList.contains('dropdown') || e.target.tagName === 'A') {
-                    this.classList.toggle('active');
-                }
+        // Botão de WhatsApp no footer
+        if (footerWhatsapp) {
+            footerWhatsapp.addEventListener('click', function(e) {
+                e.preventDefault();
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações.')}`;
+                window.open(whatsappURL, '_blank');
             });
+        }
+        
+        /**
+         * ============================================
+         * SCROLL SUAVE - NAVEGAÇÃO INTERNA
+         * ============================================
+         * Rola suavemente até a seção de contato
+         * Usado pelo botão "Agendar Consulta" no header
+         */
+        function scrollToContact() {
+            const contatoSection = document.getElementById('contato');
+            if (contatoSection) {
+                contatoSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     </script>
 
@@ -1418,28 +1442,67 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-  const swiper = new Swiper('.avaliacao-swiper', {
-    slidesPerView: 2,
-    spaceBetween: 30,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-      0: {
-        slidesPerView: 1, // mobile
-      },
-      768: {
-        slidesPerView: 2, // tablet/desktop
-      }
-    }
-  });
-</script>
+        /**
+         * ============================================
+         * SWIPER - CARROSSEL DE AVALIAÇÕES
+         * ============================================
+         * Configuração do carrossel de depoimentos de clientes
+         * Responsivo: 1 slide no mobile, 2 no desktop
+         */
+        const swiper = new Swiper('.avaliacao-swiper', {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1, // Mobile
+                },
+                768: {
+                    slidesPerView: 2, // Tablet/Desktop
+                }
+            }
+        });
+    </script>
+
+    <!-- Botão WhatsApp Flutuante -->
+    <a 
+        href="https://wa.me/351933892968?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." 
+        class="whatsapp-float" 
+        target="_blank"
+        rel="noopener"
+        aria-label="Falar no WhatsApp"
+        style="
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s;
+        "
+        onmouseover="this.style.transform='scale(1.1)'"
+        onmouseout="this.style.transform='scale(1)'"
+    >
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
 </body>
 
