@@ -12,6 +12,22 @@
   gtag('config', 'G-H37P01B0NL');
 </script>
 
+    <!-- Google Ads Conversion Tracking -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17544918589/RVcLCO-s29EbEL3siK5B',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-Estar & Spa | Carrara Smart Clinic | Estética em Lisboa</title>
@@ -775,6 +791,7 @@
         footerWhatsapp.addEventListener('click', function(e) {
             e.preventDefault();
             const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre os rituais de bem-estar.')}`;
+            gtag_report_conversion(whatsappURL);
             window.open(whatsappURL, '_blank');
         });
     </script>

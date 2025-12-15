@@ -31,6 +31,22 @@
   gtag('config', 'G-H37P01B0NL');
 </script>
 
+    <!-- Google Ads Conversion Tracking -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17544918589/RVcLCO-s29EbEL3siK5B',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
@@ -1529,6 +1545,7 @@
                 }
                 
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                gtag_report_conversion(whatsappURL);
                 window.open(whatsappURL, '_blank');
             });
         }
@@ -1538,6 +1555,7 @@
             footerWhatsapp.addEventListener('click', function(e) {
                 e.preventDefault();
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de mais informações.')}`;
+                gtag_report_conversion(whatsappURL);
                 window.open(whatsappURL, '_blank');
             });
         }
@@ -1598,6 +1616,7 @@
         target="_blank"
         rel="noopener"
         aria-label="Falar no WhatsApp"
+        onclick="return gtag_report_conversion(this.href);"
         style="
             position: fixed;
             width: 60px;
