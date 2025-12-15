@@ -571,7 +571,12 @@
             clienteSelect.disabled = true; // Desabilita enquanto carrega
             clienteSelect.innerHTML = '<option value="">Carregando...</option>'; 
             try {
-                const response = await fetch(`${API_URL}/api/clients`);
+                const response = await fetch(`${API_URL}/api/clients`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) throw new Error(`Erro HTTP ao buscar clientes: ${response.status}`);
                 const clients = await response.json();
                 
@@ -601,7 +606,12 @@
              if (!agendaTableBody) return; // Segurança extra
              agendaTableBody.innerHTML = '<tr><td colspan="6">Carregando agendamentos...</td></tr>';
             try {
-                const response = await fetch(`${API_URL}/api/appointments`);
+                const response = await fetch(`${API_URL}/api/appointments`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) throw new Error(`Erro HTTP ao buscar agendamentos: ${response.status}`);
                 const appointments = await response.json();
                  console.log(`Recebidos ${appointments.length} agendamentos.`);
@@ -746,7 +756,13 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', },
                     body: JSON.stringify(dataToSend),
+                    credentials: 'include'
                 });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 console.log("Resposta do POST:", response.status, response.statusText);
                  if (!response.ok) {
                     const err = await response.json();
@@ -780,7 +796,13 @@
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ payment_status: 'pago', value_paid: valuePaid }),
+                    credentials: 'include'
                 });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  console.log(`Resposta do PUT /payment para ${appointmentId}:`, response.status);
                 if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao marcar como pago.'); }
                 alert('Agendamento marcado como realizado e pago!');
@@ -804,7 +826,13 @@
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ payment_status: 'pago', value_paid: valuePaid }),
+                    credentials: 'include'
                 });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  console.log(`Resposta do PUT /payment (já realizado) para ${appointmentId}:`, response.status);
                 if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao marcar como pago.'); }
                 alert('Agendamento marcado como pago!');
@@ -827,7 +855,13 @@
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus }),
+                    credentials: 'include'
                 });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  console.log(`Resposta do PUT /status para ${appointmentId}:`, response.status);
                 if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao atualizar status.'); }
                 alert(`Agendamento ${appointmentId} marcado como ${statusTextMap[newStatus] || newStatus}!`);
@@ -874,7 +908,13 @@
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ date_time: newDateTimeFormatted }), // Envia formato local
+                    credentials: 'include'
                 });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  console.log(`Resposta do PUT /reschedule para ${appointmentId}:`, response.status);
                 if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao reagendar.'); }
                 alert(`Agendamento ${appointmentId} reagendado com sucesso!`);
@@ -901,18 +941,25 @@
          const logoutButton = document.getElementById('logout-button');
          if (logoutButton) {
              console.log("Botão de logout encontrado. Adicionando listener."); // Log
-             logoutButton.addEventListener('click', (event) => {
+             logoutButton.addEventListener('click', async (event) => {
                  event.preventDefault(); // Impede o link de navegar para '#'
                  console.log("Logout clicado."); // Log
 
-                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
-                 // localStorage.removeItem('authToken'); 
-                 // localStorage.removeItem('userInfo');
-                 console.log("Dados de sessão (simulado) limpos."); // Log
-
-                 // 2. Redirecionar para a página de login
-                 console.log("Redirecionando para login.html..."); // Log
-                 window.location.href = 'login.html'; 
+                 try {
+                     // Fazer requisição de logout para destruir a sessão no servidor
+                     const response = await fetch(`${API_URL}/api/logout`, {
+                         method: 'POST',
+                         credentials: 'include'
+                     });
+                     
+                     // Independente do resultado, redirecionar para login
+                     console.log("Logout realizado. Redirecionando para login.html...");
+                     window.location.href = 'login.html';
+                 } catch (error) {
+                     console.error("Erro ao fazer logout:", error);
+                     // Mesmo com erro, redirecionar para login
+                     window.location.href = 'login.html';
+                 }
              });
          } else {
               console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso

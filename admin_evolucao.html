@@ -505,7 +505,12 @@
         // --- FUNÇÃO 1: Buscar Clientes para o Dropdown ---
         async function fetchClientsForDropdown() {
             try {
-                const response = await fetch(`${API_URL}/api/clients`);
+                const response = await fetch(`${API_URL}/api/clients`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 const clients = await response.json();
 
                 pacienteSelect.innerHTML = '<option value="">Selecione um paciente...</option>'; // Limpa
@@ -541,7 +546,12 @@
                  cardTotalSpent.textContent = '...';
 
                 // 2. Chama a nova rota GET /api/patients/:id/evolution
-                const response = await fetch(`${API_URL}/api/patients/${clientId}/evolution`);
+                const response = await fetch(`${API_URL}/api/patients/${clientId}/evolution`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) {
                     throw new Error('Paciente não encontrado ou erro no servidor.');
                 }
@@ -671,18 +681,25 @@
          const logoutButton = document.getElementById('logout-button');
          if (logoutButton) {
              console.log("Botão de logout encontrado. Adicionando listener."); // Log
-             logoutButton.addEventListener('click', (event) => {
+             logoutButton.addEventListener('click', async (event) => {
                  event.preventDefault(); // Impede o link de navegar para '#'
                  console.log("Logout clicado."); // Log
 
-                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
-                 // localStorage.removeItem('authToken'); 
-                 // localStorage.removeItem('userInfo');
-                 console.log("Dados de sessão (simulado) limpos."); // Log
-
-                 // 2. Redirecionar para a página de login
-                 console.log("Redirecionando para login.html..."); // Log
-                 window.location.href = 'login.html'; 
+                 try {
+                     // Fazer requisição de logout para destruir a sessão no servidor
+                     const response = await fetch(`${API_URL}/api/logout`, {
+                         method: 'POST',
+                         credentials: 'include'
+                     });
+                     
+                     // Independente do resultado, redirecionar para login
+                     console.log("Logout realizado. Redirecionando para login.html...");
+                     window.location.href = 'login.html';
+                 } catch (error) {
+                     console.error("Erro ao fazer logout:", error);
+                     // Mesmo com erro, redirecionar para login
+                     window.location.href = 'login.html';
+                 }
              });
          } else {
               console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso

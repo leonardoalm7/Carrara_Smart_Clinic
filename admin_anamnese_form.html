@@ -613,7 +613,12 @@
         async function fetchClientsForDropdown() {
              if (!clienteSelect) return;
             try {
-                const response = await fetch(`${API_URL}/api/clients`);
+                const response = await fetch(`${API_URL}/api/clients`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  if (!response.ok) throw new Error(`Erro HTTP ao buscar clientes: ${response.status}`);
                 const clients = await response.json();
                 
@@ -635,7 +640,12 @@
             console.log(`Carregando anamnese ID ${id} para edição...`);
              if (!anamneseForm) return; // Segurança
             try {
-                const response = await fetch(`${API_URL}/api/anamneses/general/${id}`);
+                const response = await fetch(`${API_URL}/api/anamneses/general/${id}`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) throw new Error('Anamnese não encontrada.');
                 const data = await response.json();
                 
@@ -751,8 +761,14 @@
                      method: method,
                      headers: { 'Content-Type': 'application/json' },
                      body: JSON.stringify(data),
+                     credentials: 'include'
                  });
   
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  if (!response.ok) {
                      const err = await response.json();
                      throw new Error(err.error || `Erro ao ${isEditing ? 'atualizar' : 'salvar'} anamnese.`);
@@ -811,18 +827,25 @@
          const logoutButton = document.getElementById('logout-button');
          if (logoutButton) {
              console.log("Botão de logout encontrado. Adicionando listener."); // Log
-             logoutButton.addEventListener('click', (event) => {
+             logoutButton.addEventListener('click', async (event) => {
                  event.preventDefault(); // Impede o link de navegar para '#'
                  console.log("Logout clicado."); // Log
 
-                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
-                 // localStorage.removeItem('authToken'); 
-                 // localStorage.removeItem('userInfo');
-                 console.log("Dados de sessão (simulado) limpos."); // Log
-
-                 // 2. Redirecionar para a página de login
-                 console.log("Redirecionando para login.html..."); // Log
-                 window.location.href = 'login.html'; 
+                 try {
+                     // Fazer requisição de logout para destruir a sessão no servidor
+                     const response = await fetch(`${API_URL}/api/logout`, {
+                         method: 'POST',
+                         credentials: 'include'
+                     });
+                     
+                     // Independente do resultado, redirecionar para login
+                     console.log("Logout realizado. Redirecionando para login.html...");
+                     window.location.href = 'login.html';
+                 } catch (error) {
+                     console.error("Erro ao fazer logout:", error);
+                     // Mesmo com erro, redirecionar para login
+                     window.location.href = 'login.html';
+                 }
              });
          } else {
               console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso

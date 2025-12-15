@@ -480,7 +480,12 @@
             if (!userTableBody) return;
             userTableBody.innerHTML = '<tr><td colspan="3">Carregando usuários...</td></tr>';
             try {
-                const response = await fetch(`${API_URL}/api/users`);
+                const response = await fetch(`${API_URL}/api/users`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
                 const users = await response.json();
 
@@ -547,8 +552,14 @@
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
+                    credentials: 'include'
                 });
 
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || `Erro ao ${isEditing ? 'atualizar' : 'salvar'} usuário.`);
@@ -573,7 +584,12 @@
                 console.error("Elementos do formulário de edição de usuário não encontrados!"); alert("Erro: Elementos do formulário não encontrados."); return;
             }
             try {
-                const response = await fetch(`${API_URL}/api/users/${id}`);
+                const response = await fetch(`${API_URL}/api/users/${id}`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  if (!response.ok) { throw new Error('Usuário não encontrado.'); }
                 const user = await response.json();
 
@@ -622,8 +638,14 @@
             try {
                 const response = await fetch(`${API_URL}/api/users/${id}`, {
                     method: 'DELETE',
+                    credentials: 'include'
                 });
 
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || 'Erro ao excluir usuário.');
@@ -653,18 +675,25 @@
          const logoutButton = document.getElementById('logout-button');
          if (logoutButton) {
              console.log("Botão de logout encontrado. Adicionando listener."); // Log
-             logoutButton.addEventListener('click', (event) => {
+             logoutButton.addEventListener('click', async (event) => {
                  event.preventDefault(); // Impede o link de navegar para '#'
                  console.log("Logout clicado."); // Log
 
-                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
-                 // localStorage.removeItem('authToken'); 
-                 // localStorage.removeItem('userInfo');
-                 console.log("Dados de sessão (simulado) limpos."); // Log
-
-                 // 2. Redirecionar para a página de login
-                 console.log("Redirecionando para login.html..."); // Log
-                 window.location.href = 'login.html'; 
+                 try {
+                     // Fazer requisição de logout para destruir a sessão no servidor
+                     const response = await fetch(`${API_URL}/api/logout`, {
+                         method: 'POST',
+                         credentials: 'include'
+                     });
+                     
+                     // Independente do resultado, redirecionar para login
+                     console.log("Logout realizado. Redirecionando para login.html...");
+                     window.location.href = 'login.html';
+                 } catch (error) {
+                     console.error("Erro ao fazer logout:", error);
+                     // Mesmo com erro, redirecionar para login
+                     window.location.href = 'login.html';
+                 }
              });
          } else {
               console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso

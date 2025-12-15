@@ -435,7 +435,12 @@
             clientTableBody.innerHTML = '<tr><td colspan="4">Carregando clientes...</td></tr>'; // Mostra loading
 
             try {
-                const response = await fetch(`${API_URL}/api/clients`);
+                const response = await fetch(`${API_URL}/api/clients`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  if (!response.ok) { // Verifica se a requisição falhou
                      throw new Error(`Erro HTTP: ${response.status}`);
                  }
@@ -504,8 +509,14 @@
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, phone }),
+                    credentials: 'include'
                 });
 
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || `Erro ao ${isEditing ? 'atualizar' : 'salvar'} cliente.`);
@@ -534,7 +545,12 @@
                  return;
              }
             try {
-                const response = await fetch(`${API_URL}/api/clients/${id}`);
+                const response = await fetch(`${API_URL}/api/clients/${id}`, { credentials: 'include' });
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                  if (!response.ok) { throw new Error('Cliente não encontrado.'); }
                 const client = await response.json();
 
@@ -582,8 +598,14 @@
             try {
                 const response = await fetch(`${API_URL}/api/clients/${id}`, {
                     method: 'DELETE',
+                    credentials: 'include'
                 });
 
+                if (response.status === 401 || response.status === 403) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = 'login.html';
+                    return;
+                }
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || 'Erro ao excluir cliente.');
@@ -614,18 +636,25 @@
          const logoutButton = document.getElementById('logout-button');
          if (logoutButton) {
              console.log("Botão de logout encontrado. Adicionando listener."); // Log
-             logoutButton.addEventListener('click', (event) => {
+             logoutButton.addEventListener('click', async (event) => {
                  event.preventDefault(); // Impede o link de navegar para '#'
                  console.log("Logout clicado."); // Log
 
-                 // 1. Limpar dados de sessão (Exemplo - faremos isso de verdade depois)
-                 // localStorage.removeItem('authToken'); 
-                 // localStorage.removeItem('userInfo');
-                 console.log("Dados de sessão (simulado) limpos."); // Log
-
-                 // 2. Redirecionar para a página de login
-                 console.log("Redirecionando para login.html..."); // Log
-                 window.location.href = 'login.html'; 
+                 try {
+                     // Fazer requisição de logout para destruir a sessão no servidor
+                     const response = await fetch(`${API_URL}/api/logout`, {
+                         method: 'POST',
+                         credentials: 'include'
+                     });
+                     
+                     // Independente do resultado, redirecionar para login
+                     console.log("Logout realizado. Redirecionando para login.html...");
+                     window.location.href = 'login.html';
+                 } catch (error) {
+                     console.error("Erro ao fazer logout:", error);
+                     // Mesmo com erro, redirecionar para login
+                     window.location.href = 'login.html';
+                 }
              });
          } else {
               console.warn("Botão de logout (id='logout-button') não encontrado nesta página."); // Aviso

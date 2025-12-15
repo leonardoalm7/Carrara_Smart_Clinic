@@ -15,8 +15,6 @@ const SQLiteStore = require('connect-sqlite3')(session);
 // 2. Configurar o Servidor Express
 const app = express();
 const PORT = 3000;
-app.use(cors());
-app.use(express.json());
 
 // 3. Configurar os "Middlewares"
 app.use(cors({
@@ -72,12 +70,27 @@ app.use(express.static(__dirname));
  */
 
 /* * ============================================
+ * MIDDLEWARE DE AUTENTICAÇÃO
+ * ============================================
+ * Verifica se o usuário está autenticado através da sessão
+ */
+function isAuthenticated(req, res, next) {
+    if (req.session.userId) {
+        console.log(`--> Middleware isAuthenticated: Usuário autenticado (ID: ${req.session.userId})`);
+        next();
+    } else {
+        console.warn('--> Middleware isAuthenticated: Acesso não autorizado - sessão não encontrada');
+        return res.status(401).json({ error: "Acesso não autorizado" });
+    }
+}
+
+/* * ============================================
  * TEMA 1: DASHBOARD
  * ============================================
  */
 
 // ROTA (GET): Buscar dados agregados para o Dashboard
-app.get('/api/dashboard', async (req, res) => {
+app.get('/api/dashboard', isAuthenticated, async (req, res) => {
     console.log("--> GET /api/dashboard: Rota recebida.");
     try {
         const results = {};
@@ -138,7 +151,7 @@ app.get('/api/dashboard', async (req, res) => {
  */
 
 // ROTA (GET): Buscar todos os agendamentos
-app.get('/api/appointments', (req, res) => {
+app.get('/api/appointments', isAuthenticated, (req, res) => {
     console.log("--> GET /api/appointments: Rota recebida.");
     const sql = `
         SELECT app.*, cli.name as client_name
@@ -153,7 +166,7 @@ app.get('/api/appointments', (req, res) => {
 });
 
 // ROTA (POST): Adicionar um novo agendamento (US05)
-app.post('/api/appointments', (req, res) => {
+app.post('/api/appointments', isAuthenticated, (req, res) => {
     console.log("--> POST /api/appointments: Rota recebida.");
     const { client_id, service_name, category, date_time, service_value } = req.body;
     console.log("--> POST /api/appointments: Dados:", req.body);
@@ -180,7 +193,7 @@ app.post('/api/appointments', (req, res) => {
 });
 
 // ROTA (PUT): Atualizar STATUS de um agendamento (US06)
-app.put('/api/appointments/:id/status', (req, res) => {
+app.put('/api/appointments/:id/status', isAuthenticated, (req, res) => {
     const id = req.params.id;
 const { status } = req.body; // // cite: 35] Espera 'realizado', 'cancelado', 'nao_compareceu'
     console.log(`--> PUT /api/appointments/${id}/status: Rota recebida. Novo status: ${status}`);
@@ -196,7 +209,7 @@ if (!res.headersSent) res.json({ message: `Status do agendamento atualizado para
 });
 
 // ROTA (PUT): Atualizar PAGAMENTO de um agendamento (US08)
-app.put('/api/appointments/:id/payment', (req, res) => {
+app.put('/api/appointments/:id/payment', isAuthenticated, (req, res) => {
     const id = req.params.id;
 const { payment_status, value_paid } = req.body; // // cite: 37] Espera 'pago' e valor
     console.log(`--> PUT /api/appointments/${id}/payment: Rota recebida. Status: ${payment_status}, Valor: ${value_paid}`);
@@ -213,7 +226,7 @@ const { payment_status, value_paid } = req.body; // // cite: 37] Espera 'pago' e
 });
 
 // ROTA (PUT): REAGENDAR um agendamento (US07)
-app.put('/api/appointments/:id/reschedule', (req, res) => {
+app.put('/api/appointments/:id/reschedule', isAuthenticated, (req, res) => {
     const id = req.params.id;
 const { date_time } = req.body; // // cite: 36] Espera nova data/hora
     console.log(`--> PUT /api/appointments/${id}/reschedule: Rota recebida. Nova data: ${date_time}`);
@@ -235,29 +248,29 @@ const { date_time } = req.body; // // cite: 36] Espera nova data/hora
  */
 
 // ROTA (GET): Buscar todos os clientes // cite: 10]
-app.get('/api/clients', (req, res) => {
+app.get('/api/clients', isAuthenticated, (req, res) => {
     const sql = "SELECT * FROM clients ORDER BY name";
     db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); });
 });
 // ROTA (GET): Buscar UM cliente pelo ID
-app.get('/api/clients/:id', (req, res) => {
+app.get('/api/clients/:id', isAuthenticated, (req, res) => {
     const id = req.params.id; const sql = "SELECT * FROM clients WHERE id = ?";
     db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Cliente não encontrado." }); } res.json(row); });
 });
 // ROTA (POST): Adicionar um novo cliente // cite: 33]
-app.post('/api/clients', (req, res) => {
+app.post('/api/clients', isAuthenticated, (req, res) => {
 const { name, email, phone } = req.body; if (!name || !phone) { return res.status(400).json({ error: "Nome e Telefone são obrigatórios." }); } // // cite: 39]
     const sql = "INSERT INTO clients (name, email, phone) VALUES (?, ?, ?)";
     db.run(sql, [name, email, phone], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } res.status(201).json({ clientId: this.lastID }); });
 });
 // ROTA (PUT): Atualizar um cliente existente // cite: 39]
-app.put('/api/clients/:id', (req, res) => {
+app.put('/api/clients/:id', isAuthenticated, (req, res) => {
     const id = req.params.id; const { name, email, phone } = req.body; if (!name || !phone) { return res.status(400).json({ error: "Nome e Telefone são obrigatórios." }); }
     const sql = "UPDATE clients SET name = ?, email = ?, phone = ? WHERE id = ?";
     db.run(sql, [name, email, phone, id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Cliente não encontrado." }); } res.json({ message: "Cliente atualizado!" }); });
 });
 // ROTA (DELETE): Excluir um cliente // cite: 39]
-app.delete('/api/clients/:id', (req, res) => {
+app.delete('/api/clients/:id', isAuthenticated, (req, res) => {
     const id = req.params.id; const sql = "DELETE FROM clients WHERE id = ?";
     db.run(sql, [id], function (err) { if (err) { if (err.message.includes('FOREIGN KEY constraint failed')) { return res.status(400).json({ error: "Não é possível excluir: cliente possui vínculos." }); } res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Cliente não encontrado." }); } res.json({ message: "Cliente excluído!" }); });
 });
@@ -268,7 +281,7 @@ app.delete('/api/clients/:id', (req, res) => {
  */
 
 // ROTA (POST): Salvar um novo formulário de Anamnese Geral (US10) - CORRIGIDA
-app.post('/api/anamneses/general', (req, res) => { // // cite: 41]
+app.post('/api/anamneses/general', isAuthenticated, (req, res) => { // // cite: 41]
     console.log("--> POST /api/anamneses/general: Rota recebida."); const receivedData = req.body; console.log("--> POST /api/anamneses/general: Dados:", receivedData);
     const { client_id, date_created } = receivedData; if (!client_id || !date_created) { console.error("--> POST /api/anamneses/general: ERRO - Cliente/Data ausentes."); return res.status(400).json({ error: "Cliente e Data são obrigatórios." }); }
     const columns = [ 'client_id', 'date_created', 'main_objective', 'is_pregnant', 'obs_pregnant', 'is_lactating', 'obs_lactating', 'has_autoimmune', 'obs_autoimmune', 'has_diabetes', 'obs_diabetes', 'has_hypertension', 'obs_hypertension', 'has_pacemaker', 'has_thrombosis', 'obs_thrombosis', 'has_epilepsy', 'obs_epilepsy', 'has_cancer_history', 'obs_cancer_history', 'has_metal_implants', 'obs_metal_implants', 'has_iud', 'obs_iud', 'has_keloid', 'has_herpes', 'obs_herpes', 'has_allergies', 'obs_allergies', 'used_roacutan_6m', 'uses_anticoagulant', 'obs_anticoagulant', 'medications_in_use', 'sun_exposure', 'uses_sunscreen', 'is_smoker', 'consent_terms_accepted', 'consent_data_truthful', 'consent_procedures', 'consent_photos' ];
@@ -278,23 +291,23 @@ app.post('/api/anamneses/general', (req, res) => { // // cite: 41]
     db.run(sql, values, function (err) { if (err) { console.error("--> POST /api/anamneses/general: ERRO:", err.message); console.error("--> SQL:", sql); console.error("--> Params:", values); if (!res.headersSent) res.status(500).json({ error: `Erro SQL: ${err.message}` }); return; } console.log(`--> POST /api/anamneses/general: Inserido ID: ${this.lastID}`); if (!res.headersSent) res.status(201).json({ message: "Anamnese salva!", anamnesisId: this.lastID }); });
 });
 // ROTA (GET): Buscar TODAS as Anamneses Gerais (US11)
-app.get('/api/anamneses/general', (req, res) => { // // cite: 42]
+app.get('/api/anamneses/general', isAuthenticated, (req, res) => { // // cite: 42]
     const sql = `SELECT ag.id, ag.client_id, ag.date_created, cl.name as client_name FROM anamneses_general ag LEFT JOIN clients cl ON ag.client_id = cl.id ORDER BY ag.date_created DESC`; db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); });
 });
 // ROTA (GET): Buscar UMA Anamnese Geral pelo ID
-app.get('/api/anamneses/general/:id', (req, res) => { const id = req.params.id; const sql = "SELECT * FROM anamneses_general WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Anamnese não encontrada." }); } const anamneseData = {}; for (const key in row) { if (row[key] === 1 || row[key] === 0) { anamneseData[key] = Boolean(row[key]); } else { anamneseData[key] = row[key]; } } res.json(anamneseData); }); });
+app.get('/api/anamneses/general/:id', isAuthenticated, (req, res) => { const id = req.params.id; const sql = "SELECT * FROM anamneses_general WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Anamnese não encontrada." }); } const anamneseData = {}; for (const key in row) { if (row[key] === 1 || row[key] === 0) { anamneseData[key] = Boolean(row[key]); } else { anamneseData[key] = row[key]; } } res.json(anamneseData); }); });
 // ROTA (PUT): Atualizar uma Anamnese Geral existente (US12) - CORRIGIDA
-app.put('/api/anamneses/general/:id', (req, res) => { // // cite: 43]
+app.put('/api/anamneses/general/:id', isAuthenticated, (req, res) => { // // cite: 43]
     const id = req.params.id; const receivedData = req.body; console.log(`--> PUT /api/anamneses/general/${id}: Dados:`, receivedData); const { date_created } = receivedData; if (!date_created) { return res.status(400).json({ error: "Data é obrigatória." }); } const allowedColumnsToUpdate = [ 'date_created', 'main_objective', 'is_pregnant', 'obs_pregnant', 'is_lactating', 'obs_lactating', 'has_autoimmune', 'obs_autoimmune', 'has_diabetes', 'obs_diabetes', 'has_hypertension', 'obs_hypertension', 'has_pacemaker', 'has_thrombosis', 'obs_thrombosis', 'has_epilepsy', 'obs_epilepsy', 'has_cancer_history', 'obs_cancer_history', 'has_metal_implants', 'obs_metal_implants', 'has_iud', 'obs_iud', 'has_keloid', 'has_herpes', 'obs_herpes', 'has_allergies', 'obs_allergies', 'used_roacutan_6m', 'uses_anticoagulant', 'obs_anticoagulant', 'medications_in_use', 'sun_exposure', 'uses_sunscreen', 'is_smoker', 'consent_terms_accepted', 'consent_data_truthful', 'consent_procedures', 'consent_photos' ]; const values = []; const setClauses = []; allowedColumnsToUpdate.forEach(col => { if (receivedData.hasOwnProperty(col)) { const value = receivedData[col]; setClauses.push(`${col} = ?`); if (typeof value === 'boolean') { values.push(value ? 1 : 0); } else if (value === '' || value === undefined || value === null) { if (col.startsWith('obs_')) values.push(null); else values.push(null); } else { values.push(value); } } }); if (setClauses.length === 0) { return res.status(400).json({ error: "Nenhum dado válido enviado." }); } values.push(id); const sql = `UPDATE anamneses_general SET ${setClauses.join(', ')} WHERE id = ?`; console.log("--> PUT SQL:", sql); console.log("--> PUT Params:", values); db.run(sql, values, function (err) { if (err) { console.error("Erro PUT Anamnese:", err.message); res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Anamnese não encontrada." }); } res.json({ message: "Anamnese atualizada!" }); }); });
 // ROTA (DELETE): Excluir uma Anamnese Geral (US12)
-app.delete('/api/anamneses/general/:id', (req, res) => { // // cite: 43]
+app.delete('/api/anamneses/general/:id', isAuthenticated, (req, res) => { // // cite: 43]
     const id = req.params.id; const sql = "DELETE FROM anamneses_general WHERE id = ?"; db.run(sql, [id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Anamnese não encontrada." }); } res.json({ message: "Anamnese excluída!" }); }); });
 
 /* * ============================================
  * TEMA 5: RECEITAS
  * ============================================
  */
-app.get('/api/revenues', (req, res) => { // // cite: 45]
+app.get('/api/revenues', isAuthenticated, (req, res) => { // // cite: 45]
     const { startDate, endDate, category } = req.query; let sql = ` SELECT app.id, app.client_id, app.service_name, app.category, app.date_time, app.service_value, app.value_paid, cli.name as client_name FROM appointments app LEFT JOIN clients cli ON app.client_id = cli.id WHERE app.status = 'realizado' AND app.payment_status = 'pago'`; const params = []; if (startDate) { sql += ` AND app.date_time >= ?`; params.push(startDate + 'T00:00:00'); } if (endDate) { sql += ` AND app.date_time <= ?`; params.push(endDate + 'T23:59:59'); } if (category) { sql += ` AND app.category = ?`; params.push(category); } sql += ` ORDER BY app.date_time DESC`; db.all(sql, params, (err, rows) => { if (err) { console.error("Erro SQL Receitas:", sql, params); res.status(500).json({ error: err.message }); return; } res.json(rows); }); });
 
 
@@ -304,30 +317,30 @@ app.get('/api/revenues', (req, res) => { // // cite: 45]
  */
 
 // ROTA (GET): Buscar todas as despesas // cite: 12]
-app.get('/api/expenses', (req, res) => { const sql = "SELECT * FROM expenses ORDER BY date DESC"; db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); }); });
+app.get('/api/expenses', isAuthenticated, (req, res) => { const sql = "SELECT * FROM expenses ORDER BY date DESC"; db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); }); });
 // ROTA (POST): Adicionar uma nova despesa (US14)
-app.post('/api/expenses', (req, res) => { const { date, description, category, type, value } = req.body; if (!date || !description || !category || !type || value === undefined || value === null) { return res.status(400).json({ error: "Todos campos obrigatórios." }); } if (isNaN(parseFloat(value)) || parseFloat(value) <= 0) { return res.status(400).json({ error: "Valor deve ser positivo." }); } const sql = "INSERT INTO expenses (date, description, category, type, value) VALUES (?, ?, ?, ?, ?)"; db.run(sql, [date, description, category, type, parseFloat(value)], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } res.status(201).json({ expenseId: this.lastID }); }); }); // // cite: 47]
+app.post('/api/expenses', isAuthenticated, (req, res) => { const { date, description, category, type, value } = req.body; if (!date || !description || !category || !type || value === undefined || value === null) { return res.status(400).json({ error: "Todos campos obrigatórios." }); } if (isNaN(parseFloat(value)) || parseFloat(value) <= 0) { return res.status(400).json({ error: "Valor deve ser positivo." }); } const sql = "INSERT INTO expenses (date, description, category, type, value) VALUES (?, ?, ?, ?, ?)"; db.run(sql, [date, description, category, type, parseFloat(value)], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } res.status(201).json({ expenseId: this.lastID }); }); }); // // cite: 47]
 // ROTA (GET): Buscar UMA despesa pelo ID
-app.get('/api/expenses/:id', (req, res) => { const id = req.params.id; const sql = "SELECT * FROM expenses WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json(row); }); });
+app.get('/api/expenses/:id', isAuthenticated, (req, res) => { const id = req.params.id; const sql = "SELECT * FROM expenses WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json(row); }); });
 // ROTA (PUT): Atualizar uma despesa existente // cite: 47]
-app.put('/api/expenses/:id', (req, res) => { const id = req.params.id; const { date, description, category, type, value } = req.body; if (!date || !description || !category || !type || value === undefined || value === null) { return res.status(400).json({ error: "Todos campos obrigatórios." }); } if (isNaN(parseFloat(value)) || parseFloat(value) <= 0) { return res.status(400).json({ error: "Valor deve ser positivo." }); } const sql = "UPDATE expenses SET date = ?, description = ?, category = ?, type = ?, value = ? WHERE id = ?"; const params = [date, description, category, type, parseFloat(value), id]; db.run(sql, params, function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json({ message: "Despesa atualizada!" }); }); });
+app.put('/api/expenses/:id', isAuthenticated, (req, res) => { const id = req.params.id; const { date, description, category, type, value } = req.body; if (!date || !description || !category || !type || value === undefined || value === null) { return res.status(400).json({ error: "Todos campos obrigatórios." }); } if (isNaN(parseFloat(value)) || parseFloat(value) <= 0) { return res.status(400).json({ error: "Valor deve ser positivo." }); } const sql = "UPDATE expenses SET date = ?, description = ?, category = ?, type = ?, value = ? WHERE id = ?"; const params = [date, description, category, type, parseFloat(value), id]; db.run(sql, params, function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json({ message: "Despesa atualizada!" }); }); });
 // ROTA (DELETE): Excluir uma despesa // cite: 47]
-app.delete('/api/expenses/:id', (req, res) => { const id = req.params.id; const sql = "DELETE FROM expenses WHERE id = ?"; db.run(sql, [id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json({ message: "Despesa excluída!" }); }); });
+app.delete('/api/expenses/:id', isAuthenticated, (req, res) => { const id = req.params.id; const sql = "DELETE FROM expenses WHERE id = ?"; db.run(sql, [id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Despesa não encontrada." }); } res.json({ message: "Despesa excluída!" }); }); });
 
 /* * ============================================
  * TEMA 7: CONTROLE DE ACESSO
  * ============================================
  */
 // ROTA (GET): Buscar todos os usuários (US16)
-app.get('/api/users', (req, res) => { const sql = "SELECT id, username, layer FROM users ORDER BY username"; db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); }); }); // // cite: 50]
+app.get('/api/users', isAuthenticated, (req, res) => { const sql = "SELECT id, username, layer FROM users ORDER BY username"; db.all(sql, [], (err, rows) => { if (err) { res.status(500).json({ error: err.message }); return; } res.json(rows); }); }); // // cite: 50]
 // ROTA (GET): Buscar UM usuário pelo ID
-app.get('/api/users/:id', (req, res) => { const id = req.params.id; const sql = "SELECT id, username, layer FROM users WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json(row); }); });
+app.get('/api/users/:id', isAuthenticated, (req, res) => { const id = req.params.id; const sql = "SELECT id, username, layer FROM users WHERE id = ?"; db.get(sql, [id], (err, row) => { if (err) { res.status(500).json({ error: err.message }); return; } if (!row) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json(row); }); });
 // ROTA (POST): Adicionar um novo usuário (US16)
-app.post('/api/users', (req, res) => { const { username, password, layer } = req.body; if (!username || !password || !layer) { return res.status(400).json({ error: "Username, Password e Layer obrigatórios." }); } if (!['admin', 'esteticista'].includes(layer)) { return res.status(400).json({ error: "Layer inválida." }); } if (password.length < 6) { return res.status(400).json({ error: "Senha deve ter >= 6 caracteres." }); } bcrypt.hash(password, saltRounds, (err, hash) => { if (err) { console.error("--> POST /api/users: Erro bcrypt:", err); return res.status(500).json({ error: "Erro ao processar senha." }); } const sql = "INSERT INTO users (username, password_hash, layer) VALUES (?, ?, ?)"; db.run(sql, [username, hash, layer], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } res.status(201).json({ userId: this.lastID }); }); }); }); // // cite: 50]
+app.post('/api/users', isAuthenticated, (req, res) => { const { username, password, layer } = req.body; if (!username || !password || !layer) { return res.status(400).json({ error: "Username, Password e Layer obrigatórios." }); } if (!['admin', 'esteticista'].includes(layer)) { return res.status(400).json({ error: "Layer inválida." }); } if (password.length < 6) { return res.status(400).json({ error: "Senha deve ter >= 6 caracteres." }); } bcrypt.hash(password, saltRounds, (err, hash) => { if (err) { console.error("--> POST /api/users: Erro bcrypt:", err); return res.status(500).json({ error: "Erro ao processar senha." }); } const sql = "INSERT INTO users (username, password_hash, layer) VALUES (?, ?, ?)"; db.run(sql, [username, hash, layer], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } res.status(201).json({ userId: this.lastID }); }); }); }); // // cite: 50]
 // ROTA (PUT): Atualizar um usuário existente // cite: 50]
-app.put('/api/users/:id', (req, res) => { const id = req.params.id; const { username, password, layer } = req.body; if (!username || !layer) { return res.status(400).json({ error: "Username e Layer obrigatórios." }); } if (!['admin', 'esteticista'].includes(layer)) { return res.status(400).json({ error: "Layer inválida." }); } if (password && password.length < 6) { return res.status(400).json({ error: "Nova senha deve ter >= 6 caracteres." }); } if (password) { bcrypt.hash(password, saltRounds, (err, hash) => { if (err) { return res.status(500).json({ error: "Erro ao processar nova senha." }); } const sql = "UPDATE users SET username = ?, password_hash = ?, layer = ? WHERE id = ?"; db.run(sql, [username, hash, layer, id], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json({ message: "Usuário atualizado (com senha)!" }); }); }); } else { const sql = "UPDATE users SET username = ?, layer = ? WHERE id = ?"; db.run(sql, [username, layer, id], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json({ message: "Usuário atualizado (senha mantida)!" }); }); } });
+app.put('/api/users/:id', isAuthenticated, (req, res) => { const id = req.params.id; const { username, password, layer } = req.body; if (!username || !layer) { return res.status(400).json({ error: "Username e Layer obrigatórios." }); } if (!['admin', 'esteticista'].includes(layer)) { return res.status(400).json({ error: "Layer inválida." }); } if (password && password.length < 6) { return res.status(400).json({ error: "Nova senha deve ter >= 6 caracteres." }); } if (password) { bcrypt.hash(password, saltRounds, (err, hash) => { if (err) { return res.status(500).json({ error: "Erro ao processar nova senha." }); } const sql = "UPDATE users SET username = ?, password_hash = ?, layer = ? WHERE id = ?"; db.run(sql, [username, hash, layer, id], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json({ message: "Usuário atualizado (com senha)!" }); }); }); } else { const sql = "UPDATE users SET username = ?, layer = ? WHERE id = ?"; db.run(sql, [username, layer, id], function (err) { if (err) { if (err.message.includes('UNIQUE constraint failed')) { return res.status(400).json({ error: "Username já em uso." }); } res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } res.json({ message: "Usuário atualizado (senha mantida)!" }); }); } });
 // ROTA (DELETE): Excluir um usuário // cite: 50]
-app.delete('/api/users/:id', (req, res) => { const id = req.params.id; console.log(`--> DELETE /api/users/${id}`); const sql = "DELETE FROM users WHERE id = ?"; db.run(sql, [id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } console.log(`--> DELETE /api/users/${id}: Excluído.`); res.json({ message: "Usuário excluído!" }); }); });
+app.delete('/api/users/:id', isAuthenticated, (req, res) => { const id = req.params.id; console.log(`--> DELETE /api/users/${id}`); const sql = "DELETE FROM users WHERE id = ?"; db.run(sql, [id], function (err) { if (err) { res.status(500).json({ error: err.message }); return; } if (this.changes === 0) { return res.status(404).json({ error: "Usuário não encontrado." }); } console.log(`--> DELETE /api/users/${id}: Excluído.`); res.json({ message: "Usuário excluído!" }); }); });
 // ROTA (POST): Autenticar um usuário (Login - US15)
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
@@ -368,6 +381,25 @@ app.post('/api/login', (req, res) => {
                 layer: user.layer 
             } 
         });
+        });
+});
+
+// ROTA (POST): Logout - Destruir sessão
+app.post('/api/logout', (req, res) => {
+    console.log('--> POST /api/logout: Rota recebida');
+    const sessionId = req.sessionID;
+    
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('--> POST /api/logout: Erro ao destruir sessão:', err.message);
+            return res.status(500).json({ error: "Erro ao fazer logout." });
+        }
+        
+        // Limpar o cookie de sessão
+        res.clearCookie('connect.sid');
+        console.log(`--> POST /api/logout: Sessão ${sessionId} destruída com sucesso`);
+        
+        res.json({ message: "Logout realizado com sucesso!" });
     });
 });
 
@@ -376,7 +408,7 @@ app.post('/api/login', (req, res) => {
  * ============================================
  */
 // ROTA (GET): Buscar dados para a timeline de evolução de UM paciente // cite: 52, 53, 54]
-app.get('/api/patients/:id/evolution', async (req, res) => { const clientId = req.params.id; try { const evolutionData = {}; const clientSql = "SELECT * FROM clients WHERE id = ?"; evolutionData.client = await dbGetAsync(clientSql, [clientId]); if (!evolutionData.client) { return res.status(404).json({ error: "Cliente não encontrado." }); } const appointmentsSql = `SELECT * FROM appointments WHERE client_id = ? ORDER BY date_time DESC`; evolutionData.appointments = await dbAllAsync(appointmentsSql, [clientId]); const anamnesesSql = `SELECT * FROM anamneses_general WHERE client_id = ? ORDER BY date_created DESC`; evolutionData.anamneses = await dbAllAsync(anamnesesSql, [clientId]); res.json(evolutionData); } catch (err) { res.status(500).json({ error: err.message }); } });
+app.get('/api/patients/:id/evolution', isAuthenticated, async (req, res) => { const clientId = req.params.id; try { const evolutionData = {}; const clientSql = "SELECT * FROM clients WHERE id = ?"; evolutionData.client = await dbGetAsync(clientSql, [clientId]); if (!evolutionData.client) { return res.status(404).json({ error: "Cliente não encontrado." }); } const appointmentsSql = `SELECT * FROM appointments WHERE client_id = ? ORDER BY date_time DESC`; evolutionData.appointments = await dbAllAsync(appointmentsSql, [clientId]); const anamnesesSql = `SELECT * FROM anamneses_general WHERE client_id = ? ORDER BY date_created DESC`; evolutionData.anamneses = await dbAllAsync(anamnesesSql, [clientId]); res.json(evolutionData); } catch (err) { res.status(500).json({ error: err.message }); } });
 
 /* * ============================================
  * HELPER FUNCTIONS (Async/Await para SQLite)
